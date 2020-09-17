@@ -11,6 +11,12 @@ import './style.css'
 
 const Header = (props) => {
 
+    const logOut = (e) => {
+        e.preventDefault()
+        localStorage.removeItem("token")
+        props.logOut()
+
+    }
 
     return (
         <Navbar bg="light" expand="lg" >
@@ -26,7 +32,11 @@ const Header = (props) => {
                     </Form>
                 </Nav>
                 <Nav className='mx-5'>
-                    <Button onClick={() => {props.handleShow(true)}}>Login</Button>
+                    {props.currentUser
+                        ? <Button onClick={() => {props.handleShow(true)}}>Login</Button>
+                        : <Button onClick={logOut}>Logout</Button>
+                    }
+
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

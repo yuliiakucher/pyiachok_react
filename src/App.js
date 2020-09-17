@@ -9,18 +9,17 @@ import Content from "./components/Content/Content";
 import {connect} from "react-redux";
 import getProfileFetch from "./redux/profile-fetch";
 
-class App extends React.Component{
+class App extends React.Component {
 
     componentDidMount = () => {
         this.props.getProfileFetch()
     }
+
     render() {
         return (
             <BrowserRouter>
                 <>
                     <HeaderContainer/>
-                    {/*<Route path='/signup' render={() => <Registration/>}/>*/}
-                    {/*<Route path='/login' render={() => <Login />}/>*/}
                     <ModalContainer/>
                     <Content/>
 
