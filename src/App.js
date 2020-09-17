@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min (2).css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import {BrowserRouter, Route} from "react-router-dom";
+import ModalContainer from "./components/Modal/ModalContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
+import Content from "./components/Content/Content";
+import {connect} from "react-redux";
+import getProfileFetch from "./redux/profile-fetch";
+
+class App extends React.Component{
+
+    componentDidMount = () => {
+        this.props.getProfileFetch()
+    }
+    render() {
+        return (
+            <BrowserRouter>
+                <>
+                    <HeaderContainer/>
+                    {/*<Route path='/signup' render={() => <Registration/>}/>*/}
+                    {/*<Route path='/login' render={() => <Login />}/>*/}
+                    <ModalContainer/>
+                    <Content/>
+
+                </>
+            </BrowserRouter>
+        )
+    }
+    ;
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+    getProfileFetch: () => dispatch(getProfileFetch())
+})
+
+export default connect(null, mapDispatchToProps)(App);
