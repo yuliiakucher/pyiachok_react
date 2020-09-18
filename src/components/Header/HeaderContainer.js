@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import Header from "./index";
+import Header from "./Header";
 import {handleShow} from "../../redux/modal-reducer";
 import {logOut} from "../../redux/login-reducer";
 

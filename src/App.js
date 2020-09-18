@@ -8,6 +8,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Content from "./components/Content/Content";
 import {connect} from "react-redux";
 import getProfileFetch from "./redux/profile-fetch";
+import Profile from "./components/Profile/Profile";
 
 class App extends React.Component {
 
@@ -21,7 +22,10 @@ class App extends React.Component {
                 <>
                     <HeaderContainer/>
                     <ModalContainer/>
-                    <Content/>
+                    <Route path='/home' render={() => <Content/>}/>
+
+                    <Route exact path='/profile' render={() => <Profile/>}/>
+
 
                 </>
             </BrowserRouter>

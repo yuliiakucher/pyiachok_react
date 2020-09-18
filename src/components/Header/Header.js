@@ -7,6 +7,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import './style.css'
+import {NavLink} from "react-router-dom";
 
 
 const Header = (props) => {
@@ -34,7 +35,13 @@ const Header = (props) => {
                 <Nav className='mx-5'>
                     {props.currentUser
                         ? <Button onClick={() => {props.handleShow(true)}}>Login</Button>
-                        : <Button onClick={logOut}>Logout</Button>
+                        : <div>
+                            <NavLink to='/profile' className='mx-2'>
+                                <Button>Мой кабинет</Button>
+                            </NavLink>
+                            <Button onClick={logOut}>Logout</Button>
+                        </div>
+
                     }
 
                 </Nav>

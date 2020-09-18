@@ -10,9 +10,6 @@
 
 }
 
-
-
-
 .subwrapper_left {
     display: flex;
     flex-direction: column;
@@ -40,9 +37,7 @@
     background-color: #f4cbb7;
 }
 
-.photo {
-    width: 50px;
-}
+
 
 
 
