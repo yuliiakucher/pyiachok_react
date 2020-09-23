@@ -21,7 +21,7 @@ const Header = (props) => {
 
     return (
         <Navbar bg="light" expand="lg" >
-            <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+            <Navbar.Brand href='/'>React-Bootstrap</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse>
                 <Nav className="ml-auto">
@@ -33,7 +33,7 @@ const Header = (props) => {
                     </Form>
                 </Nav>
                 <Nav className='mx-5'>
-                    {props.currentUser
+                    {!localStorage.length
                         ? <Button onClick={() => {props.handleShow(true)}}>Login</Button>
                         : <div>
                             <NavLink to='/profile' className='mx-2'>

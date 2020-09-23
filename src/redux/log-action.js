@@ -7,9 +7,9 @@ const userLogin = user => {
             .then(response => {
                     localStorage.setItem("token", response.data.access)
                     dispatch(loginUserAC(response.data.user))
-                    console.log(response.data)
+                    console.log('response data',response.data)
             })
-            .catch(err => console.log(err))
+            .catch(err => dispatch(loginUserAC(err.response.status)))
     }
 }
 

@@ -10,6 +10,7 @@ import EditProfileInfo from "../EditProfileInfo/EditProfileInfo";
 
 
 const ProfileSidebar =() => {
+    console.log('LC',localStorage.length)
     return(
         <div>
 
@@ -37,17 +38,17 @@ const ProfileSidebar =() => {
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
                                 <Card className={styles.info}>
-                                    <Card.Text>
+                                    <div>
                                             <EditProfileInfo/>
-                                    </Card.Text>
+                                    </div>
                                 </Card>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
                                 <Card className={styles.info}>
-                                    <Card.Text>
+                                    <div>
                                         Some quick example text to build on the card title and make up the bulk of
                                         the card's content.
-                                    </Card.Text>
+                                    </div>
                                 </Card>
                             </Tab.Pane>
                         </Tab.Content>
