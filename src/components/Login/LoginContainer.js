@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import {handleClose, handleShow} from "../../redux/modal-reducer";
 import Login from "./Login";
+import {userLogin} from "../../redux/login-reducer";
 
 
 let mapStateToProps = (state) => {
@@ -10,6 +11,6 @@ let mapStateToProps = (state) => {
 }
 
 
-const LoginContainer = connect(mapStateToProps, {handleClose, handleShow})(Login)
+const LoginContainer = connect(mapStateToProps, {handleClose, handleShow, userLogin})(Login)
 
 export default LoginContainer

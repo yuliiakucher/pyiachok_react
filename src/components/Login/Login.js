@@ -2,7 +2,6 @@ import React, {useEffect} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
 import {connect} from "react-redux";
-import userLogin from "../../redux/log-action";
 import * as yup from 'yup'
 import {ErrorMessage, Formik} from "formik";
 import {NavLink} from "react-router-dom";
@@ -75,10 +74,4 @@ class Login extends React.Component{
 
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        userLogin: (user) => dispatch(userLogin(user))
-    }
-}
-
-export default connect(null, mapDispatchToProps)(Login)
+export default Login
