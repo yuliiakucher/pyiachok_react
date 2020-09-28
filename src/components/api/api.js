@@ -1,6 +1,5 @@
 import * as axios from 'axios'
 
-
 const token = localStorage.token;
 const instance = axios.create({
     baseURL: 'http://localhost:8000/',
@@ -25,6 +24,20 @@ export const userAuth = ({
     userRefresh(){
         return(
             instance.post('/token/refresh')
+        )
+    }
+})
+
+
+export const userProfile = ({
+    showProfile(){
+        return(
+            instance.get('profile/edit/')
+        )
+    },
+    editProfile(data){
+        return(
+            instance.patch('profile/edit/', {...data})
         )
     }
 })

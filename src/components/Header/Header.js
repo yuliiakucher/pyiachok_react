@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
-import './style.css'
+// import './style.css'
 import {NavLink} from "react-router-dom";
 
 
@@ -20,8 +20,8 @@ const Header = (props) => {
     }
 
     return (
-        <Navbar bg="light" expand="lg" >
-            <Navbar.Brand href='/'>React-Bootstrap</Navbar.Brand>
+        <Navbar expand="lg" className='navbar-dark bg-dark' >
+            <Navbar.Brand href='/'>Пиячок</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse>
                 <Nav className="ml-auto">

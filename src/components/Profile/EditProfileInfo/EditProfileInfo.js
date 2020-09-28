@@ -1,75 +1,109 @@
-import React from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
+import React, {useEffect} from "react";
+import Form from 'react-bootstrap/Form'
+import Button from "react-bootstrap/cjs/Button";
+import {Formik} from "formik";
+import * as yup from 'yup'
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 
-const EditProfileInfo = () => {
-    return(
-        <Form>
-            <Form.Group >
-                <Form.Label>First name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter first name"
-                    // onChange={this.handleChange}
-                    // value={this.state.first_name}
-                    name='first_name'
-                />
-            </Form.Group>
+const EditProfileInfo = (props) => {
 
-            <Form.Group>
-                <Form.Label>Last name</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter last name"
-                    // onChange={this.handleChange}
-                    // value={this.state.last_name}
-                    name='last_name'
-                />
-            </Form.Group>
-
-            <Form.Group controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    // onChange={this.handleChange}
-                    // value={this.state.email}
-                    name='email'
-                />
-            </Form.Group>
+    let {first_name, last_name, email} = props
 
 
-            <Form.Group >
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter username"
-                    // onChange={this.handleChange}
-                    // value={this.state.username}
-                    name='username'
-                />
-            </Form.Group>
+    let initialValues = {
+        first_name: first_name,
+        last_name: last_name,
+        email: email,
 
-            {/*<Form.Group controlId="exampleForm.ControlSelect1">*/}
-            {/*    <Form.Label>Choose your gender</Form.Label>*/}
-            {/*    <Form.Control as="select" onChange={this.handleChange} value={this.state.value}>*/}
-            {/*        <option  value='male' name='sex'>м</option>*/}
-            {/*        <option  value='female' name='sex'>ж</option>*/}
-            {/*    </Form.Control>*/}
-            {/*</Form.Group>*/}
+    }
 
 
+    const onSubmit = values => {
+        console.log('submit', values)
+        props.editUser(values)
+    }
 
-            <Button
-                variant="primary"
-                type="submit"
-                // onClick={this.handleClick}
-            >
-                Сохранить изменения
-            </Button>
-        </Form>
+    const validationSchema = yup.object({
+        first_name: yup.string().required('Введите ваше имя!'),
+        last_name: yup.string().required('Введите вашу фамилию!!'),
+        email: yup.string().email('Email is not valid').required('Email is required'),
+    })
+
+
+    return (
+        <Formik
+            initialValues={initialValues}
+            onSubmit={onSubmit}
+            validationSchema={validationSchema}
+        >
+            {formik => {
+                return (
+                    <Form className='m-3'>
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="2">Имя</Form.Label>
+                            <Col sm="10">
+                                <Form.Control
+                                    type="text"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    name='first_name'
+                                    value={formik.values.first_name}
+                                />
+                            </Col>
+
+                            {formik.touched.first_name && formik.errors.first_name ?
+                                <Form.Text>{formik.errors.first_name} </Form.Text> : null}
+                        </Form.Group>
+
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="2">Фамилия</Form.Label>
+                            <Col sm="10">
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter last name"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    name='last_name'
+                                    value={formik.values.last_name}
+                                />
+                            </Col>
+                            {formik.touched.last_name && formik.errors.last_name ?
+                                <Form.Text>{formik.errors.last_name} </Form.Text> : null}
+                        </Form.Group>
+
+                        <Form.Group as={Row}>
+                            <Form.Label column sm="2">Электронная почта</Form.Label>
+                            <Col sm="10">
+                                <Form.Control
+                                    type="email"
+                                    placeholder="Enter email"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    name='email'
+                                    value={formik.values.email}
+                                />
+                            </Col>
+                            {formik.touched.email && formik.errors.email ?
+                                <Form.Text>{formik.errors.email} </Form.Text> : null}
+                        </Form.Group>
+
+                        <Button variant="outline-info" className='my-2'>Изменить пароль</Button>
+                        <br/>
+                        <Button
+                            variant="primary"
+                            onClick={formik.handleSubmit}
+                            disabled={!formik.validateForm}
+                        >Сохранить изменения
+                        </Button>
+                    </Form>
+                )
+            }}
+        </Formik>
     )
+
 }
+
 
 export default EditProfileInfo
