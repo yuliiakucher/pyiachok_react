@@ -1,7 +1,7 @@
 import React, {useReducer} from "react";
 import styles from './Profile.module.css'
-import ItemContent from "../Content/ItemContent/ItemContent";
-import TabContent from "../Content/ItemContent/TabContent/TabContent";
+import EventsItemContent from "../Content/EventsItemContent/EventsItemContent";
+import TabContent from "../Content/TabContent/TabContent";
 import ProfileSidebar from "./ProfileSidebar/ProfileSidebar";
 
 

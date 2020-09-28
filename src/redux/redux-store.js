@@ -1,10 +1,12 @@
 import {combineReducers, createStore, applyMiddleware} from "redux";
-import loginReducer from "./login-reducer";
+import LoginReducer from "./login-reducer";
 import thunkMiddleware from 'redux-thunk';
 import ModalReducer from "./modal-reducer";
+import RegistrationReducer from "./registration-reducer";
 
 let reducers = combineReducers({
-    LoginPage: loginReducer,
+    LoginPage: LoginReducer,
+    RegistrationPage: RegistrationReducer,
     ModalPage: ModalReducer
 })
 

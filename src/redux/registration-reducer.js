@@ -23,7 +23,8 @@ const userReg = () => ({type: USER_REGISTERED})
 export const userRegistration = (userData) => {
     return(dispatch) => {
         userAuth.userRegistration(userData)
-            .then(response => console.log(response))
+            .then(response => console.log(response.data.message))
+            .catch(error => console.log('!!!', error.data.message))
     }
 }
 

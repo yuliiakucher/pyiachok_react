@@ -1,7 +1,7 @@
 import React from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
-import {Formik, Field} from "formik";
+import {Formik} from "formik";
 import * as yup from 'yup'
 
 

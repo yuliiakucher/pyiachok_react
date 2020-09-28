@@ -58,7 +58,7 @@ class Login extends React.Component{
                                 {(this.props.errorCode === 401) &&
                                 <Form.Text>Такого юзера не существует.
                                     Проверьте правильность написания или
-                                    <NavLink to='/reg'> зарегистрируйтесь</NavLink>
+                                    <a className='text-primary' onClick={()=> this.props.handleActiveTab('reg')}> зарегистрируйтесь</a>
                                 </Form.Text>}
 
                             </Form.Group>

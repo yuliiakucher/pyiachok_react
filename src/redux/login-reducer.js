@@ -8,7 +8,7 @@ const initialState = {
     currentUser: null
 }
 
-export function loginReducer(state = initialState, action) {
+export function LoginReducer(state = initialState, action) {
     switch (action.type) {
         case LOGIN_USER:{
             return {...state, currentUser: action.payload}
@@ -46,4 +46,4 @@ export const userLogin = user => {
     }
 }
 
-export default loginReducer
+export default LoginReducer
