@@ -13,7 +13,7 @@ export const userAuth = ({
 
     userRegistration(userData) {
         return (
-            axios.post('http://localhost:8000/user/create/', {...userData})
+            axios.post('http://localhost:8000/register/', {...userData})
         )
     },
     userLogin(userData) {

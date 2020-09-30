@@ -4,7 +4,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom'
 import LoginContainer from "../Login/LoginContainer";
-import RegistrationContainer from "../Registration/RegistrationComponent";
+import RegistrationContainer from "../Registration/RegistrationContainer";
 import {NavTab} from "react-router-tabs";
 import "react-router-tabs/styles/react-router-tabs.scss";
 import Login from "../Login/Login";

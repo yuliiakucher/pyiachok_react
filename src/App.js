@@ -8,6 +8,7 @@ import HeaderContainer from "./components/Header/HeaderContainer";
 import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
 import Profile from "./components/Profile/Profile";
+import Test from "./components/Test/Test";
 
 class App extends React.Component {
 
@@ -20,6 +21,8 @@ class App extends React.Component {
                     <Route exact path='/' render={() => <Content/>}/>
                     <Route  path='/profile' render={() => <Profile/>}/>
                     <Route  path='/places' render={() => <Places/>}/>
+                    <Route  path='/test' render={() => <Test/>}/>
+
                 </>
             </BrowserRouter>
         )
