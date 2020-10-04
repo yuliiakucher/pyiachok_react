@@ -39,5 +39,14 @@ export const userProfile = ({
         return(
             instance.patch('profile/edit/', {...data})
         )
+    },
+    editPassword(data){
+        return(
+            instance.post('profile/edit/', {...data})
+        )
     }
+})
+
+export const PlaceAPI = ({
+    createPlace(data){instance.post('place/', {...data})}
 })

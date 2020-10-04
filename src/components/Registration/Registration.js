@@ -4,12 +4,11 @@ import Button from "react-bootstrap/cjs/Button";
 import Alert from "react-bootstrap/cjs/Alert";
 import {Formik} from "formik";
 import * as yup from 'yup'
-
-
 class Registration extends React.Component {
 
     state = {
-        show: false
+        show: false,
+        showSuccess: false
     }
 
     initialValues = {
@@ -27,11 +26,14 @@ class Registration extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        debugger
-        if (this.props.responseCode === 400){
-            prevProps.responseMessage!== this.props.responseMessage && this.setState({show: true})
+        if (this.props.responseCode === 400) {
+            prevProps.responseMessage !== this.props.responseMessage && this.setState({show: true})
         }
-        else this.props.handleClose(false)
+        if (this.props.responseCode === 201) {
+            prevProps.responseMessage !== this.props.responseMessage && this.setState({show:false, showSuccess: true})
+
+        }
+        // else this.props.handleClose(false)
     }
 
 
@@ -49,13 +51,6 @@ class Registration extends React.Component {
     render() {
         return (
             <>
-                {(this.state.show) &&
-                <Alert variant="danger" onClose={() => this.setState({show: false})} dismissible>
-                    <Alert.Heading>Что-то пошло не так...</Alert.Heading>
-                    <p>{this.props.responseMessage}</p>
-                </Alert>
-                }
-
                 <Formik
                     initialValues={this.initialValues}
                     onSubmit={this.onSubmit}
@@ -72,6 +67,7 @@ class Registration extends React.Component {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='first_name'
+                                        isValid={formik.touched.first_name && !formik.errors.first_name}
                                     />
                                     {formik.touched.first_name && formik.errors.first_name ?
                                         <Form.Text>{formik.errors.first_name} </Form.Text> : null}
@@ -85,6 +81,7 @@ class Registration extends React.Component {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='last_name'
+                                        isValid={formik.touched.last_name && !formik.errors.last_name}
                                     />
                                     {formik.touched.last_name && formik.errors.last_name ?
                                         <Form.Text>{formik.errors.last_name} </Form.Text> : null}
@@ -98,6 +95,7 @@ class Registration extends React.Component {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='email'
+                                        isValid={formik.touched.email && !formik.errors.email}
                                     />
                                     {formik.touched.email && formik.errors.email ?
                                         <Form.Text>{formik.errors.email} </Form.Text> : null}
@@ -111,6 +109,7 @@ class Registration extends React.Component {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='username'
+                                        isValid={formik.touched.username && !formik.errors.username}
                                     />
                                     {formik.touched.username && formik.errors.username ?
                                         <Form.Text>{formik.errors.username} </Form.Text> : null}
@@ -132,10 +131,27 @@ class Registration extends React.Component {
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='password'
-                                    />
+                                        isValid={formik.touched.password && !formik.errors.password}/>
+
                                     {formik.touched.password && formik.errors.password ?
                                         <Form.Text>{formik.errors.password} </Form.Text> : null}
                                 </Form.Group>
+
+                                {(this.state.showSuccess) &&
+                                <Alert variant="success" onClose={() => this.setState({showSuccess: false})}
+                                       dismissible>
+                                    <Alert.Heading>Отлично!</Alert.Heading>
+                                    <p>{this.props.responseMessage}</p>
+                                    <p><a className='text-primary' onClick={() => this.props.handleActiveTab('login')}>Ввойдите
+                                        в систему</a></p>
+                                </Alert>
+                                }
+                                {(this.state.show) &&
+                                <Alert variant="danger" onClose={() => this.setState({show: false})} dismissible>
+                                    <Alert.Heading>Что-то пошло не так...</Alert.Heading>
+                                    <p>{this.props.responseMessage}</p>
+                                </Alert>
+                                }
 
                                 <Button
                                     variant="primary"

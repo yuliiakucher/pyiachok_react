@@ -3,6 +3,7 @@ import {loginUserAC} from "./login-reducer";
 
 const SHOW_PROFILE = 'SHOW_PROFILE'
 const EDIT_PROFILE = 'EDIT_PROFILE'
+const EDIT_PASSWORD = 'EDIT_PASSWORD'
 
 const initialState = {
     isAuth: false,
@@ -10,7 +11,8 @@ const initialState = {
     last_name: '',
     email: '',
     photo: null,
-    owned_places: []
+    owned_places: [],
+    passwordStatusCode: null
 }
 
 const ProfileReducer = (state = initialState, action) => {
@@ -22,6 +24,12 @@ const ProfileReducer = (state = initialState, action) => {
                 isAuth: true
             }
         }
+        case EDIT_PASSWORD:{
+            return {
+                ...state,
+                passwordStatusCode: action.passwordStatusCode
+            }
+        }
         default:
             return state
     }
@@ -30,6 +38,8 @@ const ProfileReducer = (state = initialState, action) => {
 let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
     {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
 )
+
+let getPasswordStatusCode = (passwordStatusCode) => ({type: EDIT_PASSWORD, passwordStatusCode})
 
 export const showUser = () => {
     return (dispatch) => {
@@ -50,6 +60,16 @@ export const editUser = (data) => {
                 console.log('response data edit user', response.data)
             })
             .catch(err => console.log(err))
+    }
+}
+
+export const editPassword = (data) => {
+    return (dispatch) => {
+        userProfile.editPassword(data)
+            .then(response => {
+                dispatch(getPasswordStatusCode(response.status))
+            })
+            .catch(error => console.log(error.response))
     }
 }
 

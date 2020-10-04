@@ -9,6 +9,7 @@ import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
 import Profile from "./components/Profile/Profile";
 import Test from "./components/Test/Test";
+import CreatePlace from "./components/Place/CreatePlace/CreatePlace";
 
 class App extends React.Component {
 
@@ -19,9 +20,10 @@ class App extends React.Component {
                     <HeaderContainer/>
                     <ModalContainer/>
                     <Route exact path='/' render={() => <Content/>}/>
-                    <Route  path='/profile' render={() => <Profile/>}/>
-                    <Route  path='/places' render={() => <Places/>}/>
-                    <Route  path='/test' render={() => <Test/>}/>
+                    <Route exact path='/profile' render={() => <Profile/>}/>
+                    <Route path='/profile/place/create' render={() => <CreatePlace/>}/>
+                    <Route path='/places' render={() => <Places/>}/>
+                    <Route path='/test' render={() => <Test/>}/>
 
                 </>
             </BrowserRouter>
@@ -29,7 +31,6 @@ class App extends React.Component {
     }
     ;
 }
-
 
 
 export default App;

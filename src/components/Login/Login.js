@@ -1,10 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
-import {connect} from "react-redux";
 import * as yup from 'yup'
 import {ErrorMessage, Formik} from "formik";
-import {NavLink} from "react-router-dom";
 
 
 class Login extends React.Component{
@@ -44,13 +42,22 @@ class Login extends React.Component{
                         <Form>
                             <Form.Group>
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control name='username' onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+                                <Form.Control
+                                    name='username'
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    isValid={formik.touched.username && !formik.errors.username}
+                                />
                                 <ErrorMessage name='username' component={Form.Text}/>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control name='password' onChange={formik.handleChange}
-                                              onBlur={formik.handleBlur} type='password'/>
+                                <Form.Control
+                                    name='password'
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    type='password'
+                                    isValid={formik.touched.password && !formik.errors.password}/>
                                 {formik.touched.password && formik.errors.password ?
                                     <Form.Text>{formik.errors.password} </Form.Text> : null}
                             </Form.Group>

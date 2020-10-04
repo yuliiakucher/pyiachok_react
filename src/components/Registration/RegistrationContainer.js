@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {handleClose} from "../../redux/modal-reducer";
+import {handleActiveTab, handleClose} from "../../redux/modal-reducer";
 import {userRegistration} from "../../redux/registration-reducer";
 import Registration from "./Registration";
 
@@ -12,6 +12,6 @@ let mapStateToProps = (state) => {
 }
 
 
-const RegistrationContainer = connect(mapStateToProps, {handleClose, userRegistration})(Registration)
+const RegistrationContainer = connect(mapStateToProps, {handleClose, userRegistration, handleActiveTab})(Registration)
 
 export default RegistrationContainer

@@ -7,7 +7,8 @@ import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import EditProfileInfo from "./EditProfileInfo/EditProfileInfo";
 import {connect} from "react-redux";
-import {editUser, showUser} from "../../redux/profile-reducer";
+import {editPassword, editUser, showUser} from "../../redux/profile-reducer";
+import Place from "../Place/Place";
 
 
 class Profile extends React.Component {
@@ -55,10 +56,7 @@ class Profile extends React.Component {
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="second">
                                     <Card className={styles.info}>
-                                        <div>
-                                            Some quick example text to build on the card title and make up the bulk of
-                                            the card's content.
-                                        </div>
+                                        <Place/>
                                     </Card>
                                 </Tab.Pane>
                             </Tab.Content>
@@ -76,8 +74,9 @@ let mapStateToProps = (state) => {
         first_name: state.ProfilePage.first_name,
         last_name: state.ProfilePage.last_name,
         email: state.ProfilePage.email,
-        isAuth: state.ProfilePage.isAuth
+        isAuth: state.ProfilePage.isAuth,
+        passwordStatusCode: state.ProfilePage.passwordStatusCode,
     }
 }
 
-export default connect(mapStateToProps, {showUser, editUser})(Profile)
+export default connect(mapStateToProps, {showUser, editUser, editPassword})(Profile)

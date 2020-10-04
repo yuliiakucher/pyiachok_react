@@ -1,15 +1,18 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from 'yup'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import EditPassword from "../../EditPassword/EditPassword";
 
 
 const EditProfileInfo = (props) => {
 
     let {first_name, last_name, email} = props
+
+    let [show, handleShow] = useState(false)
 
 
     let initialValues = {
@@ -50,6 +53,7 @@ const EditProfileInfo = (props) => {
                                     onBlur={formik.handleBlur}
                                     name='first_name'
                                     value={formik.values.first_name}
+                                    isValid={formik.touched.first_name && !formik.errors.first_name}
                                 />
                             </Col>
 
@@ -67,6 +71,7 @@ const EditProfileInfo = (props) => {
                                     onBlur={formik.handleBlur}
                                     name='last_name'
                                     value={formik.values.last_name}
+                                    isValid={formik.touched.last_name && !formik.errors.last_name}
                                 />
                             </Col>
                             {formik.touched.last_name && formik.errors.last_name ?
@@ -83,13 +88,21 @@ const EditProfileInfo = (props) => {
                                     onBlur={formik.handleBlur}
                                     name='email'
                                     value={formik.values.email}
+                                    isValid={formik.touched.email && !formik.errors.email}
                                 />
                             </Col>
                             {formik.touched.email && formik.errors.email ?
                                 <Form.Text>{formik.errors.email} </Form.Text> : null}
                         </Form.Group>
 
-                        <Button variant="outline-info" className='my-2'>Изменить пароль</Button>
+                        <Button
+                            variant="outline-info"
+                            className='my-2'
+                            onClick={() => handleShow(!show)}
+                        >Изменить пароль</Button>
+                        <br/>
+                        {show && <EditPassword {...props}/>}
+
                         <br/>
                         <Button
                             variant="primary"
