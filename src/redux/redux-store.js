@@ -4,12 +4,14 @@ import thunkMiddleware from 'redux-thunk';
 import ModalReducer from "./modal-reducer";
 import RegistrationReducer from "./registration-reducer";
 import ProfileReducer from "./profile-reducer";
+import PlaceReducer from "./place-reducer";
 
 let reducers = combineReducers({
     LoginPage: LoginReducer,
     RegistrationPage: RegistrationReducer,
     ModalPage: ModalReducer,
-    ProfilePage: ProfileReducer
+    ProfilePage: ProfileReducer,
+    PlacePage: PlaceReducer
 })
 
 let store = createStore(

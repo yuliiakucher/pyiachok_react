@@ -15,6 +15,7 @@ const Header = (props) => {
     const logOut = (e) => {
         e.preventDefault()
         localStorage.removeItem("token")
+        localStorage.removeItem("refresh_token")
         props.logOut()
 
     }

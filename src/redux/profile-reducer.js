@@ -1,33 +1,25 @@
-import {userAuth, userProfile} from "../components/api/api";
-import {loginUserAC} from "./login-reducer";
+import {userProfile} from "../components/api/api";
 
-const SHOW_PROFILE = 'SHOW_PROFILE'
-const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
+const SET_PRELOADER = 'SET_PRELOADER'
 
 const initialState = {
-    isAuth: false,
-    first_name: '',
-    last_name: '',
-    email: '',
-    photo: null,
-    owned_places: [],
-    passwordStatusCode: null
+    passwordStatusCode: null,
+    isLoading: true
 }
 
 const ProfileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SHOW_PROFILE: {
-            return{
-                ...state,
-                ...action.payload,
-                isAuth: true
-            }
-        }
         case EDIT_PASSWORD:{
             return {
                 ...state,
                 passwordStatusCode: action.passwordStatusCode
+            }
+        }
+        case SET_PRELOADER: {
+            return {
+                ...state,
+                isLoading: action.value
             }
         }
         default:
@@ -35,23 +27,12 @@ const ProfileReducer = (state = initialState, action) => {
     }
 }
 
-let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
-    {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
-)
+
 
 let getPasswordStatusCode = (passwordStatusCode) => ({type: EDIT_PASSWORD, passwordStatusCode})
 
-export const showUser = () => {
-    return (dispatch) => {
-        userProfile.showProfile()
-            .then(response => {
-                let {first_name, last_name, email, photo, owned_places} = response.data
-                dispatch(getProfileInfo(first_name, last_name, email, photo, owned_places))
-                console.log('response data show user', response.data)
-            })
-            .catch(err => console.log(err))
-    }
-}
+export let setPreloader = (value) => ({type: SET_PRELOADER, value})
+
 
 export const editUser = (data) => {
     return (dispatch) => {

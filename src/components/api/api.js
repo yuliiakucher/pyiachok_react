@@ -21,32 +21,70 @@ export const userAuth = ({
             instance.post('/token', {...userData})
         )
     },
-    userRefresh(){
-        return(
-            instance.post('/token/refresh')
+    refreshToken(refresh) {
+        return (
+            instance.post('token/refresh', {refresh})
         )
     }
+
 })
+
+instance.interceptors.response.use(
+        (response) =>
+            new Promise((resolve, reject) => {
+                resolve(response)
+                console.log('response resolve', response.data)
+            }),
+        (error) => {
+            // if (!error.response) {
+            //     return new Promise((resolve, reject) => {
+            //         reject(error)
+            //         console.log('reject error')
+            //     })
+            // }
+
+            if (error.response.status === 401 && localStorage.token) {
+                console.log('error from interceptor')
+                userAuth.refreshToken(localStorage.refresh_token)
+                    .then(response => {
+                        localStorage.setItem("token", response.data.access)
+                    })
+            }
+            if (error.response) {
+                return new Promise((resolve, reject) => {
+                    reject(error)
+                    console.log('reject error', error)
+                })
+            }
+        }
+    )
+
 
 
 export const userProfile = ({
-    showProfile(){
-        return(
+    showProfile() {
+        return (
             instance.get('profile/edit/')
         )
     },
-    editProfile(data){
-        return(
+    editProfile(data) {
+        return (
             instance.patch('profile/edit/', {...data})
         )
     },
-    editPassword(data){
-        return(
+    editPassword(data) {
+        return (
             instance.post('profile/edit/', {...data})
         )
     }
 })
 
 export const PlaceAPI = ({
-    createPlace(data){instance.post('place/', {...data})}
+    createPlace(data) {
+        return (
+            instance.post('place/', {...data})
+        )
+    }
 })
+
+

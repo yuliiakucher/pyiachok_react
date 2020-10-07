@@ -1,5 +1,4 @@
 import React from 'react';
-// import 'bootstrap/dist/css/bootstrap.min (2).css';
 import "bootswatch/dist/united/bootstrap.min.css";
 import './App.css';
 import {BrowserRouter, Route} from "react-router-dom";
@@ -10,6 +9,7 @@ import Places from "./components/Places/Places";
 import Profile from "./components/Profile/Profile";
 import Test from "./components/Test/Test";
 import CreatePlace from "./components/Place/CreatePlace/CreatePlace";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 class App extends React.Component {
 
@@ -20,7 +20,7 @@ class App extends React.Component {
                     <HeaderContainer/>
                     <ModalContainer/>
                     <Route exact path='/' render={() => <Content/>}/>
-                    <Route exact path='/profile' render={() => <Profile/>}/>
+                    <Route exact path='/profile' render={() => <ProfileContainer/>}/>
                     <Route path='/profile/place/create' render={() => <CreatePlace/>}/>
                     <Route path='/places' render={() => <Places/>}/>
                     <Route path='/test' render={() => <Test/>}/>
