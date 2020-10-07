@@ -1,16 +1,37 @@
 import {userProfile} from "../components/api/api";
 
+const SHOW_PROFILE = 'SHOW_PROFILE'
+
+const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
 const SET_PRELOADER = 'SET_PRELOADER'
 
 const initialState = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    photo: null,
+    owned_places: [],
+    profileStatusCode: null,
     passwordStatusCode: null,
     isLoading: true
 }
 
 const ProfileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case EDIT_PASSWORD:{
+        case SHOW_PROFILE: {
+            return {
+                ...state,
+                ...action.payload
+            }
+        }
+        case EDIT_PROFILE: {
+            return {
+                ...state,
+                profileStatusCode: action.profileStatusCode
+            }
+        }
+        case EDIT_PASSWORD: {
             return {
                 ...state,
                 passwordStatusCode: action.passwordStatusCode
@@ -27,18 +48,33 @@ const ProfileReducer = (state = initialState, action) => {
     }
 }
 
+let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
+    {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
+)
 
-
+let getProfileStatusCode = (profileStatusCode) => ({type: EDIT_PROFILE, profileStatusCode})
 let getPasswordStatusCode = (passwordStatusCode) => ({type: EDIT_PASSWORD, passwordStatusCode})
 
 export let setPreloader = (value) => ({type: SET_PRELOADER, value})
+
+
+export const showProfile = () => {
+    return (dispatch) => {
+        userProfile.showProfile().then(response => {
+            let {first_name, last_name, email, photo, owned_places} = response.data
+            dispatch(getProfileInfo(first_name, last_name, email, photo, owned_places))
+            dispatch(setPreloader(false))
+            console.log('response data show user', response.data)
+        })
+    }
+}
 
 
 export const editUser = (data) => {
     return (dispatch) => {
         userProfile.editProfile(data)
             .then(response => {
-                console.log('response data edit user', response.data)
+                dispatch(getProfileStatusCode(response.status))
             })
             .catch(err => console.log(err))
     }

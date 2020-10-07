@@ -29,36 +29,45 @@ export const userAuth = ({
 
 })
 
+instance.interceptors.request.use(request => {
+    console.log('request', request)
+    const token = localStorage.token;
+    request.headers = {Authorization: `Bearer ${token}`}
+    return request
+}, error => {
+    console.log('request err', error)
+})
+
 instance.interceptors.response.use(
-        (response) =>
-            new Promise((resolve, reject) => {
-                resolve(response)
-                console.log('response resolve', response.data)
-            }),
-        (error) => {
-            // if (!error.response) {
-            //     return new Promise((resolve, reject) => {
-            //         reject(error)
-            //         console.log('reject error')
-            //     })
-            // }
+    (response) =>
+        new Promise((resolve, reject) => {
+            resolve(response)
+            console.log('response resolve', response)
+        }),
+    (error) => {
+        // if (!error.response) {
+        //     return new Promise((resolve, reject) => {
+        //         reject(error)
+        //         console.log('reject error')
+        //     })
+        // }
 
-            if (error.response.status === 401 && localStorage.token) {
-                console.log('error from interceptor')
-                userAuth.refreshToken(localStorage.refresh_token)
-                    .then(response => {
-                        localStorage.setItem("token", response.data.access)
-                    })
-            }
-            if (error.response) {
-                return new Promise((resolve, reject) => {
-                    reject(error)
-                    console.log('reject error', error)
+        if (error.response.status === 401 && localStorage.token) {
+            console.log('error for token ')
+            userAuth.refreshToken(localStorage.refresh_token)
+                .then(response => {
+                    localStorage.setItem("token", response.data.access)
                 })
-            }
         }
-    )
 
+        if (error.response) {
+            return new Promise((resolve, reject) => {
+                reject(error)
+                console.log('reject error', error)
+            })
+        }
+    }
+)
 
 
 export const userProfile = ({

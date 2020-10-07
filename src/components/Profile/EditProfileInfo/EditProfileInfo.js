@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EditPassword from "../../EditPassword/EditPassword";
+import Alert from "react-bootstrap/cjs/Alert";
 
 
 const EditProfileInfo = (props) => {
@@ -13,7 +14,13 @@ const EditProfileInfo = (props) => {
     let {first_name, last_name, email} = props
 
     let [show, handleShow] = useState(false)
+    let [success, handleSuccess] = useState(false)
 
+    useEffect(() => {
+        if (props.profileStatusCode === 200) {
+            handleSuccess(true)
+        }
+    }, [props.profileStatusCode])
 
     let initialValues = {
         first_name: first_name,
@@ -104,6 +111,11 @@ const EditProfileInfo = (props) => {
                         {show && <EditPassword {...props}/>}
 
                         <br/>
+                        {success &&
+                        <Alert variant="success">
+                            <Alert.Heading>Отлично!</Alert.Heading>
+                            <p>Изменения сохранены</p>
+                        </Alert>}
                         <Button
                             variant="primary"
                             onClick={formik.handleSubmit}

@@ -58,7 +58,7 @@ export const userLogin = user => {
             .then(response => {
                 localStorage.setItem("token", response.data.access)
                 localStorage.setItem("refresh_token", response.data.refresh)
-                dispatch(loginUserAC(response.data.user))
+                dispatch(loginUserAC(response.status))
                 dispatch(setPreloader(true))
                 userProfile.showProfile()
                     .then(response => {

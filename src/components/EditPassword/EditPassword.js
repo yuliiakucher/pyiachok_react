@@ -18,7 +18,7 @@ const EditPassword = (props) => {
     const onSubmit = values => {
         props.editPassword(values)
     }
-    let [sucess, handleSuccess] = useState(false)
+    let [success, handleSuccess] = useState(false)
 
     useEffect(() => {
         if (props.passwordStatusCode === 200) {
@@ -75,7 +75,7 @@ const EditPassword = (props) => {
                             </Col>
                         </Form.Group>
 
-                        {sucess &&
+                        {success &&
                         <Alert variant="success">
                             <Alert.Heading>Отлично!</Alert.Heading>
                             <p>Пароль изменен</p>
