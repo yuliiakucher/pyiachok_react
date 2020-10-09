@@ -5,13 +5,15 @@ import ModalReducer from "./modal-reducer";
 import RegistrationReducer from "./registration-reducer";
 import ProfileReducer from "./profile-reducer";
 import PlaceReducer from "./place-reducer";
+import AlertReducer from "./alert-reducer";
 
 let reducers = combineReducers({
     LoginPage: LoginReducer,
     RegistrationPage: RegistrationReducer,
     ModalPage: ModalReducer,
     ProfilePage: ProfileReducer,
-    PlacePage: PlaceReducer
+    PlacePage: PlaceReducer,
+    AlertPage: AlertReducer
 })
 
 let store = createStore(

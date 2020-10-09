@@ -35,6 +35,9 @@ let mapStateToProps = (state) => {
         isLoading: state.ProfilePage.isLoading,
         passwordStatusCode: state.ProfilePage.passwordStatusCode,
         profileStatusCode: state.ProfilePage.profileStatusCode,
+        alert_text: state.AlertPage.text,
+        alert_header: state.AlertPage.header,
+        alert_variant: state.AlertPage.variant
     }
 }
 

@@ -7,6 +7,7 @@ import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from "yup";
 import Alert from "react-bootstrap/cjs/Alert";
+import CustomAlert from "../Alerts/CustomAlert";
 
 const EditPassword = (props) => {
     let initialValues = {
@@ -75,11 +76,12 @@ const EditPassword = (props) => {
                             </Col>
                         </Form.Group>
 
-                        {success &&
-                        <Alert variant="success">
-                            <Alert.Heading>Отлично!</Alert.Heading>
-                            <p>Пароль изменен</p>
-                        </Alert>}
+                        {(props.alert_text) &&
+                        <CustomAlert
+                            statusMessage={props.alert_text}
+                            header={props.alert_header}
+                            variant={props.alert_variant}
+                        />}
 
                         <Button
                             variant="outline-primary"

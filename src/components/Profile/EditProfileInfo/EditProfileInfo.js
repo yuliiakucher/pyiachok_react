@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EditPassword from "../../EditPassword/EditPassword";
 import Alert from "react-bootstrap/cjs/Alert";
+import CustomAlert from "../../Alerts/CustomAlert";
 
 
 const EditProfileInfo = (props) => {
@@ -111,11 +112,13 @@ const EditProfileInfo = (props) => {
                         {show && <EditPassword {...props}/>}
 
                         <br/>
-                        {success &&
-                        <Alert variant="success">
-                            <Alert.Heading>Отлично!</Alert.Heading>
-                            <p>Изменения сохранены</p>
-                        </Alert>}
+                        {(props.alert_text) &&
+                        <CustomAlert
+                            statusMessage={props.alert_text}
+                            header={props.alert_header}
+                            variant={props.alert_variant}
+                        />}
+
                         <Button
                             variant="primary"
                             onClick={formik.handleSubmit}

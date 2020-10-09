@@ -45,12 +45,11 @@ instance.interceptors.response.use(
             console.log('response resolve', response)
         }),
     (error) => {
-        // if (!error.response) {
-        //     return new Promise((resolve, reject) => {
-        //         reject(error)
-        //         console.log('reject error')
-        //     })
-        // }
+        if (!error.response) {
+            return new Promise((resolve, reject) => {
+                reject(error)
+            })
+        }
 
         if (error.response.status === 401 && localStorage.token) {
             console.log('error for token ')

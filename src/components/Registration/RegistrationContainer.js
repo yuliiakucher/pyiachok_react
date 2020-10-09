@@ -7,7 +7,10 @@ import Registration from "./Registration";
 let mapStateToProps = (state) => {
     return{
         responseCode: state.RegistrationPage.responseCode,
-        responseMessage: state.RegistrationPage.responseMessage
+        responseMessage: state.RegistrationPage.responseMessage,
+        alert_text: state.AlertPage.text,
+        alert_header: state.AlertPage.header,
+        alert_variant: state.AlertPage.variant
     }
 }
 

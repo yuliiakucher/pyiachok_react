@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
@@ -6,30 +6,20 @@ import * as yup from "yup";
 import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
 import {getResponseInfo} from "../../../redux/place-reducer";
-import Alert from "react-bootstrap/cjs/Alert";
+import CustomAlert from "../../Alerts/CustomAlert";
 
 
 const CreatePlace = (props) => {
-
-    const [show, handleShow] = useState(false)
 
     const initialValues = {
         name: '',
         address: '',
         email: '',
         contacts: '',
-        type: '',
+        type: 'bar',
         tags: [],
         specificities: []
     }
-
-    useEffect(() => {
-        if (props.statusCode === 201){
-            handleShow(true)
-        }
-    }, [props.statusCode])
-
-
 
     const onSubmit = values => {
         values.tags =[...(values.tags.map(value =>({'tag_name': value})))]
@@ -66,7 +56,7 @@ const CreatePlace = (props) => {
               }) => {
                 return (
 
-                    <Form className='w-50 m-5'>
+                    <Form>
                         <Form.Group>
                             <Form.Label>Название</Form.Label>
                             <Form.Control
@@ -160,12 +150,12 @@ const CreatePlace = (props) => {
                             </Form.Control>
                         </Form.Group>
 
-                        {show &&
-                        <Alert variant="success">
-                            <Alert.Heading>Отлично!</Alert.Heading>
-                            <p>{props.statusMessage}</p>
-                        </Alert>}
-
+                        {(props.alert_text) &&
+                        <CustomAlert
+                            statusMessage={props.alert_text}
+                            header={props.alert_header}
+                            variant={props.alert_variant}
+                        />}
 
                         <Button
                             variant="primary"
@@ -184,6 +174,9 @@ let mapStateToProps = (state) => {
     return {
         statusCode: state.PlacePage.statusCode,
         statusMessage: state.PlacePage.statusMessage,
+        alert_text: state.AlertPage.text,
+        alert_header: state.AlertPage.header,
+        alert_variant: state.AlertPage.variant
     }
 }
 

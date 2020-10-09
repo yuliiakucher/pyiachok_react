@@ -9,6 +9,10 @@ import EditProfileInfo from "./EditProfileInfo/EditProfileInfo";
 import {connect} from "react-redux";
 import {editPassword, editUser, showUser} from "../../redux/profile-reducer";
 import Place from "../Place/Place";
+import {BrowserRouter, Route} from "react-router-dom";
+import ProfileContainer from "./ProfileContainer";
+import CreatePlace from "../Place/CreatePlace/CreatePlace";
+import SideNavbar from "../SideNavbar";
 
 
 class Profile extends React.Component {
@@ -19,6 +23,9 @@ class Profile extends React.Component {
 
         return (
             <>
+                {/*<BrowserRouter>*/}
+                {/*    <SideNavbar/>*/}
+                {/*</BrowserRouter>*/}
                 <div className='d-flex justify-content-center mt-5'>
                     <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                         <Row>
@@ -37,7 +44,7 @@ class Profile extends React.Component {
                                         <Nav.Link eventKey="first">Информация о профиле</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="second">Tab 2</Nav.Link>
+                                        <Nav.Link eventKey="second">Заведения</Nav.Link>
                                     </Nav.Item>
                                 </Nav>
                             </Col>

@@ -4,10 +4,10 @@ import Button from "react-bootstrap/cjs/Button";
 import Alert from "react-bootstrap/cjs/Alert";
 import {Formik} from "formik";
 import * as yup from 'yup'
+import CustomAlert from "../Alerts/CustomAlert";
 class Registration extends React.Component {
 
     state = {
-        show: false,
         showSuccess: false
     }
 
@@ -26,14 +26,10 @@ class Registration extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.responseCode === 400) {
-            prevProps.responseMessage !== this.props.responseMessage && this.setState({show: true})
-        }
         if (this.props.responseCode === 201) {
-            prevProps.responseMessage !== this.props.responseMessage && this.setState({show:false, showSuccess: true})
+            prevProps.responseMessage !== this.props.responseMessage && this.setState({showSuccess: true})
 
         }
-        // else this.props.handleClose(false)
     }
 
 
@@ -146,11 +142,13 @@ class Registration extends React.Component {
                                         в систему</a></p>
                                 </Alert>
                                 }
-                                {(this.state.show) &&
-                                <Alert variant="danger" onClose={() => this.setState({show: false})} dismissible>
-                                    <Alert.Heading>Что-то пошло не так...</Alert.Heading>
-                                    <p>{this.props.responseMessage}</p>
-                                </Alert>
+
+                                {(this.props.alert_text) &&
+                                <CustomAlert
+                                    statusMessage={this.props.alert_text}
+                                    header={this.props.alert_header}
+                                    variant={this.props.alert_variant}
+                                />
                                 }
 
                                 <Button

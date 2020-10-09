@@ -1,4 +1,5 @@
 import {PlaceAPI} from "../components/api/api";
+import {setAlert} from "./alert-reducer";
 
 const SET_RESPONSE_INFO = 'SET_RESPONSE_INFO'
 
@@ -27,11 +28,13 @@ export const getResponseInfo = (values) => {
     return (dispatch) => {
         PlaceAPI.createPlace(values)
             .then(response => {
-                    debugger
-                    dispatch(setResponseInfo(response.status, response.data.message))
+                    dispatch((setAlert(response.data.message, 'Отлично', 'success')))
                 }
             )
-            .catch(error => dispatch(setResponseInfo(error.response.status, error.response.data.message)))
+            .catch(error => {
+                console.log(error.response)
+                dispatch(setAlert(error.response.data.message, 'Что-то пошло не так...', 'danger'))
+            })
     }
 }
 

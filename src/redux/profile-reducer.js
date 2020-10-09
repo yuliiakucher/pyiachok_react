@@ -1,4 +1,5 @@
 import {userProfile} from "../components/api/api";
+import {setAlert} from "./alert-reducer";
 
 const SHOW_PROFILE = 'SHOW_PROFILE'
 
@@ -74,9 +75,11 @@ export const editUser = (data) => {
     return (dispatch) => {
         userProfile.editProfile(data)
             .then(response => {
-                dispatch(getProfileStatusCode(response.status))
+                dispatch(setAlert(response.data.message, 'Отлично', 'success'))
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                dispatch(setAlert(err.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
     }
 }
 
@@ -84,9 +87,11 @@ export const editPassword = (data) => {
     return (dispatch) => {
         userProfile.editPassword(data)
             .then(response => {
-                dispatch(getPasswordStatusCode(response.status))
+                dispatch((setAlert(response.data.message, 'Отлично', 'success')))
             })
-            .catch(error => console.log(error.response))
+            .catch(error => {
+                dispatch(setAlert(error.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
     }
 }
 

@@ -1,4 +1,5 @@
 import {userAuth} from "../components/api/api";
+import {setAlert} from "./alert-reducer";
 
 const USER_REGISTERED = 'USER_REGISTERED'
 
@@ -22,11 +23,12 @@ const RegistrationReducer = (state=initialState, action) => {
 
 const setStatusMessage = (responseMessage, responseCode) => ({type: USER_REGISTERED, payload: {responseMessage, responseCode}})
 
+
 export const userRegistration = (userData) => {
     return(dispatch) => {
         userAuth.userRegistration(userData)
             .then(response => dispatch(setStatusMessage(response.data.message, response.status)))
-            .catch(error => dispatch(setStatusMessage(error.response.data.message, error.response.status)))
+            .catch(error => dispatch(setAlert(error.response.data.message, 'Что-то пошло не так...', 'danger')))
     }
 }
 

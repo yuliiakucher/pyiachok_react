@@ -3,9 +3,10 @@ import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
 import * as yup from 'yup'
 import {ErrorMessage, Formik} from "formik";
+import Alert from "react-bootstrap/Alert";
 
 
-class Login extends React.Component{
+class Login extends React.Component {
 
     initialValues = {
         username: '',
@@ -21,7 +22,6 @@ class Login extends React.Component{
             ? console.log('user is not auth!!')
             : this.props.handleClose(false)
     }
-
 
 
     validationSchema = yup.object({
@@ -63,10 +63,13 @@ class Login extends React.Component{
                             </Form.Group>
                             <Form.Group>
                                 {(this.props.errorCode === 401) &&
-                                <Form.Text>Такого юзера не существует.
-                                    Проверьте правильность написания или
-                                    <a className='text-primary' onClick={()=> this.props.handleActiveTab('reg')}> зарегистрируйтесь</a>
-                                </Form.Text>}
+                                <Alert variant='danger'>
+                                    <Alert.Heading>Такого юзера не существует.</Alert.Heading>
+                                    <p>Проверьте правильность написания или
+                                        <a className='text-primary'
+                                           onClick={() => this.props.handleActiveTab('reg')}> зарегистрируйтесь</a>
+                                    </p>
+                                </Alert>}
 
                             </Form.Group>
                             <Button onClick={formik.handleSubmit} disabled={!formik.validateForm}>Submit</Button>

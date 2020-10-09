@@ -1,8 +1,7 @@
-.users_wrapper {
+.wrapper {
     display: grid;
     grid-template-rows: 1fr 10fr 3fr;
     border-radius: 15px;
-    width: 50%;
     height: 500px;
     margin: 10px;
     background-color: #ffffff;
