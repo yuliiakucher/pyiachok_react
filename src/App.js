@@ -9,6 +9,7 @@ import Places from "./components/Places/Places";
 import Test from "./components/Test/Test";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import ModalCreatePlace from "./components/Place/CreatePlace/ModalCreatePlace";
+import CreatePlace from "./components/Place/CreatePlace/CreatePlace";
 
 class App extends React.Component {
 
@@ -22,10 +23,9 @@ class App extends React.Component {
                     <Route exact path='/' render={() => <Content/>}/>
                     <Route path='/profile' render={() => <ProfileContainer/>}/>
                     {/*<Route path='/profile/edit' render={() => <EditProfileInfo/>}/>*/}
-                    {/*<Route path='/profile/place/create' render={() => <CreatePlace/>}/>*/}
+                    <Route  exact path='/place/create' render={() => <CreatePlace/>}/>
                     <Route path='/places' render={() => <Places/>}/>
                     <Route path='/test' render={() => <Test/>}/>
-
                 </>
             </BrowserRouter>
         )

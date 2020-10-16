@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
-// import './style.css'
 import {NavLink} from "react-router-dom";
 
 
@@ -21,8 +20,12 @@ const Header = (props) => {
     }
 
     return (
-        <Navbar expand="lg" className='navbar-dark bg-dark' >
-            <Navbar.Brand href='/'>Пиячок</Navbar.Brand>
+        <Navbar expand="lg" className='navbar-dark bg-dark'>
+            <Navbar.Brand>
+                <NavLink to='/'>
+                    Пиячок
+                </NavLink>
+                </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse>
                 <Nav className="ml-auto">
@@ -34,11 +37,13 @@ const Header = (props) => {
                     </Form>
                 </Nav>
                 <Nav className='mx-5'>
-                    {!localStorage.length
-                        ? <Button onClick={() => {props.handleShow(true)}}>Login</Button>
+                    {!props.first_name
+                        ? <Button onClick={() => {
+                            props.handleShow(true)
+                        }}>Login</Button>
                         : <div>
                             <NavLink to='/profile' className='mx-2'>
-                                <Button>Мой кабинет</Button>
+                                <Button>Мой кабинет, {props.first_name}</Button>
                             </NavLink>
                             <Button onClick={logOut}>Logout</Button>
                         </div>

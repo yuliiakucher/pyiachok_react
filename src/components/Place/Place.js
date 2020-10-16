@@ -2,13 +2,16 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import {handleShowCreatePlace} from "../../redux/modal-reducer";
 import {connect} from "react-redux";
+import {NavLink} from "react-router-dom";
 
 
 
 const Place = (props) => {
     return (
         <>
-            <Button variant='info' onClick={() => props.handleShowCreatePlace(true)}>Создать новое заведение</Button>
+            <NavLink to='place/create'>
+                <Button variant='info' >Создать новое заведение</Button>
+            </NavLink>
         </>
     )
 }

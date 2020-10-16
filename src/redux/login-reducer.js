@@ -9,7 +9,7 @@ const SHOW_PROFILE = 'SHOW_PROFILE'
 
 const initialState = {
     isAuth: false,
-
+    currentUser: null,
     first_name: '',
     last_name: '',
     email: '',
@@ -19,15 +19,24 @@ const initialState = {
 
 export function LoginReducer(state = initialState, action) {
     switch (action.type) {
-        case LOGIN_USER:{
+        case LOGIN_USER: {
             return {...state, currentUser: action.payload, isAuth: true}
         }
-        case LOGOUT_USER:{
-            return {...state, currentUser: {}}
+        case LOGOUT_USER: {
+            return {
+                ...state,
+                currentUser: null,
+                isAuth: false,
+                first_name: '',
+                last_name: '',
+                email: '',
+                photo: null,
+                owned_places: [],
+            }
         }
 
         case SHOW_PROFILE: {
-            return{
+            return {
                 ...state,
                 ...action.payload
             }
@@ -47,14 +56,13 @@ export const logOut = () => ({
 })
 
 
-
 let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
     {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
 )
 
 export const userLogin = user => {
     return (dispatch) => {
-            userAuth.userLogin(user)
+        userAuth.userLogin(user)
             .then(response => {
                 localStorage.setItem("token", response.data.access)
                 localStorage.setItem("refresh_token", response.data.refresh)
@@ -67,7 +75,7 @@ export const userLogin = user => {
                         dispatch(setPreloader(false))
                         console.log('response data show user', response.data)
                     })
-                console.log('response data',response.data)
+                console.log('response data', response.data)
             })
             .catch(err => dispatch(loginUserAC(err.response.status)))
     }

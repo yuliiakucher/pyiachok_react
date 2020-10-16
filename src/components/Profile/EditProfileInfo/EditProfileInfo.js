@@ -15,24 +15,24 @@ const EditProfileInfo = (props) => {
     let {first_name, last_name, email} = props
 
     let [show, handleShow] = useState(false)
-    let [success, handleSuccess] = useState(false)
+    // let [success, handleSuccess] = useState(false)
 
     useEffect(() => {
-        if (props.profileStatusCode === 200) {
-            handleSuccess(true)
-        }
-    }, [props.profileStatusCode])
+        props.getTagsInfo()
+    }, [])
 
     let initialValues = {
         first_name: first_name,
         last_name: last_name,
         email: email,
-
     }
 
 
     const onSubmit = values => {
         console.log('submit', values)
+        if (values.email === email){
+            delete values.email
+        }
         props.editUser(values)
     }
 

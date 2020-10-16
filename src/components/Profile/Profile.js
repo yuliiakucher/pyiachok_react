@@ -9,7 +9,7 @@ import EditProfileInfo from "./EditProfileInfo/EditProfileInfo";
 import {connect} from "react-redux";
 import {editPassword, editUser, showUser} from "../../redux/profile-reducer";
 import Place from "../Place/Place";
-import {BrowserRouter, Route} from "react-router-dom";
+import {BrowserRouter, Redirect, Route} from "react-router-dom";
 import ProfileContainer from "./ProfileContainer";
 import CreatePlace from "../Place/CreatePlace/CreatePlace";
 import SideNavbar from "../SideNavbar";
@@ -19,8 +19,7 @@ class Profile extends React.Component {
 
 
     render() {
-
-
+        // if (!this.props.currentUser) return <Redirect to={'/'}/>
         return (
             <>
                 {/*<BrowserRouter>*/}

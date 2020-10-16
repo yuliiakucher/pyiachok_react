@@ -2,6 +2,7 @@ import React from "react";
 
 import styles from "./PlacesItemContent.module.css";
 import Card from "react-bootstrap/Card";
+import {NavLink} from "react-router-dom";
 
 
 
@@ -12,8 +13,8 @@ const PlacesItemContent = () => {
                 <h4 className={styles.name}>Топ заведений</h4>
             </Card.Header>
             <Card.Body> alalal</Card.Body>
-            <Card.Footer >
-                    <a href='/places'>Смотреть все заведения...</a>
+            <Card.Footer>
+                <NavLink to='/places'>Смотреть все заведения...</NavLink>
             </Card.Footer>
         </Card>
     )

@@ -1,15 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from "yup";
 import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
-import {getResponseInfo} from "../../../redux/place-reducer";
+import {getResponseInfo, getTagsInfo} from "../../../redux/place-reducer";
 import CustomAlert from "../../Alerts/CustomAlert";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import CustomMap from "../../CustomMap/CustomMap";
 
 
 const CreatePlace = (props) => {
+
+    useEffect(() => {
+        props.getTagsInfo()
+    }, [props.lat])
+
+    const arr = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
     const initialValues = {
         name: '',
@@ -18,14 +29,45 @@ const CreatePlace = (props) => {
         contacts: '',
         type: 'bar',
         tags: [],
-        specificities: []
+        specificities: [],
+        schedule: {
+            'monday_start': '',
+            'monday_end': '',
+            'monday_check': false,
+            'tuesday_start': '',
+            'tuesday_end': '',
+            'tuesday_check': false,
+            'wednesday_start': '',
+            'wednesday_end': '',
+            'wednesday_check': false,
+            'thursday_start': '',
+            'thursday_end': '',
+            'thursday_check': false,
+            'friday_start': '',
+            'friday_end': '',
+            'friday_check': false,
+            'saturday_start': '',
+            'saturday_end': '',
+            'saturday_check': false,
+            'sunday': '',
+            'sunday_start': '',
+            'sunday_end': '',
+            'sunday_check': false,
+        },
+        coordinates: ''
     }
 
     const onSubmit = values => {
-        values.tags =[...(values.tags.map(value =>({'tag_name': value})))]
+        values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
         values.specificities = [...(values.specificities.map(value => ({'specificity_name': value})))]
         values.type = ({'type_name': values.type})
+        values.coordinates = ({'lat': props.lat, 'lng': props.lng})
+        const my_map = new Map()
+        const sch = arr.map(day => my_map.set(day, values.schedule[`${day}_start`].concat(values.schedule[`${day}_end`])))
+        values.schedule = Object.fromEntries(sch[0])
         props.getResponseInfo(values)
+        console.log(values)
+
     }
 
 
@@ -33,140 +75,192 @@ const CreatePlace = (props) => {
         name: yup.string().required('Введите название'),
         address: yup.string().required('Введите адрес'),
         email: yup.string().email('Email is not valid')
-        .required('Введите вашу эл. почту')
+            .required('Введите вашу эл. почту')
         ,
         contacts: yup.string().matches(/^(\+\d{1,12})$/, 'Номер телефона должен содержать только цифры')
-        .required('Введите ваши контакты')
-        ,
+            .required('Введите ваши контакты')
     })
     return (
-        <Formik
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            validationSchema={validationSchema}
-        >
-            {({
-                  handleChange,
-                  handleBlur,
-                  touched,
-                  errors,
-                  handleSubmit,
-                  validateForm
+        <>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}
+            >
+                {({
+                      handleChange,
+                      handleBlur,
+                      touched,
+                      errors,
+                      handleSubmit,
+                      validateForm, values
 
-              }) => {
-                return (
+                  }) => {
+                    return (
+                        <Container className={'m-3'}>
+                            <Row>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Название</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter name"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name='name'
+                                            isValid={touched.name && !errors.name}
+                                        />
+                                        {touched.name && errors.name ?
+                                            <Form.Text>{errors.name} </Form.Text> : null}
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Адрес</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter address"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name='address'
+                                            isValid={touched.address && !errors.address}
+                                        />
+                                        {touched.address && errors.address ?
+                                            <Form.Text>{errors.address} </Form.Text> : null}
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Электронная почта</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="Enter email"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name='email'
+                                            isValid={touched.email && !errors.email}
+                                        />
+                                        {touched.email && errors.email ?
+                                            <Form.Text>{errors.email} </Form.Text> : null}
+                                    </Form.Group>
+                                </Col>
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Контакты</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            placeholder="+38"
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            name='contacts'
+                                            isValid={touched.contacts && !errors.contacts}
+                                        />
+                                        {touched.contacts && errors.contacts ?
+                                            <Form.Text>{errors.contacts} </Form.Text> : null}
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                            <Form>
+                                <Form.Group>
+                                    <Form.Label>Тип заведения</Form.Label>
+                                    <Form.Control as="select" name='type' onChange={handleChange}>
+                                        {props.type.map(type => (
+                                            <option value={type.type_name} key={type.id}>
+                                                {type.type_name}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
 
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Название</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter name"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                name='name'
-                                isValid={touched.name && !errors.name}
-                            />
-                            {touched.name && errors.name ?
-                                <Form.Text>{errors.name} </Form.Text> : null}
-                        </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Адрес</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter address"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                name='address'
-                                isValid={touched.address && !errors.address}
-                            />
-                            {touched.address && errors.address ?
-                                <Form.Text>{errors.address} </Form.Text> : null}
-                        </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Электронная почта</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter email"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                name='email'
-                                isValid={touched.email && !errors.email}
-                            />
-                            {touched.email && errors.email ?
-                                <Form.Text>{errors.email} </Form.Text> : null}
-                        </Form.Group>
-
-                        <Form.Group>
-                            <Form.Label>Контакты</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="+38"
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                name='contacts'
-                                isValid={touched.contacts && !errors.contacts}
-                            />
-                            {touched.contacts && errors.contacts ?
-                                <Form.Text>{errors.contacts} </Form.Text> : null}
-                        </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Теги</Form.Label>
+                                    <Form.Control as="select" multiple name='tags' onChange={handleChange}>
+                                        {props.tags.map(tag => (
+                                            <option value={tag.tag_name} key={tag.id}>
+                                                {tag.tag_name}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
 
 
-                        <Form.Group>
-                            <Form.Label>Выберите тип заведения</Form.Label>
-                            <Form.Control as="select" onChange={handleChange} name='type'>
-                                <option value='bar'>Бар</option>
-                                <option value='restaurant'>Ресторан</option>
-                            </Form.Control>
-                        </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Особенности</Form.Label>
+                                    <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
+                                        {props.spec.map(spec => (
+                                            <option value={spec.specificity_name} key={spec.id}>
+                                                {spec.specificity_name}
+                                            </option>
+                                        ))}
+                                    </Form.Control>
+                                </Form.Group>
 
-                        {/*<Form>*/}
-                        {/*    <Form.Control as="select" multiple value={options} onChange={handleChange}>*/}
-                        {/*        {options.map(options => (*/}
-                        {/*            <option key={option.name} value={option.value}>*/}
-                        {/*                {option.name}*/}
-                        {/*            </option>*/}
-                        {/*        ))}*/}
-                        {/*    </Form.Control>*/}
-                        {/*</Form>*/}
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>График</Form.Label>
+                                            {arr.map(day => (
+                                                <InputGroup className="mb-3">
+                                                    <InputGroup.Prepend>
+                                                        <InputGroup.Text>
+                                                            {day}
+                                                        </InputGroup.Text>
+                                                    </InputGroup.Prepend>
+                                                    <InputGroup.Prepend>
+                                                        <InputGroup.Checkbox
+                                                            onChange={handleChange}
+                                                            name={`schedule.${day}_check`}
+                                                        />
+                                                    </InputGroup.Prepend>
+                                                    <InputGroup.Text>
+                                                        Открытие
+                                                    </InputGroup.Text>
+                                                    <Form.Control
+                                                        placeholder={'00'}
+                                                        onChange={handleChange}
+                                                        name={`schedule.${day}_start`}
+                                                        disabled={!values.schedule[`${day}_check`]}
+                                                    />
+                                                    <InputGroup.Text>
+                                                        Закрытие
+                                                    </InputGroup.Text>
+                                                    <Form.Control
+                                                        placeholder={'00'}
+                                                        onChange={handleChange}
+                                                        name={`schedule.${day}_end`}
+                                                        disabled={!values.schedule[`${day}_check`]}
+                                                    />
+                                                </InputGroup>
+                                            ))}
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <CustomMap/>
+                                    </Col>
 
-                        <Form.Group>
-                            <Form.Label>Выберите дополнительные услуги заведения</Form.Label>
-                            <Form.Control as="select" multiple onChange={handleChange} name='tags'>
-                                <option value='parking'>Парковка</option>
-                                <option value='wifi'>Wifi</option>
-                                <option value='children_menu'>Детское меню</option>
-                            </Form.Control>
-                        </Form.Group>
+                                </Row>
 
+                                {(props.alert_text) &&
+                                <CustomAlert
+                                    statusMessage={props.alert_text}
+                                    header={props.alert_header}
+                                    variant={props.alert_variant}
+                                />}
 
-                        <Form.Group>
-                            <Form.Label>Выберите спецификацию заведения</Form.Label>
-                            <Form.Control as="select" multiple onChange={handleChange} name='specificities'>
-                                <option value='BDs'>Дни рождения</option>
-                                <option value='corporate_parties'>Корпоративы</option>
-                            </Form.Control>
-                        </Form.Group>
-
-                        {(props.alert_text) &&
-                        <CustomAlert
-                            statusMessage={props.alert_text}
-                            header={props.alert_header}
-                            variant={props.alert_variant}
-                        />}
-
-                        <Button
-                            variant="primary"
-                            onClick={handleSubmit}
-                            disabled={!validateForm}
-                        >Submit
-                        </Button>
-                    </Form>
-                )
-            }}
-        </Formik>
+                                <Button
+                                    variant="primary"
+                                    onClick={handleSubmit}
+                                    disabled={!validateForm}
+                                >Сформировать заявку на регистрацию заведения
+                                </Button>
+                            </Form>
+                        </Container>
+                    )
+                }}
+            </Formik>
+        </>
     )
 }
 
@@ -176,8 +270,13 @@ let mapStateToProps = (state) => {
         statusMessage: state.PlacePage.statusMessage,
         alert_text: state.AlertPage.text,
         alert_header: state.AlertPage.header,
-        alert_variant: state.AlertPage.variant
+        alert_variant: state.AlertPage.variant,
+        tags: state.PlacePage.tags,
+        spec: state.PlacePage.spec,
+        type: state.PlacePage.type,
+        lat: state.PlacePage.lat,
+        lng: state.PlacePage.lng,
     }
 }
 
-export default connect(mapStateToProps, {getResponseInfo})(CreatePlace)
+export default connect(mapStateToProps, {getResponseInfo, getTagsInfo})(CreatePlace)

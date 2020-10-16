@@ -2,6 +2,7 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import React from "react";
 import styles from "./TabContent.module.css";
+import CustomMap from "../../../CustomMap/CustomMap";
 
 const TabContent = () => {
     return (

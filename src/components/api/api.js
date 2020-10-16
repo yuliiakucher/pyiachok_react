@@ -92,6 +92,11 @@ export const PlaceAPI = ({
         return (
             instance.post('place/', {...data})
         )
+    },
+    getTags(){
+        return(
+         instance.get('place/tags')
+        )
     }
 })
 

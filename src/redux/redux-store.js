@@ -1,4 +1,4 @@
-import {combineReducers, createStore, applyMiddleware} from "redux";
+import {combineReducers, createStore, applyMiddleware, compose} from "redux";
 import LoginReducer from "./login-reducer";
 import thunkMiddleware from 'redux-thunk';
 import ModalReducer from "./modal-reducer";
@@ -16,10 +16,10 @@ let reducers = combineReducers({
     AlertPage: AlertReducer
 })
 
-let store = createStore(
-    reducers,
-    applyMiddleware(
-        thunkMiddleware
-    ))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(reducers, composeEnhancers(
+    applyMiddleware(thunkMiddleware)
+));
+// const store = createStore(reducers, applyMiddleware(thunkMiddleware));
 
 export default store

@@ -6,7 +6,8 @@ import {logOut} from "../../redux/login-reducer";
 
 let mapStateToProps = (state) => {
     return{
-        currentUser: state.LoginPage.currentUser
+        currentUser: state.LoginPage.currentUser,
+        first_name: state.LoginPage.first_name
     }
 }
 
