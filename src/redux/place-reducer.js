@@ -4,6 +4,7 @@ import {setAlert} from "./alert-reducer";
 const SET_RESPONSE_INFO = 'SET_RESPONSE_INFO'
 const SET_TAGS = 'SET_TAGS'
 const SET_MAP_INFO = 'SET_MAP_INFO'
+const SET_ALL_PLACES = 'SET_ALL_PLACES'
 
 const initialState = {
     statusCode: null,
@@ -12,7 +13,8 @@ const initialState = {
     spec: [],
     type:[],
     lat: null,
-    lng: null
+    lng: null,
+    places: []
 }
 
 const PlaceReducer = (state = initialState, action) => {
@@ -39,6 +41,12 @@ const PlaceReducer = (state = initialState, action) => {
                 lng: action.lng
             }
         }
+        case SET_ALL_PLACES: {
+            return {
+                ...state,
+                places: action.places
+            }
+        }
         default:
             return state
     }
@@ -46,9 +54,13 @@ const PlaceReducer = (state = initialState, action) => {
 
 const setResponseInfo = (statusCode, statusMessage) => ({type: SET_RESPONSE_INFO, statusCode, statusMessage})
 const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
+const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 
 export const getResponseInfo = (values) => {
+    values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
+    values.specificities = [...(values.specificities.map(value => ({'specificity_name': value})))]
+    console.log(values)
     return (dispatch) => {
         PlaceAPI.createPlace(values)
             .then(response => {
@@ -56,7 +68,6 @@ export const getResponseInfo = (values) => {
                 }
             )
             .catch(error => {
-                console.log(error.response)
                 dispatch(setAlert(error.response.data.message, 'Что-то пошло не так...', 'danger'))
             })
 
@@ -68,8 +79,17 @@ export const getTagsInfo = () => {
     return dispatch => {
         PlaceAPI.getTags()
             .then(response => {
-                console.log(response.data)
                 dispatch(setTags(response.data.tags, response.data.spec, response.data.type))
+            })
+    }
+}
+
+export const getAllPosts = () => {
+    return dispatch => {
+        PlaceAPI.getAllPlaces()
+            .then(response => {
+                console.log(response)
+                dispatch(setAllPlaces(response.data))
             })
     }
 }

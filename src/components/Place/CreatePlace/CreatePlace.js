@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/cjs/Button";
-import {Formik} from "formik";
+import {Formik, useFormik, useFormikContext} from "formik";
 import * as yup from "yup";
 import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
@@ -27,58 +27,55 @@ const CreatePlace = (props) => {
         address: '',
         email: '',
         contacts: '',
-        type: 'bar',
-        tags: [],
-        specificities: [],
+        type: {type_name: 'bar'},
+        tags: [{}],
+        specificities: [{}],
         schedule: {
-            'monday_start': '',
-            'monday_end': '',
+            'monday_start': '00',
+            'monday_end': '00',
             'monday_check': false,
-            'tuesday_start': '',
-            'tuesday_end': '',
+            'tuesday_start': '00',
+            'tuesday_end': '00',
             'tuesday_check': false,
-            'wednesday_start': '',
-            'wednesday_end': '',
+            'wednesday_start': '00',
+            'wednesday_end': '00',
             'wednesday_check': false,
-            'thursday_start': '',
-            'thursday_end': '',
+            'thursday_start': '00',
+            'thursday_end': '00',
             'thursday_check': false,
-            'friday_start': '',
-            'friday_end': '',
+            'friday_start': '00',
+            'friday_end': '00',
             'friday_check': false,
-            'saturday_start': '',
-            'saturday_end': '',
+            'saturday_start': '00',
+            'saturday_end': '00',
             'saturday_check': false,
-            'sunday': '',
-            'sunday_start': '',
-            'sunday_end': '',
+            'sunday_start': '00',
+            'sunday_end': '00',
             'sunday_check': false,
         },
         coordinates: ''
     }
 
     const onSubmit = values => {
-        values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
-        values.specificities = [...(values.specificities.map(value => ({'specificity_name': value})))]
-        values.type = ({'type_name': values.type})
+        console.log(values)
+
         values.coordinates = ({'lat': props.lat, 'lng': props.lng})
         const my_map = new Map()
         const sch = arr.map(day => my_map.set(day, values.schedule[`${day}_start`].concat(values.schedule[`${day}_end`])))
         values.schedule = Object.fromEntries(sch[0])
         props.getResponseInfo(values)
-        console.log(values)
-
     }
 
 
+
     const validationSchema = yup.object({
-        name: yup.string().required('Введите название'),
-        address: yup.string().required('Введите адрес'),
-        email: yup.string().email('Email is not valid')
-            .required('Введите вашу эл. почту')
-        ,
-        contacts: yup.string().matches(/^(\+\d{1,12})$/, 'Номер телефона должен содержать только цифры')
-            .required('Введите ваши контакты')
+        // name: yup.string().required('Введите название'),
+        // address: yup.string().required('Введите адрес'),
+        // email: yup.string().email('Email is not valid')
+        //     .required('Введите вашу эл. почту')
+        // ,
+        // contacts: yup.string().matches(/^(\+\d{1,12})$/, 'Номер телефона должен содержать только цифры')
+        //     .required('Введите ваши контакты')
     })
     return (
         <>
@@ -98,6 +95,7 @@ const CreatePlace = (props) => {
                   }) => {
                     return (
                         <Container className={'m-3'}>
+                            <Form>
                             <Row>
                                 <Col>
                                     <Form.Group>
@@ -162,40 +160,46 @@ const CreatePlace = (props) => {
                                     </Form.Group>
                                 </Col>
                             </Row>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Label>Тип заведения</Form.Label>
-                                    <Form.Control as="select" name='type' onChange={handleChange}>
-                                        {props.type.map(type => (
-                                            <option value={type.type_name} key={type.id}>
-                                                {type.type_name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
+                            <Col lg={4}>
 
-                                <Form.Group>
-                                    <Form.Label>Теги</Form.Label>
-                                    <Form.Control as="select" multiple name='tags' onChange={handleChange}>
-                                        {props.tags.map(tag => (
-                                            <option value={tag.tag_name} key={tag.id}>
-                                                {tag.tag_name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
+                                    <Form.Group>
+                                        <Form.Label>Тип заведения</Form.Label>
+                                        <Form.Control as="select" name='type.type_name' onChange={handleChange}>
+                                            {props.type.map(type => (
+                                                <option value={type.type_name} key={type.id}>
+                                                    {type.type_name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                            </Col>
+                                <Col lg={4}>
+                                    <Form.Group>
+                                        <Form.Label>Теги</Form.Label>
+                                        <Form.Control as="select" multiple name='tags' onChange={handleChange}>
+                                            {props.tags.map(tag => (
+                                                <option value={tag.tag_name} key={tag.id}>
+                                                    {tag.tag_name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
 
 
-                                <Form.Group>
-                                    <Form.Label>Особенности</Form.Label>
-                                    <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
-                                        {props.spec.map(spec => (
-                                            <option value={spec.specificity_name} key={spec.id}>
-                                                {spec.specificity_name}
-                                            </option>
-                                        ))}
-                                    </Form.Control>
-                                </Form.Group>
+                                <Col lg={5}>
+                                    <Form.Group>
+                                        <Form.Label>Особенности</Form.Label>
+                                        <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
+                                            {props.spec.map(spec => (
+                                                <option value={spec.specificity_name}  key={spec.id}>
+                                                    {spec.specificity_name}
+                                                </option>
+                                            ))}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col>
+
 
                                 <Row>
                                     <Col>
@@ -239,7 +243,6 @@ const CreatePlace = (props) => {
                                     <Col>
                                         <CustomMap/>
                                     </Col>
-
                                 </Row>
 
                                 {(props.alert_text) &&

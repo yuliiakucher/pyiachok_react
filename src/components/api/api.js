@@ -30,12 +30,11 @@ export const userAuth = ({
 })
 
 instance.interceptors.request.use(request => {
-    console.log('request', request)
     const token = localStorage.token;
     request.headers = {Authorization: `Bearer ${token}`}
     return request
 }, error => {
-    console.log('request err', error)
+    // console.log('request err', error)
 })
 
 instance.interceptors.response.use(
@@ -55,6 +54,7 @@ instance.interceptors.response.use(
             console.log('error for token ')
             userAuth.refreshToken(localStorage.refresh_token)
                 .then(response => {
+                    console.log('refresh token')
                     localStorage.setItem("token", response.data.access)
                 })
         }
@@ -97,7 +97,12 @@ export const PlaceAPI = ({
         return(
          instance.get('place/tags')
         )
-    }
+    },
+    getAllPlaces(){
+        return(
+            instance.get('place/all')
+        )
+    },
 })
 
 

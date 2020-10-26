@@ -37,13 +37,13 @@ const Header = (props) => {
                     </Form>
                 </Nav>
                 <Nav className='mx-5'>
-                    {!props.first_name
+                    {!props.email
                         ? <Button onClick={() => {
                             props.handleShow(true)
                         }}>Login</Button>
                         : <div>
                             <NavLink to='/profile' className='mx-2'>
-                                <Button>Мой кабинет, {props.first_name}</Button>
+                                <Button>Мой кабинет, {props.email}</Button>
                             </NavLink>
                             <Button onClick={logOut}>Logout</Button>
                         </div>

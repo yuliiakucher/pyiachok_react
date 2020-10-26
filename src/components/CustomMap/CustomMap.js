@@ -10,18 +10,14 @@ class CustomMap extends React.Component {
     constructor() {
         super();
         this.state = {
-            markers: []
+            marker: null
         };
     }
 
 
     addMarker = (e) => {
         this.props.getMapInfo(e.latlng.lat, e.latlng.lng)
-        const {markers} = this.state
-        console.log(this.state.markers)
-        console.log(e.latlng)
-        markers.push(e.latlng)
-        this.setState({markers: markers})
+        this.setState({marker: e.latlng})
     }
 
     render() {
@@ -36,9 +32,10 @@ class CustomMap extends React.Component {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
                 />
-                {this.state.markers.map((marker, index) =>
-                    <Marker key={index} position={marker}/>
-                )}
+                {this.state.marker &&
+                <Marker position={this.state.marker}/>
+                }
+
             </Map>
         );
     }
