@@ -8,8 +8,10 @@ import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
 import Test from "./components/Test/Test";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import ModalCreatePlace from "./components/Place/CreatePlace/ModalCreatePlace";
 import CreatePlace from "./components/Place/CreatePlace/CreatePlace";
+import PlaceProfileContainer from "./components/Place/PlaceProfile/PlaceProfileContainer";
+import CreateEvent from "./components/Event/CreateEvent/CreateEvent";
+
 
 class App extends React.Component {
 
@@ -19,12 +21,13 @@ class App extends React.Component {
                 <>
                     <HeaderContainer/>
                     <ModalContainer/>
-                    <ModalCreatePlace/>
                     <Route exact path='/' render={() => <Content/>}/>
                     <Route path='/profile' render={() => <ProfileContainer/>}/>
                     {/*<Route path='/profile/edit' render={() => <EditProfileInfo/>}/>*/}
-                    <Route  exact path='/place/create' render={() => <CreatePlace/>}/>
-                    <Route path='/places' render={() => <Places/>}/>
+                    <Route exact path='/place/create' render={() => <CreatePlace/>}/>
+                    <Route exact path='/places' render={() => <Places/>}/>
+                    <Route exact path='/places/place/:placeId' render={() => <PlaceProfileContainer/>}/>
+                    <Route path='/places/place/:placeId/create-event' render={() => <CreateEvent/>}/>
                     <Route path='/test' render={() => <Test/>}/>
                 </>
             </BrowserRouter>

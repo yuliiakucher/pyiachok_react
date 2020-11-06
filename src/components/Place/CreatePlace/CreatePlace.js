@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/cjs/Button";
-import {Formik, useFormik, useFormikContext} from "formik";
+import {Formik} from "formik";
 import * as yup from "yup";
 import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
@@ -67,15 +67,14 @@ const CreatePlace = (props) => {
     }
 
 
-
     const validationSchema = yup.object({
-        // name: yup.string().required('Введите название'),
-        // address: yup.string().required('Введите адрес'),
-        // email: yup.string().email('Email is not valid')
-        //     .required('Введите вашу эл. почту')
-        // ,
-        // contacts: yup.string().matches(/^(\+\d{1,12})$/, 'Номер телефона должен содержать только цифры')
-        //     .required('Введите ваши контакты')
+        name: yup.string().required('Введите название'),
+        address: yup.string().required('Введите адрес'),
+        email: yup.string().email('Email is not valid')
+            .required('Введите вашу эл. почту')
+        ,
+        contacts: yup.string().matches(/^(\+\d{1,12})$/, 'Номер телефона должен содержать только цифры')
+            .required('Введите ваши контакты')
     })
     return (
         <>
@@ -96,71 +95,71 @@ const CreatePlace = (props) => {
                     return (
                         <Container className={'m-3'}>
                             <Form>
-                            <Row>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Название</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Enter name"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            name='name'
-                                            isValid={touched.name && !errors.name}
-                                        />
-                                        {touched.name && errors.name ?
-                                            <Form.Text>{errors.name} </Form.Text> : null}
-                                    </Form.Group>
-                                </Col>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Адрес</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Enter address"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            name='address'
-                                            isValid={touched.address && !errors.address}
-                                        />
-                                        {touched.address && errors.address ?
-                                            <Form.Text>{errors.address} </Form.Text> : null}
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Электронная почта</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="Enter email"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            name='email'
-                                            isValid={touched.email && !errors.email}
-                                        />
-                                        {touched.email && errors.email ?
-                                            <Form.Text>{errors.email} </Form.Text> : null}
-                                    </Form.Group>
-                                </Col>
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Контакты</Form.Label>
-                                        <Form.Control
-                                            type="text"
-                                            placeholder="+38"
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            name='contacts'
-                                            isValid={touched.contacts && !errors.contacts}
-                                        />
-                                        {touched.contacts && errors.contacts ?
-                                            <Form.Text>{errors.contacts} </Form.Text> : null}
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Col lg={4}>
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Название</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Enter name"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                name='name'
+                                                isValid={touched.name && !errors.name}
+                                            />
+                                            {touched.name && errors.name ?
+                                                <Form.Text>{errors.name} </Form.Text> : null}
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Адрес</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Enter address"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                name='address'
+                                                isValid={touched.address && !errors.address}
+                                            />
+                                            {touched.address && errors.address ?
+                                                <Form.Text>{errors.address} </Form.Text> : null}
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Электронная почта</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Enter email"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                name='email'
+                                                isValid={touched.email && !errors.email}
+                                            />
+                                            {touched.email && errors.email ?
+                                                <Form.Text>{errors.email} </Form.Text> : null}
+                                        </Form.Group>
+                                    </Col>
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label>Контакты</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="+38"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                name='contacts'
+                                                isValid={touched.contacts && !errors.contacts}
+                                            />
+                                            {touched.contacts && errors.contacts ?
+                                                <Form.Text>{errors.contacts} </Form.Text> : null}
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                                <Col lg={4}>
 
                                     <Form.Group>
                                         <Form.Label>Тип заведения</Form.Label>
@@ -172,7 +171,7 @@ const CreatePlace = (props) => {
                                             ))}
                                         </Form.Control>
                                     </Form.Group>
-                            </Col>
+                                </Col>
                                 <Col lg={4}>
                                     <Form.Group>
                                         <Form.Label>Теги</Form.Label>
@@ -192,7 +191,7 @@ const CreatePlace = (props) => {
                                         <Form.Label>Особенности</Form.Label>
                                         <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
                                             {props.spec.map(spec => (
-                                                <option value={spec.specificity_name}  key={spec.id}>
+                                                <option value={spec.specificity_name} key={spec.id}>
                                                     {spec.specificity_name}
                                                 </option>
                                             ))}

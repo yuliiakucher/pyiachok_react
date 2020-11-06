@@ -1,10 +1,13 @@
 import {PlaceAPI} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
+import {setPreloader} from "./profile-reducer";
 
 const SET_RESPONSE_INFO = 'SET_RESPONSE_INFO'
 const SET_TAGS = 'SET_TAGS'
 const SET_MAP_INFO = 'SET_MAP_INFO'
 const SET_ALL_PLACES = 'SET_ALL_PLACES'
+const SET_ONE_PLACE = 'SET_ONE_PLACE'
+const HANDLE_MODAL = 'HANDLE_MODAL'
 
 const initialState = {
     statusCode: null,
@@ -14,7 +17,9 @@ const initialState = {
     type:[],
     lat: null,
     lng: null,
-    places: []
+    places: [],
+    place: {},
+    showModal: false
 }
 
 const PlaceReducer = (state = initialState, action) => {
@@ -47,6 +52,18 @@ const PlaceReducer = (state = initialState, action) => {
                 places: action.places
             }
         }
+        case SET_ONE_PLACE: {
+            return {
+                ...state,
+                place: action.place
+            }
+        }
+        case HANDLE_MODAL: {
+            return{
+                ...state,
+                showModal: action.value
+            }
+        }
         default:
             return state
     }
@@ -55,7 +72,9 @@ const PlaceReducer = (state = initialState, action) => {
 const setResponseInfo = (statusCode, statusMessage) => ({type: SET_RESPONSE_INFO, statusCode, statusMessage})
 const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
 const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
+const setOnePlace =(place) => ({type: SET_ONE_PLACE, place})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
+export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 
 export const getResponseInfo = (values) => {
     values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
@@ -84,13 +103,24 @@ export const getTagsInfo = () => {
     }
 }
 
-export const getAllPosts = () => {
+export const getAllPlaces = () => {
     return dispatch => {
         PlaceAPI.getAllPlaces()
             .then(response => {
                 console.log(response)
                 dispatch(setAllPlaces(response.data))
             })
+    }
+}
+
+export const getPlaceProfile = (placeId) => {
+    return dispatch => {
+        PlaceAPI.getPlaceProfile(placeId)
+            .then(response => {
+                dispatch(setOnePlace(response.data))
+                dispatch(setPreloader(false))
+            })
+
     }
 }
 

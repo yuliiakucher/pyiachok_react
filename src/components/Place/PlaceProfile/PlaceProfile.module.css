@@ -1,0 +1,26 @@
+.wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    width: 80%;
+    height: 500px;
+    margin: 10px;
+    background-color: #ffffff;
+    box-shadow: #9fb2b5 10px 10px 40px;
+
+}
+
+.name {
+    position: relative;
+}
+
+.name::after {
+    content: '';
+    bottom: 0;
+    left: 0;
+    height: 1.5px;
+    background-color: #772953;
+    position: absolute;
+    width: 100%;
+}

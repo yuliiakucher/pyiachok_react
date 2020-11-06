@@ -90,7 +90,7 @@ export const userProfile = ({
 export const PlaceAPI = ({
     createPlace(data) {
         return (
-            instance.post('place/', {...data})
+            instance.post('place/create-place/', {...data})
         )
     },
     getTags(){
@@ -103,6 +103,19 @@ export const PlaceAPI = ({
             instance.get('place/all')
         )
     },
+    getPlaceProfile(placeId){
+        return(
+            instance.get(`place/${placeId}/`)
+        )
+    }
+})
+
+export const EventAPI = ({
+    createEvent(place_id,data){
+        return(
+            instance.post(`/place/${place_id}/create-event/`, {...data})
+        )
+    }
 })
 
 
