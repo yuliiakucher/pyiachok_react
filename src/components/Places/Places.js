@@ -9,13 +9,18 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import {NavLink} from "react-router-dom";
+import Paginator from "../Paginator";
 
 
-const Places = ({getAllPlaces, places}) => {
+const Places = ({getAllPlaces, places, totalCount}) => {
 
     useEffect(() => {
         getAllPlaces()
     }, [])
+
+    const changePage = (page) => {
+        getAllPlaces(page)
+    }
 
     return (
         <Container>
@@ -31,20 +36,20 @@ const Places = ({getAllPlaces, places}) => {
                 </Col>
                 <Col>
                     <div className={'d-flex justify-content-center'}>
-                        <div className={styles.wrapper}>
-                            <div className={styles.subwrapper_top}>
-                                <h4 className={styles.name}>Заведения</h4>
-                                {places.map(place => (
-                                    <OnePlace
-                                        key={place.id}
-                                        id={place.id}
-                                        name={place.name}
-                                        adress={place.address}
-                                        email={place.email}
+                        <div>
+                            <h4 className={styles.name}>Заведения</h4>
+                            <Paginator totalCount={totalCount} changePage={changePage}/>
+                            {places.map(place => (
+                                <OnePlace
+                                    key={place.id}
+                                    id={place.id}
+                                    name={place.name}
+                                    adress={place.address}
+                                    email={place.email}
 
-                                    />
-                                ))}
-                            </div>
+                                />
+                            ))}
+
 
                         </div>
                     </div>
@@ -60,7 +65,8 @@ const Places = ({getAllPlaces, places}) => {
 
 let mapStateToProps = (state) => {
     return {
-        places: state.PlacePage.places
+        places: state.PlacePage.places,
+        totalCount: state.PlacePage.totalCount
     }
 }
 

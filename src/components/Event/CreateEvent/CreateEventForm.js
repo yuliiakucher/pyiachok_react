@@ -5,6 +5,8 @@ import {connect} from "react-redux";
 import {createEvent} from "../../../redux/event-reducer";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/cjs/Button";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
 
 
 const CreateEventForm = (props) => {
@@ -46,82 +48,87 @@ const CreateEventForm = (props) => {
                   touched, errors
               }) => {
                 return (
-                    <Form>
-                        <Form.Group>
-                            <Form.Label>Дата</Form.Label>
-                            <Form.Control
-                                name='date'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.date && !errors.date}
-                            />
-                            {touched.date && !errors.date ?
-                                <Form.Text>{errors.date}</Form.Text> : null}
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Цель</Form.Label>
-                            <Form.Control
-                                name='purpose'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.purpose && !errors.purpose}
-                            />
-                            {touched.purpose && !errors.purpose ?
-                                <Form.Text>{errors.purpose}</Form.Text> : null}
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Пол участников</Form.Label>
-                            <Form.Control
-                                name='sex'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.sex && !errors.sex}
-                            />
-                            {touched.sex && !errors.sex ?
-                                <Form.Text>{errors.sex}</Form.Text> : null}
-                        </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Количество людей</Form.Label>
-                            <Form.Control
-                                name='number_of_people'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.number_of_people && !errors.number_of_people}
-                            />
-                            {touched.number_of_people && !errors.number_of_people ?
-                                <Form.Text>{errors.number_of_people}</Form.Text> : null}
+                    <Container>
+                        <Form>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Дата</Form.Label>
+                                    <Form.Control
+                                        name='date'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.date && !errors.date}
+                                    />
+                                    {touched.date && !errors.date ?
+                                        <Form.Text>{errors.date}</Form.Text> : null}
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Цель</Form.Label>
+                                    <Form.Control
+                                        name='purpose'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.purpose && !errors.purpose}
+                                    />
+                                    {touched.purpose && !errors.purpose ?
+                                        <Form.Text>{errors.purpose}</Form.Text> : null}
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Пол участников</Form.Label>
+                                    <Form.Control
+                                        name='sex'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.sex && !errors.sex}
+                                    />
+                                    {touched.sex && !errors.sex ?
+                                        <Form.Text>{errors.sex}</Form.Text> : null}
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group>
+                                    <Form.Label>Количество людей</Form.Label>
+                                    <Form.Control
+                                        name='number_of_people'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.number_of_people && !errors.number_of_people}
+                                    />
+                                    {touched.number_of_people && !errors.number_of_people ?
+                                        <Form.Text>{errors.number_of_people}</Form.Text> : null}
 
-                        </Form.Group>
+                                </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Кто оплачивает</Form.Label>
-                            <Form.Control
-                                name='payer'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.payer && !errors.payer}
-                            />
-                            {touched.payer && !errors.payer ?
-                                <Form.Text>{errors.payer}</Form.Text> : null}
+                                <Form.Group>
+                                    <Form.Label>Кто оплачивает</Form.Label>
+                                    <Form.Control
+                                        name='payer'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.payer && !errors.payer}
+                                    />
+                                    {touched.payer && !errors.payer ?
+                                        <Form.Text>{errors.payer}</Form.Text> : null}
 
-                        </Form.Group>
+                                </Form.Group>
 
-                        <Form.Group>
-                            <Form.Label>Приблизительные расходы</Form.Label>
-                            <Form.Control
-                                name='expenditures'
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                isValid={touched.expenditures && !errors.expenditures}
-                            />
-                            {touched.expenditures && !errors.expenditures ?
-                                <Form.Text>{errors.expenditures}</Form.Text> : null}
-                        </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Приблизительные расходы</Form.Label>
+                                    <Form.Control
+                                        name='expenditures'
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        isValid={touched.expenditures && !errors.expenditures}
+                                    />
+                                    {touched.expenditures && !errors.expenditures ?
+                                        <Form.Text>{errors.expenditures}</Form.Text> : null}
+                                </Form.Group>
+                            </Col>
 
+                            <Button onClick={handleSubmit} disabled={!validateForm} variant='primary'>Submit</Button>
 
-                        <Button onClick={handleSubmit} disabled={!validateForm} variant='primary'>Submit</Button>
-
-                    </Form>
+                        </Form>
+                    </Container>
                 )
             }}
         </Formik>

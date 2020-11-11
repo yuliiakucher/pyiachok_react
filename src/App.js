@@ -28,7 +28,7 @@ class App extends React.Component {
                     <Route exact path='/places' render={() => <Places/>}/>
                     <Route exact path='/places/place/:placeId' render={() => <PlaceProfileContainer/>}/>
                     <Route path='/places/place/:placeId/create-event' render={() => <CreateEvent/>}/>
-                    <Route path='/test' render={() => <Test/>}/>
+                    <Route exact path='/api/password_reset/' render={() => <Test/>}/>
                 </>
             </BrowserRouter>
         )

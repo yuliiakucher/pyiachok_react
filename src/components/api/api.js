@@ -98,14 +98,14 @@ export const PlaceAPI = ({
          instance.get('place/tags')
         )
     },
-    getAllPlaces(){
+    getAllPlaces(page=1){
         return(
-            instance.get('place/all')
+            axios.get(`http://localhost:8000/place/all?page=${page}`)
         )
     },
     getPlaceProfile(placeId){
         return(
-            instance.get(`place/${placeId}/`)
+            axios.get(`http://localhost:8000/place/${placeId}/`)
         )
     }
 })
