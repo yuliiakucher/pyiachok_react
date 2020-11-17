@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Button from "react-bootstrap/Button";
-import {handleShowCreatePlace} from "../../redux/modal-reducer";
 import {connect} from "react-redux";
 import {NavLink} from "react-router-dom";
+import {showPlacesByUser} from "../../redux/profile-reducer";
 
 
 
-const Place = (props) => {
+const Place = ({showPlacesByUser}) => {
+
+    useEffect(showPlacesByUser, [])
+
     return (
         <>
             <NavLink to='places/create'>
@@ -16,4 +19,6 @@ const Place = (props) => {
     )
 }
 
-export default connect(null,{handleShowCreatePlace})(Place)
+
+
+export default connect(null, {showPlacesByUser})(Place)

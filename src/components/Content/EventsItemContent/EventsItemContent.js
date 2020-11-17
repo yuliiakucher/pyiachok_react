@@ -3,9 +3,7 @@ import React from "react";
 import styles from "./EventsItemContent.module.css";
 import Card from "react-bootstrap/Card";
 import {NavLink} from "react-router-dom";
-import CustomMap from "../../CustomMap/CustomMap";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
+
 
 
 const EventsItemContent = () => {

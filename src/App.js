@@ -8,7 +8,6 @@ import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
 import Test from "./components/Test/Test";
 import ProfileContainer from "./components/Profile/ProfileContainer";
-import CreatePlace from "./components/Place/CreatePlace/CreatePlace";
 import PlaceProfileContainer from "./components/Place/PlaceProfile/PlaceProfileContainer";
 import CreateEvent from "./components/Event/CreateEvent/CreateEvent";
 

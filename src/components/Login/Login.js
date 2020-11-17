@@ -65,10 +65,10 @@ class Login extends React.Component {
                                 {(this.props.errorCode === 401) &&
                                 <Alert variant='danger'>
                                     <Alert.Heading>Такого юзера не существует.</Alert.Heading>
-                                    <p>Проверьте правильность написания или
-                                        <a className='text-primary'
-                                           onClick={() => this.props.handleActiveTab('reg')}> зарегистрируйтесь</a>
-                                    </p>
+                                    <div>Проверьте правильность написания или
+                                        <Button variant='link'
+                                           onClick={() => this.props.handleActiveTab('reg')}> зарегистрируйтесь</Button>
+                                    </div>
                                 </Alert>}
 
                             </Form.Group>

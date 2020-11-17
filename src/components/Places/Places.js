@@ -12,9 +12,7 @@ import Paginator from "../Paginator/Paginator";
 
 const Places = ({getAllPlaces, places, totalCount}) => {
 
-    useEffect(() => {
-        getAllPlaces()
-    }, [])
+    useEffect(getAllPlaces, [])
 
     const changePage = (page) => {
         getAllPlaces(page)

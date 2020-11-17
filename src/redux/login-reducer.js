@@ -3,7 +3,6 @@ import {setPreloader} from "./profile-reducer";
 
 const LOGIN_USER = 'LOGIN_USER'
 const LOGOUT_USER = 'LOGOUT_USER'
-const SET_REFRESH = 'SET_REFRESH'
 const SHOW_PROFILE = 'SHOW_PROFILE'
 
 

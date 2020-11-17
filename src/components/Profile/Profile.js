@@ -1,22 +1,15 @@
-import React, {useEffect} from "react";
-import {Link, NavLink, Router, Switch} from 'react-router-dom'
+import React from "react";
+import {NavLink} from 'react-router-dom'
 import styles from "./Profile.module.css";
-import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
-import Card from "react-bootstrap/Card";
 import EditProfileInfo from "./EditProfileInfo/EditProfileInfo";
 import default_user from '../media/default-user-image.png'
-import {connect} from "react-redux";
-import {editPassword, editUser, showUser} from "../../redux/profile-reducer";
 import Place from "../Place/Place";
-import {BrowserRouter, Redirect, Route} from "react-router-dom";
-import ProfileContainer from "./ProfileContainer";
+import {BrowserRouter, Route} from "react-router-dom";
 import CreatePlace from "../Place/CreatePlace/CreatePlace";
-import SideNavbar from "../SideNavbar";
 import Container from "react-bootstrap/Container";
-import PlaceProfileContainer from "../Place/PlaceProfile/PlaceProfileContainer";
 
 
 class Profile extends React.Component {

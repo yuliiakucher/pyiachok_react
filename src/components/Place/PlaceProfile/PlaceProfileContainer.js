@@ -1,11 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {getPlaceProfile, handleModal} from "../../../redux/place-reducer";
 import {connect} from "react-redux";
-import {NavLink, withRouter} from "react-router-dom";
-import styles from './PlaceProfile.module.css'
-import Breadcrumb from "react-bootstrap/Breadcrumb";
-import Container from "react-bootstrap/Container";
-import Badge from "react-bootstrap/Badge";
+import {withRouter} from "react-router-dom";
 import Preloader from "../../Preloader";
 import PlaceProfile from "./PlaceProfile";
 

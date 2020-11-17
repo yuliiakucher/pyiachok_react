@@ -18,9 +18,7 @@ const EditProfileInfo = (props) => {
     let [show, handleShow] = useState(false)
     // let [success, handleSuccess] = useState(false)
 
-    useEffect(() => {
-        props.getTagsInfo()
-    }, [])
+    useEffect(props.getTagsInfo, [])
 
     let initialValues = {
         first_name: first_name,

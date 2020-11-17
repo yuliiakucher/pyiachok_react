@@ -138,8 +138,8 @@ class Registration extends React.Component {
                                        dismissible>
                                     <Alert.Heading>Отлично!</Alert.Heading>
                                     <p>{this.props.responseMessage}</p>
-                                    <p><a className='text-primary' onClick={() => this.props.handleActiveTab('login')}>Ввойдите
-                                        в систему</a></p>
+                                    <div><Button variant='link' onClick={() => this.props.handleActiveTab('login')}>Ввойдите
+                                        в систему</Button></div>
                                 </Alert>
                                 }
 

@@ -79,7 +79,6 @@ const PlaceReducer = (state = initialState, action) => {
     }
 }
 
-const setResponseInfo = (statusCode, statusMessage) => ({type: SET_RESPONSE_INFO, statusCode, statusMessage})
 const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
 const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
 const setTotalCount = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount})

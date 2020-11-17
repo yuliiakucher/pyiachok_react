@@ -19,9 +19,7 @@ import {
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import MapModal from "./MapModal/MapModal";
-import {Map, Marker, TileLayer} from "react-leaflet";
-import style from "../../CustomMap/CustomMap.module.css";
-import Modal from "react-bootstrap/Modal";
+
 
 
 const PlaceProfile = (props) => {
