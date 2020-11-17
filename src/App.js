@@ -3,7 +3,7 @@ import "bootswatch/dist/united/bootstrap.min.css";
 import './App.css';
 import {BrowserRouter, Route} from "react-router-dom";
 import ModalContainer from "./components/Modal/ModalContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
+import Header from "./components/Header/Header";
 import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
 import Test from "./components/Test/Test";
@@ -19,12 +19,12 @@ class App extends React.Component {
         return (
             <BrowserRouter>
                 <>
-                    <HeaderContainer/>
+                    <Header/>
                     <ModalContainer/>
                     <Route exact path='/' render={() => <Content/>}/>
                     <Route path='/profile' render={() => <ProfileContainer/>}/>
                     {/*<Route path='/profile/edit' render={() => <EditProfileInfo/>}/>*/}
-                    <Route exact path='/place/create' render={() => <CreatePlace/>}/>
+
                     <Route exact path='/places' render={() => <Places/>}/>
                     <Route exact path='/places/place/:placeId' render={() => <PlaceProfileContainer/>}/>
                     <Route path='/places/place/:placeId/create-event' render={() => <CreateEvent/>}/>

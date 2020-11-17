@@ -100,12 +100,18 @@ export const PlaceAPI = ({
     },
     getAllPlaces(page=1){
         return(
-            axios.get(`http://localhost:8000/place/all?page=${page}`)
+            // axios.get(`http://localhost:8000/place/all?page=${page}`)
+           instance.get(`place/all?page=${page}`)
         )
     },
     getPlaceProfile(placeId){
         return(
             axios.get(`http://localhost:8000/place/${placeId}/`)
+        )
+    },
+    getPlacesByUser(){
+        return(
+            instance.get('profile/owned-places')
         )
     }
 })

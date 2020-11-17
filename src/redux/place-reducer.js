@@ -21,6 +21,7 @@ const initialState = {
     places: [],
     totalCount: '',
     place: {},
+    rate: '',
     showModal: false
 }
 
@@ -57,7 +58,8 @@ const PlaceReducer = (state = initialState, action) => {
         case SET_ONE_PLACE: {
             return {
                 ...state,
-                place: action.place
+                place: action.place,
+                rate: action.rate
             }
         }
         case HANDLE_MODAL: {
@@ -81,7 +83,7 @@ const setResponseInfo = (statusCode, statusMessage) => ({type: SET_RESPONSE_INFO
 const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
 const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
 const setTotalCount = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount})
-const setOnePlace =(place) => ({type: SET_ONE_PLACE, place})
+const setOnePlace =(place, rate) => ({type: SET_ONE_PLACE, place, rate})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 
@@ -127,7 +129,7 @@ export const getPlaceProfile = (placeId) => {
     return dispatch => {
         PlaceAPI.getPlaceProfile(placeId)
             .then(response => {
-                dispatch(setOnePlace(response.data))
+                dispatch(setOnePlace(response.data.data, response.data.rate))
                 dispatch(setPreloader(false))
             })
 

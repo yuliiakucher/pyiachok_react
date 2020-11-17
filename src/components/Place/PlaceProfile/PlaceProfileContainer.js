@@ -18,7 +18,7 @@ class PlaceProfileContainer extends React.Component {
     render() {
         return (
             <div className='d-flex justify-content-center'>
-                {this.props.isLoading ? <Preloader/> :
+                {this.props.isLoading || !this.props.place.id ? <Preloader/> :
                     <PlaceProfile {...this.props}/>
                 }
 
@@ -31,6 +31,7 @@ class PlaceProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         place: state.PlacePage.place,
+        rate: state.PlacePage.rate,
         isLoading: state.ProfilePage.isLoading,
         showModal: state.PlacePage.showModal
     }

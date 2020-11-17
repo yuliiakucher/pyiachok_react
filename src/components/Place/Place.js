@@ -9,7 +9,7 @@ import {NavLink} from "react-router-dom";
 const Place = (props) => {
     return (
         <>
-            <NavLink to='place/create'>
+            <NavLink to='places/create'>
                 <Button variant='info' >Создать новое заведение</Button>
             </NavLink>
         </>

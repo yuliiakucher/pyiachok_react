@@ -53,7 +53,7 @@ const CreatePlace = (props) => {
             'sunday_end': '00',
             'sunday_check': false,
         },
-        coordinates: ''
+        coordinates: '',
     }
 
     const onSubmit = values => {
@@ -89,7 +89,7 @@ const CreatePlace = (props) => {
                       touched,
                       errors,
                       handleSubmit,
-                      validateForm, values
+                      validateForm, values,setFieldValue
 
                   }) => {
                     return (

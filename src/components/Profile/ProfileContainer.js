@@ -1,17 +1,18 @@
 import React from "react";
 import {connect} from "react-redux";
-import {editPassword, editUser, showProfile} from "../../redux/profile-reducer";
+import {editPassword, editUser, showPlacesByUser} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import Preloader from "../Preloader";
 import {logOut} from "../../redux/login-reducer";
-import {Redirect} from "react-router-dom";
+import {BrowserRouter, Redirect} from "react-router-dom";
 import {getTagsInfo} from "../../redux/place-reducer";
 
 class ProfileContainer extends React.Component {
 
 
     componentDidMount() {
-        this.props.showProfile()
+        // this.props.showProfile()
+        this.props.showPlacesByUser()
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -24,9 +25,7 @@ class ProfileContainer extends React.Component {
     render() {
         if (!this.props.first_name) return <Redirect to={'/'}/>
         return (
-            <>
                 <Profile {...this.props}/>
-            </>
 
         )
 
@@ -38,6 +37,7 @@ let mapStateToProps = (state) => {
         first_name: state.LoginPage.first_name,
         last_name: state.LoginPage.last_name,
         email: state.LoginPage.email,
+        photo: state.LoginPage.photo,
         isLoading: state.ProfilePage.isLoading,
         passwordStatusCode: state.ProfilePage.passwordStatusCode,
         profileStatusCode: state.ProfilePage.profileStatusCode,
@@ -48,4 +48,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {showProfile, editUser, editPassword, getTagsInfo})(ProfileContainer)
+export default connect(mapStateToProps, { editUser, editPassword, getTagsInfo, showPlacesByUser})(ProfileContainer)

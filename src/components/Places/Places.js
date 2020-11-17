@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-
 import styles from "./Places.module.css";
 import {getAllPlaces} from "../../redux/place-reducer";
 import {connect} from "react-redux";
@@ -7,9 +6,8 @@ import OnePlace from "./OnePlace/OnePlace";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
 import {NavLink} from "react-router-dom";
-import Paginator from "../Paginator";
+import Paginator from "../Paginator/Paginator";
 
 
 const Places = ({getAllPlaces, places, totalCount}) => {
@@ -20,6 +18,7 @@ const Places = ({getAllPlaces, places, totalCount}) => {
 
     const changePage = (page) => {
         getAllPlaces(page)
+        window.scrollTo(0, 0)
     }
 
     return (
@@ -37,8 +36,9 @@ const Places = ({getAllPlaces, places, totalCount}) => {
                 <Col>
                     <div className={'d-flex justify-content-center'}>
                         <div>
-                            <h4 className={styles.name}>Заведения</h4>
-                            <Paginator totalCount={totalCount} changePage={changePage}/>
+                            <div className='d-flex flex-column align-content-center'>
+                                <h4 className={styles.name}>Заведения</h4>
+                            </div>
                             {places.map(place => (
                                 <OnePlace
                                     key={place.id}
@@ -46,11 +46,14 @@ const Places = ({getAllPlaces, places, totalCount}) => {
                                     name={place.name}
                                     adress={place.address}
                                     email={place.email}
+                                    type={place.type}
 
                                 />
                             ))}
-
-
+                            <Paginator
+                                className='d-flex'
+                                totalCount={totalCount}
+                                changePage={changePage}/>
                         </div>
                     </div>
 

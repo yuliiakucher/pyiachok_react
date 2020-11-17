@@ -13,11 +13,15 @@ import {
     faEnvelope,
     faClock,
     faCheck,
-    faGlassCheers
+    faGlassCheers,
+    faStar
 } from '@fortawesome/free-solid-svg-icons'
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import MapModal from "./MapModal/MapModal";
+import {Map, Marker, TileLayer} from "react-leaflet";
+import style from "../../CustomMap/CustomMap.module.css";
+import Modal from "react-bootstrap/Modal";
 
 
 const PlaceProfile = (props) => {
@@ -25,17 +29,20 @@ const PlaceProfile = (props) => {
     const arr = []
     const date = new Date().getDay()
     let new_date;
+    console.log(schedule)
     for (const [key, value] of Object.entries(schedule)) {
         arr.push(value)
     }
+    new_date=''
     arr.map((i, inx) => {
         if (inx === date) {
             new_date = i
         }
     })
-
-    console.log(tags)
-    console.log(specificities)
+    let rate = []
+    for (let i=1; i<=props.rate.rate__avg;i++){
+        rate.push(i)
+    }
 
 
     const popover = (
@@ -81,6 +88,13 @@ const PlaceProfile = (props) => {
                                 icon={faGlassCheers}/>Создать пиячок</Button>
                         </NavLink>
 
+                        <div className='d-flex flex-row'>
+                            {rate.map(i=> (
+                                <FontAwesomeIcon key={i} icon={faStar}/>
+                            ))}
+                        </div>
+
+
                         <div>
                             <FontAwesomeIcon icon={faMapMarkerAlt}/>Адрес: {address}
                             <Button
@@ -89,17 +103,19 @@ const PlaceProfile = (props) => {
                                 size="sm"
                                 onClick={() => props.handleModal(true)}>
                                 Посмотреть на карте</Button>
+
                             <MapModal
                                 handleModal={props.handleModal}
                                 show={props.showModal}
                                 coordinates={coordinates}
                             />
+
                         </div>
                         <p>
                             <FontAwesomeIcon icon={faPhoneAlt}/>
                             Контакты: {contacts}</p>
                         <p><FontAwesomeIcon icon={faEnvelope}/> {email}</p>
-                        <p>
+                        <div>
                             <FontAwesomeIcon icon={faClock}/>
                             Сегодня: {new_date}
 
@@ -132,7 +148,7 @@ const PlaceProfile = (props) => {
                             </div>
 
 
-                        </p>
+                        </div>
                         <p>Фотографии</p>
                     </div>
                 </div>

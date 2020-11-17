@@ -20,6 +20,7 @@ const AlertReducer = (state=initialState, action) => {
         case HIDE_ALERT:{
             return {
                 ...state,
+                header: null,
                 text: null
             }
         }

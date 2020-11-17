@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import {Link, NavLink, Router, Switch} from 'react-router-dom'
 import styles from "./Profile.module.css";
 import Tab from "react-bootstrap/Tab";
 import Row from "react-bootstrap/Row";
@@ -6,6 +7,7 @@ import Col from "react-bootstrap/Col";
 import Nav from "react-bootstrap/Nav";
 import Card from "react-bootstrap/Card";
 import EditProfileInfo from "./EditProfileInfo/EditProfileInfo";
+import default_user from '../media/default-user-image.png'
 import {connect} from "react-redux";
 import {editPassword, editUser, showUser} from "../../redux/profile-reducer";
 import Place from "../Place/Place";
@@ -13,6 +15,8 @@ import {BrowserRouter, Redirect, Route} from "react-router-dom";
 import ProfileContainer from "./ProfileContainer";
 import CreatePlace from "../Place/CreatePlace/CreatePlace";
 import SideNavbar from "../SideNavbar";
+import Container from "react-bootstrap/Container";
+import PlaceProfileContainer from "../Place/PlaceProfile/PlaceProfileContainer";
 
 
 class Profile extends React.Component {
@@ -21,17 +25,14 @@ class Profile extends React.Component {
     render() {
         // if (!this.props.currentUser) return <Redirect to={'/'}/>
         return (
-            <>
-                {/*<BrowserRouter>*/}
-                {/*    <SideNavbar/>*/}
-                {/*</BrowserRouter>*/}
+            <BrowserRouter>
                 <div className='d-flex justify-content-center mt-5'>
-                    <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                    <Container id="left-tabs-example" defaultActiveKey="first">
                         <Row>
                             <Col sm={3}>
                                 <div>
                                     <img className={styles.img}
-                                         src='https://www.kindpng.com/picc/m/699-6997452_administrator-network-icons-system-avatar-computer-transparent-admin.png'
+                                         src={this.props.photo ? `http://localhost:8000${this.props.photo}` : default_user}
                                          alt='avatarka'/>
                                     <div>
                                         <h3>{this.props.first_name}</h3>
@@ -40,34 +41,23 @@ class Profile extends React.Component {
                                 </div>
                                 <Nav variant="pills" className="flex-column">
                                     <Nav.Item>
-                                        <Nav.Link eventKey="first">Информация о профиле</Nav.Link>
+                                        <NavLink to="/profile">Home</NavLink>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link eventKey="second">Заведения</Nav.Link>
+                                        <NavLink to="/profile/places">Заведения</NavLink>
                                     </Nav.Item>
                                 </Nav>
                             </Col>
                             <Col sm={9} className='mt-5'>
-                                <Tab.Content>
-                                    <Tab.Pane eventKey="first">
-                                        <Card className={styles.info}>
-                                            <div>
-                                                <EditProfileInfo {...this.props}/>
-                                            </div>
-                                        </Card>
-                                    </Tab.Pane>
-                                    <Tab.Pane eventKey="second">
-                                        <Card className={styles.info}>
-                                            <Place/>
-                                        </Card>
-                                    </Tab.Pane>
-                                </Tab.Content>
+                                <Route exact path="/profile" render={() => <EditProfileInfo {...this.props}/>}/>
+                                <Route exact path="/profile/places" render={() => <Place {...this.props}/>}/>
+                                <Route exact path='/profile/places/create' render={() => <CreatePlace/>}/>
                             </Col>
                         </Row>
-                    </Tab.Container>
+                    </Container>
                 </div>
 
-            </>
+            </BrowserRouter>
 
         )
 

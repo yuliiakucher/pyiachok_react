@@ -70,8 +70,8 @@ export const userLogin = user => {
                 dispatch(setPreloader(true))
                 userProfile.showProfile()
                     .then(response => {
-                        let {first_name, last_name, email, photo, owned_places} = response.data
-                        dispatch(getProfileInfo(first_name, last_name, email, photo, owned_places))
+                        let {first_name, last_name, email, profile, owned_places} = response.data
+                        dispatch(getProfileInfo(first_name, last_name, email, profile.photo, owned_places))
                         dispatch(setPreloader(false))
                         console.log('response data show user', response.data)
                     })

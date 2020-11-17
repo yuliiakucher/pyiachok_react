@@ -7,6 +7,11 @@ import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSearch} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {handleShow} from "../../redux/modal-reducer";
+import {logOut} from "../../redux/login-reducer";
+import logo from '../media/logo.png'
+import styles from './Header.module.css'
 
 
 const Header = (props) => {
@@ -21,9 +26,10 @@ const Header = (props) => {
 
     return (
         <Navbar expand="lg" className='navbar-dark bg-dark'>
+
             <Navbar.Brand>
-                <NavLink to='/'>
-                    Пиячок
+                <img src={logo} className='d-inline-block align-top mt-2' width='50' alt='logo'/>
+                <NavLink to='/' style={{ textDecoration: 'none' }} className={styles.title}> Пиячок
                 </NavLink>
                 </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -49,11 +55,17 @@ const Header = (props) => {
                         </div>
 
                     }
-
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
     )
 }
 
-export default Header
+let mapStateToProps = (state) => {
+    return{
+        currentUser: state.LoginPage.currentUser,
+        email: state.LoginPage.email
+    }
+}
+
+export default connect(mapStateToProps, {handleShow, logOut})(Header)

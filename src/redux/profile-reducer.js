@@ -1,31 +1,21 @@
-import {userProfile} from "../components/api/api";
+import {PlaceAPI, userProfile} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
-
-const SHOW_PROFILE = 'SHOW_PROFILE'
 
 const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
 const SET_PRELOADER = 'SET_PRELOADER'
+const SET_ADMIN_PLACES = 'SET_ADMIN__PLACES'
 
 const initialState = {
-    first_name: '',
-    last_name: '',
-    email: '',
-    photo: null,
-    owned_places: [],
+
+    admin_places: [],
     profileStatusCode: null,
     passwordStatusCode: null,
-    isLoading: true
+    isLoading: true,
 }
 
 const ProfileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SHOW_PROFILE: {
-            return {
-                ...state,
-                ...action.payload
-            }
-        }
         case EDIT_PROFILE: {
             return {
                 ...state,
@@ -44,31 +34,19 @@ const ProfileReducer = (state = initialState, action) => {
                 isLoading: action.value
             }
         }
+        case SET_ADMIN_PLACES:
+            return {
+                ...state,
+                admin_places: action.admin_places
+            }
         default:
             return state
     }
 }
 
-let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
-    {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
-)
 
-let getProfileStatusCode = (profileStatusCode) => ({type: EDIT_PROFILE, profileStatusCode})
-let getPasswordStatusCode = (passwordStatusCode) => ({type: EDIT_PASSWORD, passwordStatusCode})
-
+let setAdminPlaces = (admin_places) => ({type: SET_ADMIN_PLACES, admin_places})
 export let setPreloader = (value) => ({type: SET_PRELOADER, value})
-
-
-export const showProfile = () => {
-    return (dispatch) => {
-        userProfile.showProfile().then(response => {
-            let {first_name, last_name, email, photo, owned_places} = response.data
-            dispatch(getProfileInfo(first_name, last_name, email, photo, owned_places))
-            dispatch(setPreloader(false))
-            console.log('response data show user', response.data)
-        })
-    }
-}
 
 
 export const editUser = (data) => {
@@ -91,6 +69,15 @@ export const editPassword = (data) => {
             })
             .catch(error => {
                 dispatch(setAlert(error.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
+    }
+}
+
+export const showPlacesByUser = () => {
+    return dispatch => {
+        PlaceAPI.getPlacesByUser()
+            .then(response => {
+                dispatch(setAdminPlaces(response.data))
             })
     }
 }
