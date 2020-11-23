@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from "yup";
-import CustomAlert from "../Alerts/CustomAlert";
+import CustomAlert from "../../../Alerts/CustomAlert";
 
 const EditPassword = (props) => {
     let initialValues = {

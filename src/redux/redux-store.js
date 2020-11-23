@@ -7,6 +7,8 @@ import ProfileReducer from "./profile-reducer";
 import PlaceReducer from "./place-reducer";
 import AlertReducer from "./alert-reducer";
 import EventReducer from "./event-reducer";
+import CommentReducer from "./comment-reducer";
+import ReAuthReducer from "./reauth-reducer";
 
 let reducers = combineReducers({
     LoginPage: LoginReducer,
@@ -15,7 +17,9 @@ let reducers = combineReducers({
     ProfilePage: ProfileReducer,
     PlacePage: PlaceReducer,
     AlertPage: AlertReducer,
-    EventPage: EventReducer
+    EventPage: EventReducer,
+    CommentPage: CommentReducer,
+    ReAuthPage: ReAuthReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

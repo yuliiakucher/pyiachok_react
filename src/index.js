@@ -7,6 +7,8 @@ import {Provider} from "react-redux";
 import store from "./redux/redux-store";
 
 
+export const current_store  = store
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

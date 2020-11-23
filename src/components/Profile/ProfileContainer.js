@@ -1,11 +1,15 @@
 import React from "react";
 import {connect} from "react-redux";
-import {editPassword, editUser} from "../../redux/profile-reducer";
+import {editPassword, editUser, getUserProfile} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {Redirect} from "react-router-dom";
 import {getTagsInfo} from "../../redux/place-reducer";
 
 class ProfileContainer extends React.Component {
+
+    componentDidMount() {
+        this.props.getUserProfile()
+    }
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -16,12 +20,10 @@ class ProfileContainer extends React.Component {
 
 
     render() {
-        if (!this.props.first_name) return <Redirect to={'/'}/>
+        if (!this.props.isAuth) return <Redirect to={'/'}/>
         return (
                 <Profile {...this.props}/>
-
         )
-
     }
 }
 
@@ -37,8 +39,8 @@ let mapStateToProps = (state) => {
         alert_text: state.AlertPage.text,
         alert_header: state.AlertPage.header,
         alert_variant: state.AlertPage.variant,
-        isAuth: state.LoginPage.isAuth,
+        isAuth: state.ReAuthPage.isAuth,
     }
 }
 
-export default connect(mapStateToProps, { editUser, editPassword, getTagsInfo})(ProfileContainer)
+export default connect(mapStateToProps, { editUser, editPassword, getTagsInfo, getUserProfile})(ProfileContainer)

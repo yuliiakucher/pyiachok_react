@@ -1,5 +1,6 @@
-import {PlaceAPI, userProfile} from "../components/api/api";
+import {PlaceAPI, userAuth, userProfile} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
+import {getProfileInfo, loginUserAC} from "./login-reducer";
 
 const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
@@ -82,5 +83,17 @@ export const showPlacesByUser = () => {
     }
 }
 
+export const getUserProfile = () => {
+    return (dispatch) => {
+        dispatch(setPreloader(true))
+        userProfile.showProfile()
+            .then(response => {
+                let {first_name, last_name, email, profile, owned_places} = response.data
+                dispatch(getProfileInfo(first_name, last_name, email, profile.photo, owned_places))
+                dispatch(setPreloader(false))
+            })
+    }
+
+}
 
 export default ProfileReducer

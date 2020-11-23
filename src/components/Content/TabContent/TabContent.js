@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 
 const TabContent = () => {
     return (
-        <Card className={styles.wrapper}>
+        <Card>
             <Card.Body>
                 <Tabs defaultActiveKey="news" id="uncontrolled-tab-example">
                 <Tab eventKey="news" title="Новини">

@@ -1,8 +1,6 @@
 import React from "react";
 import * as yup from 'yup'
 import {Formik} from 'formik';
-import {connect} from "react-redux";
-import {createEvent} from "../../../redux/event-reducer";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/cjs/Button";
 import Container from "react-bootstrap/Container";
@@ -178,12 +176,6 @@ const CreateEventForm = (props) => {
     )
 }
 
-let mapStateToProps = (state) => {
-    return{
-        alert_text: state.AlertPage.text,
-        alert_header: state.AlertPage.header,
-        alert_variant: state.AlertPage.variant,
-    }
-}
 
-export default connect(mapStateToProps, {createEvent})(CreateEventForm)
+
+export default CreateEventForm

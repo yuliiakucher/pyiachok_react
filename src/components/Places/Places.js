@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
-import styles from "./Places.module.css";
-import {getAllPlaces} from "../../redux/place-reducer";
+import styles from "./../../App.module.css";
+import {getAllPlaces, getTagsInfo} from "../../redux/place-reducer";
 import {connect} from "react-redux";
 import OnePlace from "./OnePlace/OnePlace";
 import Container from "react-bootstrap/Container";
@@ -8,9 +8,12 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {NavLink} from "react-router-dom";
 import Paginator from "../Paginator/Paginator";
+import {Card} from "react-bootstrap";
+import Filters from "./Filters";
+import {showEventsByPlace} from "../../redux/event-reducer";
 
 
-const Places = ({getAllPlaces, places, totalCount}) => {
+const Places = ({getAllPlaces, places, totalCount, getTagsInfo, tags, spec, type}) => {
 
     useEffect(getAllPlaces, [])
 
@@ -27,24 +30,26 @@ const Places = ({getAllPlaces, places, totalCount}) => {
                 </li>
                 <li className={'breadcrumb-item active'}>Заведения</li>
             </ol>
+            <Row className='d-flex flex-column align-items-center'>
+                <h1 className={styles.name}>Заведения</h1>
+            </Row>
             <Row>
-                <Col lg={1}>
-                    <div>Filters</div>
+                <Col lg={2}>
+                    <Filters getTagsInfo={getTagsInfo} spec={spec} tags={tags} type={type}/>
                 </Col>
                 <Col>
                     <div className={'d-flex justify-content-center'}>
                         <div>
-                            <div className='d-flex flex-column align-content-center'>
-                                <h4 className={styles.name}>Заведения</h4>
-                            </div>
+
                             {places.map(place => (
                                 <OnePlace
                                     key={place.id}
                                     id={place.id}
                                     name={place.name}
-                                    adress={place.address}
+                                    address={place.address}
                                     email={place.email}
                                     type={place.type}
+                                    tags={place.tags}
 
                                 />
                             ))}
@@ -67,9 +72,12 @@ const Places = ({getAllPlaces, places, totalCount}) => {
 let mapStateToProps = (state) => {
     return {
         places: state.PlacePage.places,
-        totalCount: state.PlacePage.totalCount
+        totalCount: state.PlacePage.totalCount,
+        tags: state.PlacePage.tags,
+        spec: state.PlacePage.spec,
+        type: state.PlacePage.type,
     }
 }
 
 
-export default connect(mapStateToProps, {getAllPlaces})(Places)
+export default connect(mapStateToProps, {getAllPlaces, getTagsInfo})(Places)

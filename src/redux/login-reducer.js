@@ -8,7 +8,6 @@ const SHOW_PROFILE = 'SHOW_PROFILE'
 
 const initialState = {
     isAuth: false,
-    currentUser: null,
     first_name: '',
     last_name: '',
     email: '',
@@ -18,13 +17,9 @@ const initialState = {
 
 export function LoginReducer(state = initialState, action) {
     switch (action.type) {
-        case LOGIN_USER: {
-            return {...state, currentUser: action.payload, isAuth: true}
-        }
         case LOGOUT_USER: {
             return {
                 ...state,
-                currentUser: null,
                 isAuth: false,
                 first_name: '',
                 last_name: '',
@@ -50,12 +45,13 @@ export const loginUserAC = userObj => ({
     payload: userObj
 })
 
+
 export const logOut = () => ({
     type: LOGOUT_USER
 })
 
 
-let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
+export let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
     {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
 )
 

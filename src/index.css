@@ -4,6 +4,7 @@ body {
   font-family: 'Montserrat', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: scroll;
 }
 
 code {
@@ -11,3 +12,9 @@ code {
     monospace;
 }
 
+/*@media screen and (min-width: 960px) {*/
+/*  html {*/
+/*    margin-left: calc(100vw - 100%);*/
+/*    margin-right: 0;*/
+/*  }*/
+/*}*/

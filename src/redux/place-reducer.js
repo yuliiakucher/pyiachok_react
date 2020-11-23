@@ -9,6 +9,7 @@ const SET_ALL_PLACES = 'SET_ALL_PLACES'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const SET_ONE_PLACE = 'SET_ONE_PLACE'
 const HANDLE_MODAL = 'HANDLE_MODAL'
+const SET_TOP_PLACES = 'SET_TOP_PLACES'
 
 const initialState = {
     statusCode: null,
@@ -22,7 +23,8 @@ const initialState = {
     totalCount: '',
     place: {},
     rate: '',
-    showModal: false
+    showModal: false,
+    top_places: [],
 }
 
 const PlaceReducer = (state = initialState, action) => {
@@ -74,6 +76,12 @@ const PlaceReducer = (state = initialState, action) => {
                 totalCount: action.totalCount
             }
         }
+        case SET_TOP_PLACES: {
+            return {
+                ...state,
+                top_places: action.places,
+            }
+        }
         default:
             return state
     }
@@ -83,6 +91,7 @@ const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
 const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
 const setTotalCount = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount})
 const setOnePlace =(place, rate) => ({type: SET_ONE_PLACE, place, rate})
+const setTopPlaces =(places, rate) => ({type: SET_TOP_PLACES, places, rate})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 
@@ -132,6 +141,16 @@ export const getPlaceProfile = (placeId) => {
                 dispatch(setPreloader(false))
             })
 
+    }
+}
+
+export const getTopPlaces = () => {
+    return dispatch => {
+        PlaceAPI.getTopPlaces()
+            .then(response => {
+                console.log(response)
+                dispatch(setTopPlaces(response.data))
+            })
     }
 }
 

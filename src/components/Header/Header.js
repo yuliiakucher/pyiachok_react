@@ -5,7 +5,7 @@ import Nav from "react-bootstrap/Nav";
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faSearch} from '@fortawesome/free-solid-svg-icons'
+import {faGlassCheers, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {handleShow} from "../../redux/modal-reducer";
@@ -26,10 +26,11 @@ const Header = (props) => {
 
     return (
         <Navbar expand="lg" className='navbar-dark bg-dark'>
-
             <Navbar.Brand>
-                <img src={logo} className='d-inline-block align-top mt-2' width='50' alt='logo'/>
-                <NavLink to='/' style={{ textDecoration: 'none' }} className={styles.title}> Пиячок
+                <NavLink to='/' style={{ textDecoration: 'none' }} className={styles.title}>
+                    <FontAwesomeIcon
+                        icon={faGlassCheers}/>
+                    пиячок
                 </NavLink>
                 </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
@@ -43,17 +44,16 @@ const Header = (props) => {
                     </Form>
                 </Nav>
                 <Nav className='mx-5'>
-                    {!props.email
+                    {!props.isAuth
                         ? <Button onClick={() => {
                             props.handleShow(true)
                         }}>Login</Button>
                         : <div>
                             <NavLink to='/profile' className='mx-2'>
-                                <Button>Мой кабинет, {props.email}</Button>
+                                <Button>Мой кабинет</Button>
                             </NavLink>
                             <Button onClick={logOut}>Logout</Button>
                         </div>
-
                     }
                 </Nav>
             </Navbar.Collapse>
@@ -63,8 +63,7 @@ const Header = (props) => {
 
 let mapStateToProps = (state) => {
     return{
-        currentUser: state.LoginPage.currentUser,
-        email: state.LoginPage.email
+        isAuth: state.ReAuthPage.isAuth
     }
 }
 

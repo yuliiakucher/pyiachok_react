@@ -1,22 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from 'yup'
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import EditPassword from "../../EditPassword/EditPassword";
+import EditPassword from "./EditPassword/EditPassword";
 import CustomAlert from "../../Alerts/CustomAlert";
 import * as axios from 'axios'
 import Container from "react-bootstrap/Container";
+import {Accordion} from "react-bootstrap";
 
 
 const EditProfileInfo = (props) => {
 
+    console.log(props)
+
     let {first_name, last_name, email} = props
 
-    let [show, handleShow] = useState(false)
-    // let [success, handleSuccess] = useState(false)
 
     useEffect(props.getTagsInfo, [])
 
@@ -52,7 +53,6 @@ const EditProfileInfo = (props) => {
                 'Content-Type': 'multipart/form-data'
             }
         })
-        console.log(event.currentTarget.files[0])
     }
 
     return (
@@ -74,6 +74,7 @@ const EditProfileInfo = (props) => {
                                 <Col sm="10">
                                     <Form.Control
                                         type="text"
+                                        placeholder="Enter first name"
                                         onChange={formik.handleChange}
                                         onBlur={formik.handleBlur}
                                         name='first_name'
@@ -120,13 +121,16 @@ const EditProfileInfo = (props) => {
                                     <Form.Text>{formik.errors.email} </Form.Text> : null}
                             </Form.Group>
 
-                            <Button
-                                variant="outline-info"
-                                className='my-2'
-                                onClick={() => handleShow(!show)}
-                            >Изменить пароль</Button>
-                            <br/>
-                            {show && <EditPassword {...props}/>}
+                            <Accordion>
+                                <Accordion.Toggle as={Button} eventKey='0'>
+                                    Изменить пароль
+                                </Accordion.Toggle>
+                                <br/>
+                                <Accordion.Collapse eventKey='0'>
+                                    <EditPassword {...props}/>
+                                </Accordion.Collapse>
+                            </Accordion>
+
 
                             <br/>
                             {(props.alert_text) &&

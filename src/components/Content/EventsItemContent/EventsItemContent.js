@@ -1,6 +1,6 @@
 import React from "react";
 
-import styles from "./EventsItemContent.module.css";
+import styles from "./../../../App.module.css";
 import Card from "react-bootstrap/Card";
 import {NavLink} from "react-router-dom";
 
@@ -8,7 +8,7 @@ import {NavLink} from "react-router-dom";
 
 const EventsItemContent = () => {
     return (
-        <Card className={styles.wrapper}>
+        <Card>
             <Card.Header>
                 <h4 className={styles.name}>Топ событий</h4>
             </Card.Header>

@@ -6,19 +6,19 @@ import {Formik} from "formik";
 import * as yup from "yup";
 import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
-import {getResponseInfo, getTagsInfo} from "../../../redux/place-reducer";
-import CustomAlert from "../../Alerts/CustomAlert";
+import {getResponseInfo, getTagsInfo} from "../../../../redux/place-reducer";
+import CustomAlert from "../../../Alerts/CustomAlert";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import CustomMap from "../../CustomMap/CustomMap";
+import CustomMap from "../../../CustomMap/CustomMap";
 
 
-const CreatePlace = (props) => {
+const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, alert_variant, getTagsInfo, getResponseInfo}) => {
 
     useEffect(() => {
-        props.getTagsInfo()
-    }, [props.lat])
+        getTagsInfo()
+    }, [lat])
 
     const arr = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
@@ -59,11 +59,11 @@ const CreatePlace = (props) => {
     const onSubmit = values => {
         console.log(values)
 
-        values.coordinates = ({'lat': props.lat, 'lng': props.lng})
+        values.coordinates = ({'lat': lat, 'lng': lng})
         const my_map = new Map()
         const sch = arr.map(day => my_map.set(day, values.schedule[`${day}_start`].concat(values.schedule[`${day}_end`])))
         values.schedule = Object.fromEntries(sch[0])
-        props.getResponseInfo(values)
+        getResponseInfo(values)
     }
 
 
@@ -89,7 +89,7 @@ const CreatePlace = (props) => {
                       touched,
                       errors,
                       handleSubmit,
-                      validateForm, values,setFieldValue
+                      validateForm, values, setFieldValue
 
                   }) => {
                     return (
@@ -164,7 +164,7 @@ const CreatePlace = (props) => {
                                     <Form.Group>
                                         <Form.Label>Тип заведения</Form.Label>
                                         <Form.Control as="select" name='type.type_name' onChange={handleChange}>
-                                            {props.type.map(type => (
+                                            {type.map(type => (
                                                 <option value={type.type_name} key={type.id}>
                                                     {type.type_name}
                                                 </option>
@@ -176,7 +176,7 @@ const CreatePlace = (props) => {
                                     <Form.Group>
                                         <Form.Label>Теги</Form.Label>
                                         <Form.Control as="select" multiple name='tags' onChange={handleChange}>
-                                            {props.tags.map(tag => (
+                                            {tags.map(tag => (
                                                 <option value={tag.tag_name} key={tag.id}>
                                                     {tag.tag_name}
                                                 </option>
@@ -190,7 +190,7 @@ const CreatePlace = (props) => {
                                     <Form.Group>
                                         <Form.Label>Особенности</Form.Label>
                                         <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
-                                            {props.spec.map(spec => (
+                                            {spec.map(spec => (
                                                 <option value={spec.specificity_name} key={spec.id}>
                                                     {spec.specificity_name}
                                                 </option>
@@ -244,11 +244,11 @@ const CreatePlace = (props) => {
                                     </Col>
                                 </Row>
 
-                                {(props.alert_text) &&
+                                {(alert_text) &&
                                 <CustomAlert
-                                    statusMessage={props.alert_text}
-                                    header={props.alert_header}
-                                    variant={props.alert_variant}
+                                    statusMessage={alert_text}
+                                    header={alert_header}
+                                    variant={alert_variant}
                                 />}
 
                                 <Button

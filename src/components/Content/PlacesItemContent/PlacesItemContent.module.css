@@ -8,8 +8,6 @@
 
 
 .name {
-    font-size: 20px;
-    font-weight: 300;
     position: relative;
 }
 
@@ -17,8 +15,8 @@
     content: '';
     bottom: 0;
     left: 0;
-    height: 1.5px;
-    background-color: #6964ff;
+    height: 1px;
+    background-color: #772953;
     position: absolute;
     width: 100%;
 }
