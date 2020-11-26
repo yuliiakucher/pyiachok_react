@@ -10,7 +10,6 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {handleShow} from "../../redux/modal-reducer";
 import {logOut} from "../../redux/login-reducer";
-import logo from '../media/logo.png'
 import styles from './Header.module.css'
 
 

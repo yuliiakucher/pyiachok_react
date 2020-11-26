@@ -11,6 +11,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import PlaceProfileContainer from "./components/Place/PlaceProfile/PlaceProfileContainer";
 import CreateEvent from "./components/Event/CreateEvent/CreateEvent";
 import EventProfile from "./components/Event/EventProfile/EventProfile";
+import EventProfileContainer from "./components/Event/EventProfile/EventProfileContainer";
 
 
 class App extends React.Component {
@@ -28,7 +29,7 @@ class App extends React.Component {
                     <Route exact path='/places/place/:placeId' render={() => <PlaceProfileContainer/>}/>
                     <Route path='/places/place/:placeId/create-event' render={() => <CreateEvent/>}/>
                     <Route exact path='/api/password_reset/' render={() => <Test/>}/>
-                    <Route exact path='/event/:eventId' render={() => <EventProfile/>}/>
+                    <Route exact path='/event/:eventId' render={() => <EventProfileContainer/>}/>
                 </>
             </BrowserRouter>
         )

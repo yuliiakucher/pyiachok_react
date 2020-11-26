@@ -50,6 +50,7 @@ const Places = ({getAllPlaces, places, totalCount, getTagsInfo, tags, spec, type
                                     email={place.email}
                                     type={place.type}
                                     tags={place.tags}
+                                    rating={place.rating}
 
                                 />
                             ))}

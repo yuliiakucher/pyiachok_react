@@ -1,6 +1,7 @@
 import * as axios from 'axios'
 import {current_store} from "../../index";
 import {setReloginUser} from "../../redux/reauth-reducer"
+import {handleShow} from "../../redux/modal-reducer";
 
 const token = localStorage.token;
 const instance = axios.create({
@@ -61,6 +62,9 @@ instance.interceptors.response.use(
                 .then(response => {
                     console.log('refresh token')
                     localStorage.setItem("token", response.data.access)
+                })
+                .catch(() => {
+                    current_store.dispatch(handleShow(true))
                 })
         }
         if (error.response) {
@@ -135,7 +139,12 @@ export const EventAPI = ({
         return (
             instance.get(`place/${place_id}/events`)
         )
-    }
+    },
+    showOneEvent(event_id){
+        return(
+            instance.get(`event/${event_id}/`)
+        )
+    },
 })
 
 export const CommentsAPI = ({

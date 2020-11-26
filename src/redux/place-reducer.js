@@ -1,6 +1,7 @@
 import {PlaceAPI} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
 import {setPreloader} from "./profile-reducer";
+import {setLoader} from "./loader-reducer";
 
 const SET_RESPONSE_INFO = 'SET_RESPONSE_INFO'
 const SET_TAGS = 'SET_TAGS'
@@ -22,7 +23,6 @@ const initialState = {
     places: [],
     totalCount: '',
     place: {},
-    rate: '',
     showModal: false,
     top_places: [],
 }
@@ -61,7 +61,6 @@ const PlaceReducer = (state = initialState, action) => {
             return {
                 ...state,
                 place: action.place,
-                rate: action.rate
             }
         }
         case HANDLE_MODAL: {
@@ -90,7 +89,7 @@ const PlaceReducer = (state = initialState, action) => {
 const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
 const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
 const setTotalCount = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount})
-const setOnePlace =(place, rate) => ({type: SET_ONE_PLACE, place, rate})
+const setOnePlace =(place) => ({type: SET_ONE_PLACE, place})
 const setTopPlaces =(places, rate) => ({type: SET_TOP_PLACES, places, rate})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 export const handleModal = (value) => ({type: HANDLE_MODAL, value})
@@ -98,7 +97,6 @@ export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 export const getResponseInfo = (values) => {
     values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
     values.specificities = [...(values.specificities.map(value => ({'specificity_name': value})))]
-    console.log(values)
     return (dispatch) => {
         PlaceAPI.createPlace(values)
             .then(response => {
@@ -137,8 +135,8 @@ export const getPlaceProfile = (placeId) => {
     return dispatch => {
         PlaceAPI.getPlaceProfile(placeId)
             .then(response => {
-                dispatch(setOnePlace(response.data.data, response.data.rate))
-                dispatch(setPreloader(false))
+                dispatch(setOnePlace(response.data.data))
+                dispatch(setLoader(false))
             })
 
     }

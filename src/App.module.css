@@ -34,3 +34,9 @@
 .link:hover:before {
     transform: scaleX(1);
 }
+
+.wrapper{
+    box-shadow: #9fb2b5 10px 10px 40px;
+    margin: 20px;
+    width: content-box;
+}

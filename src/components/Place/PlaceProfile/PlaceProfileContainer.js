@@ -2,7 +2,7 @@ import React from "react";
 import {getPlaceProfile, handleModal} from "../../../redux/place-reducer";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import Preloader from "../../Preloader";
+import Preloader from "../../utilits/Preloader";
 import PlaceProfile from "./PlaceProfile";
 import {createComment, getAllComments} from "../../../redux/comment-reducer";
 import {showEventsByPlace} from "../../../redux/event-reducer";
@@ -21,9 +21,7 @@ class PlaceProfileContainer extends React.Component {
                 {this.props.isLoading || !this.props.place.id ? <Preloader/> :
                     <PlaceProfile {...this.props}/>
                 }
-
             </div>
-
         )
     }
 }
@@ -31,7 +29,6 @@ class PlaceProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         place: state.PlacePage.place,
-        rate: state.PlacePage.rate,
         isLoading: state.ProfilePage.isLoading,
         showModal: state.PlacePage.showModal,
         comments: state.CommentPage.comments,

@@ -3,7 +3,7 @@ import {NavLink, withRouter} from "react-router-dom";
 import styles from '../../../App.module.css'
 import Container from "react-bootstrap/Container";
 import Badge from "react-bootstrap/Badge";
-import Preloader from "../../Preloader";
+import Preloader from "../../utilits/Preloader";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {
@@ -13,21 +13,21 @@ import {
     faClock,
     faCheck,
     faGlassCheers,
-    faStar
 } from '@fortawesome/free-solid-svg-icons'
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import MapModal from "./MapModal/MapModal";
 import Comments from "./Comments/Comments";
 import {Col, ListGroup, Row} from "react-bootstrap";
-import Events from "./Events";
+import Events from "../../Event/Events";
+import Stars from "../../utilits/Stars";
 
 
 const PlaceProfile = ({
-                          place, rate, getAllComments,
+                          place, getAllComments,
                           isLoading, showModal, handleModal, match, comments, createComment, events
                       }) => {
-    const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates} = place
+    const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates, rating} = place
     const arr = []
     const date = new Date().getDay()
     let new_date;
@@ -40,14 +40,7 @@ const PlaceProfile = ({
             new_date = i
         }
     })
-    let rate_arr = []
-    for (let i = 1; i <= rate.rate__avg; i++) {
-        rate_arr.push(i)
-    }
-
     useEffect(() => getAllComments(match.params.placeId), [])
-
-
     const popover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Часы работы</Popover.Title>
@@ -89,9 +82,7 @@ const PlaceProfile = ({
                                 <Row>
                                     <ListGroup variant='flush'>
                                         <ListGroup.Item className='d-flex flex-row'>
-                                            {rate_arr.map(i => (
-                                                <FontAwesomeIcon key={i} icon={faStar}/>
-                                            ))}
+                                            <Stars rating={rating}/>
                                         </ListGroup.Item>
                                         <ListGroup.Item>
                                             <FontAwesomeIcon icon={faMapMarkerAlt}/> Адрес: {address}
@@ -116,7 +107,8 @@ const PlaceProfile = ({
                                         <ListGroup.Item>
                                             <FontAwesomeIcon icon={faClock}/> Сегодня: {new_date}
                                             <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-                                                <Button className='mx-1' variant="outline-info" size="sm">Посмотреть график
+                                                <Button className='mx-1' variant="outline-info" size="sm">Посмотреть
+                                                    график
                                                     работы</Button>
                                             </OverlayTrigger>
                                         </ListGroup.Item>

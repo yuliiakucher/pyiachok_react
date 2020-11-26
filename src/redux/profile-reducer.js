@@ -1,10 +1,10 @@
 import {PlaceAPI, userAuth, userProfile} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
 import {getProfileInfo, loginUserAC} from "./login-reducer";
+import {setLoader} from "./loader-reducer";
 
 const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
-const SET_PRELOADER = 'SET_PRELOADER'
 const SET_ADMIN_PLACES = 'SET_ADMIN__PLACES'
 
 const initialState = {
@@ -12,7 +12,6 @@ const initialState = {
     admin_places: [],
     profileStatusCode: null,
     passwordStatusCode: null,
-    isLoading: true,
 }
 
 const ProfileReducer = (state = initialState, action) => {
@@ -29,12 +28,7 @@ const ProfileReducer = (state = initialState, action) => {
                 passwordStatusCode: action.passwordStatusCode
             }
         }
-        case SET_PRELOADER: {
-            return {
-                ...state,
-                isLoading: action.value
-            }
-        }
+
         case SET_ADMIN_PLACES:
             return {
                 ...state,
@@ -47,7 +41,6 @@ const ProfileReducer = (state = initialState, action) => {
 
 
 let setAdminPlaces = (admin_places) => ({type: SET_ADMIN_PLACES, admin_places})
-export let setPreloader = (value) => ({type: SET_PRELOADER, value})
 
 
 export const editUser = (data) => {
@@ -85,12 +78,12 @@ export const showPlacesByUser = () => {
 
 export const getUserProfile = () => {
     return (dispatch) => {
-        dispatch(setPreloader(true))
+        dispatch(setLoader(true))
         userProfile.showProfile()
             .then(response => {
                 let {first_name, last_name, email, profile, owned_places} = response.data
                 dispatch(getProfileInfo(first_name, last_name, email, profile.photo, owned_places))
-                dispatch(setPreloader(false))
+                dispatch(setLoader(false))
             })
     }
 

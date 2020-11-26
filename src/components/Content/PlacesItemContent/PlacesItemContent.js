@@ -7,6 +7,7 @@ import default_photo from './../../media/place.jpg'
 import Carousel from "react-bootstrap/Carousel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/free-solid-svg-icons";
+import Stars from "../../utilits/Stars";
 
 
 const PlacesItemContent = ({top_places, rate_top}) => {
@@ -41,10 +42,7 @@ const PlacesItemContent = ({top_places, rate_top}) => {
                             <div className='d-flex flex-row'>
                                 {top_places.filter((place, index) => (item === 1 ? index < visible : index >= visible))
                                     .map(place => {
-                                            let rate_arr = []
-                                            for (let i = 1; i <= place.rating; i++) {
-                                                rate_arr.push(i)
-                                            }
+
                                             return <Card key={place.id} className='mx-2'>
                                                 <NavLink
                                                     to={`places/place/${place.id}`}
@@ -59,10 +57,7 @@ const PlacesItemContent = ({top_places, rate_top}) => {
                                                             <h6 className={styles.link}>{place.name}</h6>
                                                         </Card.Title>
                                                         <Card.Subtitle className={'d-flex flex-row'}>
-                                                            {rate_arr.map(i => (
-                                                                <FontAwesomeIcon style={{color: '#4bbf74'}} key={i}
-                                                                                 icon={faStar}/>
-                                                            ))}
+                                                            <Stars rating={place.rating}/>
                                                         </Card.Subtitle>
                                                     </Card.Body>
                                                 </NavLink>

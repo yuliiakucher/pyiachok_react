@@ -1,10 +1,13 @@
 import {EventAPI} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
+import {setLoader} from "./loader-reducer";
 
 const SET_EVENTS = 'SET_EVENTS'
+const SET_EVENT = 'SET_EVENT'
 
 const InitialState = ({
-    events: []
+    events: [],
+    event: {}
 })
 
 const EventReducer = (state = InitialState, action) => {
@@ -14,12 +17,18 @@ const EventReducer = (state = InitialState, action) => {
                 ...state,
                 events: action.events
             }
+        case SET_EVENT:
+            return {
+                ...state,
+                event: action.event
+            }
         default:
             return state
     }
 }
 
 const setEvents = (events) => ({type: SET_EVENTS, events})
+const setEvent = (event) => ({type: SET_EVENT, event})
 
 export const createEvent = (place_id, data) => {
     return dispatch => {
@@ -40,6 +49,18 @@ export const showEventsByPlace = (place_id) => {
             .then(response => {
                 console.log(response)
                 dispatch(setEvents(response.data))
+            })
+    }
+}
+
+export const showOneEvent = (event_id) => {
+    return dispatch => {
+        dispatch(setLoader(true))
+        EventAPI.showOneEvent(event_id)
+            .then(response => {
+                console.log(response)
+                dispatch(setEvent(response.data))
+                dispatch(setLoader(false))
             })
     }
 }
