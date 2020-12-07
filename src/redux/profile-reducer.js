@@ -81,8 +81,8 @@ export const getUserProfile = () => {
         dispatch(setLoader(true))
         userProfile.showProfile()
             .then(response => {
-                let {first_name, last_name, email, profile, owned_places} = response.data
-                dispatch(getProfileInfo(first_name, last_name, email, profile.photo, owned_places))
+                let {id, first_name, last_name, email, profile, owned_places} = response.data
+                dispatch(getProfileInfo(id, first_name, last_name, email, profile.photo, owned_places))
                 dispatch(setLoader(false))
             })
     }

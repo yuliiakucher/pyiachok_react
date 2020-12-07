@@ -11,6 +11,7 @@ const SHOW_PROFILE = 'SHOW_PROFILE'
 const initialState = {
     statusCode: null,
     isAuth: false,
+    id: null,
     first_name: '',
     last_name: '',
     email: '',
@@ -24,6 +25,7 @@ export function LoginReducer(state = initialState, action) {
             return {
                 ...state,
                 isAuth: false,
+                id: null,
                 first_name: '',
                 last_name: '',
                 email: '',
@@ -55,8 +57,8 @@ export const loginUserAC = statusCode => ({type: LOGIN_USER, statusCode})
 export const logOut = () => ({type: LOGOUT_USER})
 
 
-export let getProfileInfo = (first_name, last_name, email, photo, owned_places) => (
-    {type: SHOW_PROFILE, payload: {first_name, last_name, email, photo, owned_places}}
+export let getProfileInfo = (id, first_name, last_name, email, photo, owned_places) => (
+    {type: SHOW_PROFILE, payload: {id, first_name, last_name, email, photo, owned_places}}
 )
 
 export const userLogin = user => {

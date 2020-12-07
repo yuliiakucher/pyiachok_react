@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 import OneEvent from "../OneEvent";
 import EventCreator from "./EventCreator";
 import styles from '../../../App.module.css'
+import Chat from "../Chat/Chat";
 
 const EventProfile = ({event}) => {
 
@@ -54,13 +55,12 @@ const EventProfile = ({event}) => {
                                     <EventCreator key={participant.id} {...participant}/>
                                 ))}
                             </Card.Body>
-
                         </Card>
                     </Row>
                 </Col>
                 <Col>
-
-                    Messages
+                    <h5 className={styles.name}>Chat</h5>
+                    <Chat eventId={event.id}/>
                 </Col>
             </Row>
         </Container>

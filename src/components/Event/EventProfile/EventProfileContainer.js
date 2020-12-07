@@ -1,16 +1,23 @@
-import React, {useEffect, useLayoutEffect} from "react";
+import React, {useEffect} from "react";
 import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {showOneEvent} from "../../../redux/event-reducer";
 import Preloader from "../../utilits/Preloader";
 import EventProfile from "./EventProfile";
 import {compose} from "redux";
+import {showMessages} from "../../../redux/chat-reducer";
+import {getUserProfile} from "../../../redux/profile-reducer";
 
 function EventProfileContainer(props) {
 
-    console.log(props.isLoading)
-    console.log(props.event)
-    useLayoutEffect(() => props.showOneEvent(props.match.params.eventId), [])
+    const event_id = props.match.params.eventId
+
+    useEffect(() => {
+        props.showOneEvent(event_id)
+        props.showMessages(event_id)
+        props.getUserProfile()
+
+    },[])
 
     return (
         <>
@@ -30,4 +37,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default compose(connect(mapStateToProps, {showOneEvent}), withRouter)(EventProfileContainer)
+export default compose(connect(mapStateToProps, {showOneEvent, showMessages, getUserProfile}), withRouter)(EventProfileContainer)

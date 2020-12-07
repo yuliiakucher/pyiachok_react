@@ -28,6 +28,9 @@ export const userAuth = ({
     }
 })
 
+
+//----------------interceptors-----------------------------
+
 instance.interceptors.request.use(request => {
     const token = localStorage.token;
     if (!!token) {
@@ -76,6 +79,7 @@ instance.interceptors.response.use(
     }
 )
 
+//--------------------------------------------------------------------
 
 export const userProfile = ({
     showProfile() {
@@ -140,11 +144,40 @@ export const EventAPI = ({
             instance.get(`place/${place_id}/events`)
         )
     },
-    showOneEvent(event_id){
-        return(
+    showOneEvent(event_id) {
+        return (
             instance.get(`event/${event_id}/`)
         )
     },
+})
+
+export const ChatAPI = ({
+    showMessages(event_id) {
+        return (
+            instance.get(`event/${event_id}/show-messages/`)
+        )
+    },
+    sendMessage(event_id, data) {
+        return (
+            instance.post(`/event/${event_id}/add-message/`, {...data})
+        )
+    },
+    showMessageForEdit(msg_id) {
+        return (
+            instance.get(`chat-messages/${msg_id}/edit`)
+        )
+    },
+    editMessage(msg_id, data) {
+        return (
+            instance.patch(`chat-messages/${msg_id}/edit`, {...data})
+        )
+    },
+    deleteMessage(msg_id) {
+        return (
+            instance.delete(`chat-messages/${msg_id}/delete`)
+        )
+    },
+
 })
 
 export const CommentsAPI = ({
@@ -157,7 +190,7 @@ export const CommentsAPI = ({
         return (
             instance.post(`place/${place_id}/add-comment/`, data)
         )
-    }
+    },
 })
 
 

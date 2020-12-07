@@ -5,8 +5,6 @@ import {NavLink} from "react-router-dom";
 import {url} from "../../../utilits/utilits";
 import default_photo from './../../media/place.jpg'
 import Carousel from "react-bootstrap/Carousel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faStar} from "@fortawesome/free-solid-svg-icons";
 import Stars from "../../utilits/Stars";
 
 

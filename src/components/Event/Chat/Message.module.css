@@ -1,0 +1,20 @@
+.userName {
+    font-size: 10px;
+}
+
+.date {
+    font-size: 10px;
+    margin: 0 2px 0 2px;
+}
+
+.block{
+    width: 70%;
+    border-radius: 20px;
+    background: #4bbf74;
+    color: black;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

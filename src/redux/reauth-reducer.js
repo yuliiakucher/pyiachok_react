@@ -1,4 +1,3 @@
-
 const RELOGIN_USER = 'RELOGIN_USER'
 
 
@@ -22,12 +21,5 @@ const ReAuthReducer = (state = initialState, action) => {
 
 export const setReloginUser = (payload) => ({type: RELOGIN_USER, payload})
 
-
-export const reloginUser = (data) => {
-    console.log(data)
-    return dispatch => {
-        dispatch(setReloginUser(data))
-    }
-}
 
 export default ReAuthReducer

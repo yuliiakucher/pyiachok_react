@@ -10,6 +10,7 @@ import EventReducer from "./event-reducer";
 import CommentReducer from "./comment-reducer";
 import ReAuthReducer from "./reauth-reducer";
 import LoaderReducer from "./loader-reducer";
+import ChatReducer from "./chat-reducer";
 
 let reducers = combineReducers({
     LoginPage: LoginReducer,
@@ -21,7 +22,8 @@ let reducers = combineReducers({
     EventPage: EventReducer,
     CommentPage: CommentReducer,
     ReAuthPage: ReAuthReducer,
-    LoaderPage: LoaderReducer
+    LoaderPage: LoaderReducer,
+    ChatPage: ChatReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
