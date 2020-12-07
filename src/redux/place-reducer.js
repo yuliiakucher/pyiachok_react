@@ -152,4 +152,6 @@ export const getTopPlaces = () => {
     }
 }
 
+
+
 export default PlaceReducer

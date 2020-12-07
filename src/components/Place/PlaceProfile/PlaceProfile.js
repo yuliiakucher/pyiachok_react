@@ -12,28 +12,33 @@ import {
     faEnvelope,
     faClock,
     faCheck,
-    faGlassCheers,
+    faGlassCheers, faHeart,
 } from '@fortawesome/free-solid-svg-icons'
+import {faHeart as faHeartOutlined} from '@fortawesome/free-regular-svg-icons'
 import Popover from "react-bootstrap/Popover";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import MapModal from "./MapModal/MapModal";
 import Comments from "./Comments/Comments";
-import {Col, ListGroup, Row} from "react-bootstrap";
+import {Col, ListGroup, Row, Tooltip} from "react-bootstrap";
 import Events from "../../Event/Events";
 import Stars from "../../utilits/Stars";
+import {PlaceAPI} from "../../api/api";
 
 
 const PlaceProfile = ({
-                          place, getAllComments,
-                          isLoading, showModal, handleModal, match, comments, createComment, events
+                          place, getAllComments, isLoading, showModal,
+                          handleModal, match, comments, createComment,
+                          events, userId, getPlaceProfile
                       }) => {
-    const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates, rating} = place
+
+    const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates, rating, fav} = place
     const arr = []
     const date = new Date().getDay()
     let new_date;
     for (const [key, value] of Object.entries(schedule)) {
         arr.push(value)
     }
+
     new_date = ''
     arr.map((i, inx) => {
         if (inx === date) {
@@ -41,6 +46,25 @@ const PlaceProfile = ({
         }
     })
     useEffect(() => getAllComments(match.params.placeId), [])
+
+    let isFav = false
+    console.log(fav)
+    fav.filter(i => {
+        if (i === userId) {
+            isFav = true
+        }
+    })
+    console.log(isFav)
+    const addToFav = () => {
+        PlaceAPI.addToFav(id)
+            .then(getPlaceProfile(id))
+    }
+
+    const deleteFromFav = () => {
+        PlaceAPI.deleteFromFav(id)
+            .then(getPlaceProfile(id))
+    }
+
     const popover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Часы работы</Popover.Title>
@@ -72,10 +96,31 @@ const PlaceProfile = ({
                     </li>
                     <li className={'breadcrumb-item active'}>{name}</li>
                 </ol>
+
                 <Row className={'d-flex justify-content-center'}>
                     <Container className='d-flex flex-column'>
                         <h1 className={styles.name}>{name}
                             <Badge variant="info" className='m-2'>{type.type_name}</Badge>
+                            {isFav
+                                ? <OverlayTrigger
+                                    key='1'
+                                    placement='bottom'
+                                    overlay={<Tooltip id={`tooltip-1`}>Delete from favourites</Tooltip>}>
+                                    <FontAwesomeIcon
+                                        onClick={deleteFromFav}
+                                        style={{color: '#4bbf74'}}
+                                        icon={faHeart}/>
+                                </OverlayTrigger>
+                                : <OverlayTrigger
+                                    key='2'
+                                    placement='bottom'
+                                    overlay={<Tooltip id={`tooltip-2`}>Add to favourites</Tooltip>}>
+                                    <FontAwesomeIcon
+                                        onClick={addToFav}
+                                        style={{color: '#4bbf74'}}
+                                        icon={faHeartOutlined}/>
+                                </OverlayTrigger>
+                            }
                         </h1>
                         <Row>
                             <Col>

@@ -6,6 +6,7 @@ import Preloader from "../../utilits/Preloader";
 import PlaceProfile from "./PlaceProfile";
 import {createComment, getAllComments} from "../../../redux/comment-reducer";
 import {showEventsByPlace} from "../../../redux/event-reducer";
+import {getUserProfile} from "../../../redux/profile-reducer";
 
 class PlaceProfileContainer extends React.Component {
 
@@ -13,6 +14,7 @@ class PlaceProfileContainer extends React.Component {
         const place_id = this.props.match.params.placeId
         this.props.getPlaceProfile(place_id)
         this.props.showEventsByPlace(place_id)
+        this.props.getUserProfile()
     }
 
     render() {
@@ -29,6 +31,7 @@ class PlaceProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     return {
         place: state.PlacePage.place,
+        userId: state.LoginPage.id,
         isLoading: state.ProfilePage.isLoading,
         showModal: state.PlacePage.showModal,
         comments: state.CommentPage.comments,
@@ -41,5 +44,6 @@ export default withRouter(connect(mapStateToProps, {
     handleModal,
     getAllComments,
     createComment,
-    showEventsByPlace
+    showEventsByPlace,
+    getUserProfile
 })(PlaceProfileContainer))

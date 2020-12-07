@@ -130,6 +130,16 @@ export const PlaceAPI = ({
         return (
             instance.get('place/top/')
         )
+    },
+    addToFav(place_id) {
+        return(
+            instance.put(`/place/${place_id}/add-to-fave/`)
+        )
+    },
+    deleteFromFav(place_id) {
+        return (
+            instance.patch(`profile/del-from-fav/${place_id}/`)
+        )
     }
 })
 
