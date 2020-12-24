@@ -34,14 +34,16 @@ const Places = ({getAllPlaces, places, totalCount, getTagsInfo, tags, spec, type
                 <h1 className={styles.name}>Заведения</h1>
             </Row>
             <Row>
-                <Col lg={2}>
-                    <Filters getTagsInfo={getTagsInfo} spec={spec} tags={tags} type={type}/>
+                <Col lg={3}>
+                    <Filters getTagsInfo={getTagsInfo} spec={spec} tags={tags} type={type} getAllPlaces={getAllPlaces}/>
                 </Col>
                 <Col>
                     <div className={'d-flex justify-content-center'}>
                         <div>
 
-                            {places.map(place => (
+                            {places.length===0
+                                ? <div>'Oops... It seems like there nothing here... '</div>
+                                :places.map(place => (
                                 <OnePlace
                                     key={place.id}
                                     id={place.id}

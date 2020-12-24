@@ -17,7 +17,7 @@ const initialState = {
     statusMessage: '',
     tags: [],
     spec: [],
-    type:[],
+    type: [],
     lat: null,
     lng: null,
     places: [],
@@ -64,13 +64,13 @@ const PlaceReducer = (state = initialState, action) => {
             }
         }
         case HANDLE_MODAL: {
-            return{
+            return {
                 ...state,
                 showModal: action.value
             }
         }
         case SET_TOTAL_COUNT: {
-            return{
+            return {
                 ...state,
                 totalCount: action.totalCount
             }
@@ -86,11 +86,11 @@ const PlaceReducer = (state = initialState, action) => {
     }
 }
 
-const setTags= (tags, spec, types) => ({type: SET_TAGS, tags,spec, types})
-const setAllPlaces =(places) => ({type: SET_ALL_PLACES, places})
+const setTags = (tags, spec, types) => ({type: SET_TAGS, tags, spec, types})
+const setAllPlaces = (places) => ({type: SET_ALL_PLACES, places})
 const setTotalCount = (totalCount) => ({type: SET_TOTAL_COUNT, totalCount})
-const setOnePlace =(place) => ({type: SET_ONE_PLACE, place})
-const setTopPlaces =(places, rate) => ({type: SET_TOP_PLACES, places, rate})
+const setOnePlace = (place) => ({type: SET_ONE_PLACE, place})
+const setTopPlaces = (places, rate) => ({type: SET_TOP_PLACES, places, rate})
 export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 
@@ -120,9 +120,9 @@ export const getTagsInfo = () => {
     }
 }
 
-export const getAllPlaces = (page) => {
+export const getAllPlaces = (url_params, page) => {
     return dispatch => {
-        PlaceAPI.getAllPlaces(page)
+        PlaceAPI.getAllPlaces(page, url_params)
             .then(response => {
                 console.log(response)
                 dispatch(setAllPlaces(response.data.data))
@@ -151,7 +151,6 @@ export const getTopPlaces = () => {
             })
     }
 }
-
 
 
 export default PlaceReducer

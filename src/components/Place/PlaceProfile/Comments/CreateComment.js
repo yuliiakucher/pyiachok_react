@@ -1,22 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Form} from 'react-bootstrap'
 import StarRatings from 'react-star-ratings';
 import Button from "react-bootstrap/Button";
 
-const CreateComment = ({createComment, placeId}) => {
+const CreateComment = ({createComment, placeId, comment}) => {
 
     const [rating, changeRating] = useState(0)
     const [text, changeText] = useState('')
     const [file, changeFile] = useState('')
 
+    useEffect(()=> {
+        console.log(comment)
+        const {bill, rate, text} = comment
+        changeFile(bill)
+        changeText(text)
+        changeRating(rate)
+    }, [comment])
 
-    //
     const handleSubmit = () => {
         const formDate = new FormData()
         formDate.append('bill', file)
         formDate.append('rate', rating)
         formDate.append('text', text)
         createComment(placeId, formDate)
+        changeFile('')
+        changeText('')
+        changeRating(0)
     }
 
     const setNewRating = (rating) => changeRating(rating)

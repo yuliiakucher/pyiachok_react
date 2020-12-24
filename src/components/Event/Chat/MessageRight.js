@@ -32,7 +32,6 @@ const MessageRight = ({id, text, date, users, eventId, showMessageForEdit, delet
                                         style={{color: '#fff', marginLeft: '5px'}}
                                         icon={faTimes}/>
                                 </div>
-
                             }
                         </Row>
                         <Row className={styles.date}>

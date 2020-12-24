@@ -10,7 +10,6 @@ import Test from "./components/Test/Test";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import PlaceProfileContainer from "./components/Place/PlaceProfile/PlaceProfileContainer";
 import CreateEvent from "./components/Event/CreateEvent/CreateEvent";
-import EventProfile from "./components/Event/EventProfile/EventProfile";
 import EventProfileContainer from "./components/Event/EventProfile/EventProfileContainer";
 
 

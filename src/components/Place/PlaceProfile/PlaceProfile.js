@@ -28,7 +28,8 @@ import {PlaceAPI} from "../../api/api";
 const PlaceProfile = ({
                           place, getAllComments, isLoading, showModal,
                           handleModal, match, comments, createComment,
-                          events, userId, getPlaceProfile
+                          events, userId, getPlaceProfile, getCommentForEdit,
+                          comment
                       }) => {
 
     const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates, rating, fav} = place
@@ -48,13 +49,11 @@ const PlaceProfile = ({
     useEffect(() => getAllComments(match.params.placeId), [])
 
     let isFav = false
-    console.log(fav)
     fav.filter(i => {
         if (i === userId) {
             isFav = true
         }
     })
-    console.log(isFav)
     const addToFav = () => {
         PlaceAPI.addToFav(id)
             .then(getPlaceProfile(id))
@@ -197,7 +196,13 @@ const PlaceProfile = ({
 
                         <p>Фотографии</p>
 
-                        <Comments comments={comments} placeId={match.params.placeId} createComment={createComment}/>
+                        <Comments
+                            userId={userId}
+                            comments={comments}
+                            comment={comment}
+                            placeId={match.params.placeId}
+                            createComment={createComment}
+                            getCommentForEdit={getCommentForEdit}/>
                     </Container>
                 </Row>
             </Container>

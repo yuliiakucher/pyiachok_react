@@ -110,10 +110,12 @@ export const PlaceAPI = ({
             instance.get('place/tags')
         )
     },
-    getAllPlaces(page = 1) {
+    getAllPlaces(page = 1, url_params) {
         return (
             // axios.get(`http://localhost:8000/place/all?page=${page}`)
-            instance.get(`place/all?page=${page}`)
+            instance.get(`place/all?${url_params}`, {
+                params: {page}
+            })
         )
     },
     getPlaceProfile(placeId) {
@@ -132,7 +134,7 @@ export const PlaceAPI = ({
         )
     },
     addToFav(place_id) {
-        return(
+        return (
             instance.put(`/place/${place_id}/add-to-fave/`)
         )
     },
@@ -201,6 +203,11 @@ export const CommentsAPI = ({
             instance.post(`place/${place_id}/add-comment/`, data)
         )
     },
+    showCommentForEdit(comment_id) {
+        return (
+            instance.get(`comment/${comment_id}/show-comment/`)
+        )
+    }
 })
 
 
