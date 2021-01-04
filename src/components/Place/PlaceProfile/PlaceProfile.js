@@ -24,12 +24,11 @@ import Events from "../../Event/Events";
 import Stars from "../../utilits/Stars";
 import {PlaceAPI} from "../../api/api";
 
-
 const PlaceProfile = ({
                           place, getAllComments, isLoading, showModal,
                           handleModal, match, comments, createComment,
                           events, userId, getPlaceProfile, getCommentForEdit,
-                          comment
+                          comment, editComment
                       }) => {
 
     const {id, name, address, photos, contacts, email, type, tags, specificities, schedule, coordinates, rating, fav} = place
@@ -202,7 +201,9 @@ const PlaceProfile = ({
                             comment={comment}
                             placeId={match.params.placeId}
                             createComment={createComment}
-                            getCommentForEdit={getCommentForEdit}/>
+                            getCommentForEdit={getCommentForEdit}
+                            editComment={editComment}
+                        />
                     </Container>
                 </Row>
             </Container>

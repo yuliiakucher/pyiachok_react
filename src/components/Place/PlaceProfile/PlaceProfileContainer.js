@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import Preloader from "../../utilits/Preloader";
 import PlaceProfile from "./PlaceProfile";
-import {createComment, getAllComments, getCommentForEdit} from "../../../redux/comment-reducer";
+import {createComment, editComment, getAllComments, getCommentForEdit} from "../../../redux/comment-reducer";
 import {showEventsByPlace} from "../../../redux/event-reducer";
 import {getUserProfile} from "../../../redux/profile-reducer";
 
@@ -47,5 +47,6 @@ export default withRouter(connect(mapStateToProps, {
     createComment,
     showEventsByPlace,
     getUserProfile,
-    getCommentForEdit
+    getCommentForEdit,
+    editComment
 })(PlaceProfileContainer))

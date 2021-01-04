@@ -3,13 +3,13 @@ import {Form} from 'react-bootstrap'
 import StarRatings from 'react-star-ratings';
 import Button from "react-bootstrap/Button";
 
-const CreateComment = ({createComment, placeId, comment}) => {
+const CreateComment = ({createComment, placeId, comment, editComment, commentForm}) => {
 
     const [rating, changeRating] = useState(0)
     const [text, changeText] = useState('')
     const [file, changeFile] = useState('')
 
-    useEffect(()=> {
+    useEffect(() => {
         console.log(comment)
         const {bill, rate, text} = comment
         changeFile(bill)
@@ -18,12 +18,15 @@ const CreateComment = ({createComment, placeId, comment}) => {
     }, [comment])
 
     const handleSubmit = () => {
+
         const formDate = new FormData()
         formDate.append('bill', file)
         formDate.append('rate', rating)
         formDate.append('text', text)
-        createComment(placeId, formDate)
-        changeFile('')
+        !comment.id
+            ? createComment(placeId, formDate)
+            : editComment(comment.id, formDate, placeId)
+            changeFile('')
         changeText('')
         changeRating(0)
     }
@@ -37,7 +40,7 @@ const CreateComment = ({createComment, placeId, comment}) => {
         changeFile(event.currentTarget.files[0])
     }
     return (
-        <Form className='my-2 d-flex flex-column'>
+        <Form className='my-2 d-flex flex-column' ref={commentForm}>
             <Form.Group>
                 <Form.Label>Ваш общий рейтинг заведения</Form.Label>
                 <StarRatings

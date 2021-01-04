@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import Card from "react-bootstrap/cjs/Card";
 import {Col, Container, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
@@ -7,14 +7,21 @@ import Stars from "../../../utilits/Stars";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTimes} from "@fortawesome/free-solid-svg-icons";
 import CreateComment from "./CreateComment";
+import {useDispatch} from "react-redux";
+import {deleteComment} from "../../../../redux/comment-reducer";
 
-const OneComment = ({userId, comment, getCommentForEdit, handleActive}) => {
+const OneComment = ({userId, comment, getCommentForEdit, handleActive, commentForm}) => {
+
+    const dispatch = useDispatch()
+
+    const executeScroll = () => commentForm.current.scrollIntoView({behavior: "smooth"});
 
     const [icon, setIcon] = useState(false)
 
     const handleClick = () => {
         getCommentForEdit(comment.id)
         handleActive(0)
+        executeScroll()
     }
 
     return (
@@ -32,8 +39,8 @@ const OneComment = ({userId, comment, getCommentForEdit, handleActive}) => {
                     </Col>
                     <Col onMouseEnter={() => setIcon(true)}
                          onMouseLeave={() => setIcon(false)}>
-                        <Card.Body >
-                            <Row >
+                        <Card.Body>
+                            <Row>
                                 <Col>
                                     <Stars rating={comment.rate}/>
                                     <Card.Text>{comment.text}</Card.Text>
@@ -42,7 +49,9 @@ const OneComment = ({userId, comment, getCommentForEdit, handleActive}) => {
                                     {icon && comment.user.id === userId &&
                                     <div>
                                         <FontAwesomeIcon onClick={handleClick} icon={faEdit}/>
-                                        <FontAwesomeIcon className='ml-2' icon={faTimes}/>
+                                        <FontAwesomeIcon
+                                            onClick={() => dispatch(deleteComment(comment.id, comment.place))}
+                                            className='ml-2' icon={faTimes}/>
                                     </div>
                                     }
                                 </Col>

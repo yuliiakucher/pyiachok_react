@@ -207,7 +207,27 @@ export const CommentsAPI = ({
         return (
             instance.get(`comment/${comment_id}/show-comment/`)
         )
+    },
+    editComment(comment_id, data){
+        return (
+            instance.patch(`comment/${comment_id}/edit/`, data)
+        )
+    },
+    deleteComment(comment_id) {
+        return(
+            instance.delete(`comment/${comment_id}/delete/`)
+        )
     }
 })
 
+
+export const NewsAPI = ({
+    getNews(type) {
+        return(
+            instance.get(`news-top`, {
+                params: {type}
+            })
+        )
+    }
+})
 

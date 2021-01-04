@@ -44,18 +44,44 @@ export const getCommentForEdit = (comment_id) => {
     return dispatch => {
         CommentsAPI.showCommentForEdit(comment_id)
             .then(response => {
-                console.log(response)
                 dispatch(setComment(response.data))
             })
     }
 }
 
 export const createComment = (place_id, data) => {
-    console.log(data)
     return dispatch => {
        CommentsAPI.createComment(place_id, data)
             .then(response => {
                 dispatch(setAlert(response.data.message, 'Отлично', 'success'))
+                dispatch(getAllComments(place_id))
+            })
+            .catch(err => {
+                dispatch(setAlert(err.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
+    }
+}
+
+export const editComment = (comment_id, data, place_id) => {
+    console.log(data)
+    return dispatch => {
+        CommentsAPI.editComment(comment_id, data)
+            .then(response => {
+                dispatch(setAlert(response.data.message, 'Отлично', 'success'))
+                dispatch(getAllComments(place_id))
+            })
+            .catch(err => {
+                dispatch(setAlert(err.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
+    }
+}
+
+export const deleteComment = (comment_id, place_id) => {
+    return dispatch => {
+        CommentsAPI.deleteComment(comment_id)
+            .then(response => {
+                dispatch(setAlert(response.data.message, 'Отлично', 'success'))
+                console.log(response)
                 dispatch(getAllComments(place_id))
             })
             .catch(err => {

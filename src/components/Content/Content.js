@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import {connect} from "react-redux";
 import {getTopPlaces} from "../../redux/place-reducer";
+import {Col} from "react-bootstrap";
 
 
 const Content = (props) => {
@@ -15,13 +16,12 @@ const Content = (props) => {
     useEffect(getTopPlaces, [])
 
     return (
-        <Container>
-            <Row lg={10}>
-                <PlacesItemContent top_places={top_places} rate_top={rate_top}/>
-
-            </Row>
+        <Container className='d-flex flex-column justify-content-center'>
             <Row>
-                <TabContent/>
+                <PlacesItemContent top_places={top_places} rate_top={rate_top}/>
+            </Row>
+            <Row className='align-self-center'>
+                    <TabContent/>
             </Row>
             <Row>
                 <EventsItemContent/>

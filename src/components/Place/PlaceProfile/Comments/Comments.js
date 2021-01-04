@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Card from "react-bootstrap/cjs/Card";
 import styles from "../../../../App.module.css";
 import Button from "react-bootstrap/Button";
@@ -7,9 +7,11 @@ import Accordion from "react-bootstrap/Accordion";
 import CreateComment from "./CreateComment";
 import OneComment from "./OneComment";
 
-const Comments = ({userId, comments, createComment, placeId, getCommentForEdit, comment}) => {
+const Comments = ({userId, comments, createComment, placeId, getCommentForEdit, comment, editComment}) => {
 
     const [active, setActive] = useState('')
+    const commentForm = useRef(null);
+
 
     const handleActive = (value) => {
         setActive(value)
@@ -26,7 +28,12 @@ const Comments = ({userId, comments, createComment, placeId, getCommentForEdit, 
                                     Комментарии
                                 </Col>
                                 <Col>
-                                    <Accordion.Toggle as={Button} className='m-2' size='sm' eventKey='0'>
+                                    <Accordion.Toggle
+                                        as={Button}
+                                        className='m-2'
+                                        size='sm'
+                                        eventKey='0'
+                                        onClick={()=>setActive(0)}>
                                         Оставить комментарий
                                     </Accordion.Toggle>
                                 </Col>
@@ -36,7 +43,10 @@ const Comments = ({userId, comments, createComment, placeId, getCommentForEdit, 
                                     <CreateComment
                                         comment={comment}
                                         createComment={createComment}
-                                        placeId={placeId}/>
+                                        placeId={placeId}
+                                        editComment={editComment}
+                                        commentForm={commentForm}
+                                    />
                                 </Accordion.Collapse>
                             </Row>
                         </Accordion>
@@ -49,7 +59,9 @@ const Comments = ({userId, comments, createComment, placeId, getCommentForEdit, 
                        comment={comment}
                        userId={userId}
                        getCommentForEdit={getCommentForEdit}
-                       handleActive={handleActive}/>
+                       handleActive={handleActive}
+                       commentForm={commentForm}
+                   />
                 ))}
             </Card.Body>
         </Card>

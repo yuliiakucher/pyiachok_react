@@ -7,9 +7,13 @@ import Alert from "react-bootstrap/Alert";
 import {connect} from "react-redux";
 import {handleActiveTab, handleClose, handleShow} from "../../redux/modal-reducer";
 import {userLogin} from "../../redux/login-reducer";
+import {useHistory} from 'react-router-dom'
+import {setReloginUser} from "../../redux/reauth-reducer";
 
 
 const Login = (props) => {
+
+    const history = useHistory()
 
     const initialValues = {
         username: '',
@@ -18,6 +22,8 @@ const Login = (props) => {
 
     const onSubmit = values => {
         props.userLogin(values)
+        props.setReloginUser(true)
+        history.push('/')
     }
 
 
@@ -82,4 +88,4 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps,
-    {handleClose, handleShow, userLogin, handleActiveTab})(Login)
+    {handleClose, handleShow, userLogin, handleActiveTab, setReloginUser})(Login)

@@ -11,6 +11,7 @@ import CommentReducer from "./comment-reducer";
 import ReAuthReducer from "./reauth-reducer";
 import LoaderReducer from "./loader-reducer";
 import ChatReducer from "./chat-reducer";
+import NewsReducer from "./news-reducer";
 
 let reducers = combineReducers({
     LoginPage: LoginReducer,
@@ -23,7 +24,8 @@ let reducers = combineReducers({
     CommentPage: CommentReducer,
     ReAuthPage: ReAuthReducer,
     LoaderPage: LoaderReducer,
-    ChatPage: ChatReducer
+    ChatPage: ChatReducer,
+    NewsPage: NewsReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
