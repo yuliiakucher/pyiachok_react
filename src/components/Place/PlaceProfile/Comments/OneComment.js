@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useState} from "react";
 import Card from "react-bootstrap/cjs/Card";
 import {Col, Container, Row} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
@@ -6,7 +6,6 @@ import default_user from "../../../media/default-user-image.png";
 import Stars from "../../../utilits/Stars";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faTimes} from "@fortawesome/free-solid-svg-icons";
-import CreateComment from "./CreateComment";
 import {useDispatch} from "react-redux";
 import {deleteComment} from "../../../../redux/comment-reducer";
 

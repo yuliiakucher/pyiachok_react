@@ -12,12 +12,20 @@ const Chat = ({eventId, messages, userId, sendMessage, messageForEdit, showMessa
 
     const message = useRef('')
 
+    const messagesEndRef = useRef(null)
+
+    const scrollToBottom = () => {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    }
+
     useEffect(() => {
         message.current.value = messageForEdit.text
-    }, [messageForEdit])
+        scrollToBottom()
+    }, [messageForEdit, messages])
 
     const handleClick = () => {
-        !messageForEdit
+        console.log(messageForEdit)
+        !messageForEdit.id
             ? sendMessage(eventId, {'text': message.current.value})
             : editMessage(messageForEdit.id, {'text': message.current.value}, eventId)
         message.current.value = ''
@@ -41,6 +49,7 @@ const Chat = ({eventId, messages, userId, sendMessage, messageForEdit, showMessa
                             } else return <MessageLeft key={message.id} {...message}/>
                         }
                     )}
+                <div ref={messagesEndRef} />
             </div>
 
             <Form className='align-self-center'>

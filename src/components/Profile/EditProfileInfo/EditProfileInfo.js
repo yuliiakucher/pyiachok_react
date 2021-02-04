@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Form from 'react-bootstrap/Form'
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
@@ -7,30 +7,29 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EditPassword from "./EditPassword/EditPassword";
 import CustomAlert from "../../Alerts/CustomAlert";
-import * as axios from 'axios'
 import Container from "react-bootstrap/Container";
 import {Accordion} from "react-bootstrap";
+import CustomFileInput from "../../utilits/CustomFileInput";
 
 
 const EditProfileInfo = (props) => {
 
-    console.log(props)
 
     let {first_name, last_name, email} = props
+    let {alert_text, alert_variant, alert_header} = props
+    const [photo, setPhoto] = useState('')
 
-
+    console.log(props)
     useEffect(props.getTagsInfo, [])
 
     let initialValues = {
         first_name: first_name,
         last_name: last_name,
         email: email,
-        file: ''
     }
 
 
     const onSubmit = values => {
-        console.log('submit', values)
         if (values.email === email) {
             delete values.email
         }
@@ -43,22 +42,22 @@ const EditProfileInfo = (props) => {
         email: yup.string().email('Email is not valid'),
     })
 
-    const handleImageSelect = (event) => {
+    const handleImageSelect = () => {
         let formData = new FormData();
-        const token = localStorage.token;
-        formData.append("photo", event.currentTarget.files[0]);
-        axios.patch('http://localhost:8000/profile/edit/', formData, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data'
-            }
-        })
+        formData.append("photo", photo);
+        props.editPhoto(formData)
     }
 
     return (
         <Container>
             <form>
-                <input id="photo" name="file" type="file" onChange={handleImageSelect}/>
+                <CustomFileInput
+                    file={photo}
+                    name='Profile photo'
+                    file_label='Please, attach your photo'
+                    setData={setPhoto}
+                />
+                <Button variant='outline-primary' onClick={handleImageSelect}>Change Image</Button>
             </form>
             <Formik
                 initialValues={initialValues}
@@ -121,35 +120,34 @@ const EditProfileInfo = (props) => {
                                     <Form.Text>{formik.errors.email} </Form.Text> : null}
                             </Form.Group>
 
-                            <Accordion>
-                                <Accordion.Toggle as={Button} eventKey='0'>
-                                    Изменить пароль
-                                </Accordion.Toggle>
-                                <br/>
-                                <Accordion.Collapse eventKey='0'>
-                                    <EditPassword {...props}/>
-                                </Accordion.Collapse>
-                            </Accordion>
-
-
                             <br/>
                             {(props.alert_text) &&
                             <CustomAlert
-                                statusMessage={props.alert_text}
-                                header={props.alert_header}
-                                variant={props.alert_variant}
+                                statusMessage={alert_text}
+                                header={alert_header}
+                                variant={alert_variant}
                             />}
 
                             <Button
                                 variant="primary"
                                 onClick={formik.handleSubmit}
                                 disabled={!formik.validateForm}
-                            >Сохранить изменения
+                            >Save changes
                             </Button>
                         </Form>
                     )
                 }}
             </Formik>
+
+            <Accordion>
+                <Accordion.Toggle as={Button} eventKey='0'>
+                    Change password
+                </Accordion.Toggle>
+                <br/>
+                <Accordion.Collapse eventKey='0'>
+                    <EditPassword {...props}/>
+                </Accordion.Collapse>
+            </Accordion>
         </Container>
 
     )

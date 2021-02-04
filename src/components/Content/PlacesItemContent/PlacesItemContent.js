@@ -1,26 +1,15 @@
-import React, {useState} from "react";
+import React from "react";
 import styles from "./../../../App.module.css";
 import Card from "react-bootstrap/Card";
 import {NavLink} from "react-router-dom";
 import {url} from "../../../utilits/utilits";
 import default_photo from './../../media/place.jpg'
-import Carousel from "react-bootstrap/Carousel";
+import Carousel from "react-multi-carousel";
 import Stars from "../../utilits/Stars";
+import "react-multi-carousel/lib/styles.css";
 
 
-const PlacesItemContent = ({top_places, rate_top}) => {
-
-    const all = 10
-    const visible = 5
-    const arr = []
-    for (let i = 1; i <= all / visible; i++) {
-        arr.push(i)
-    }
-    const [index, setIndex] = useState(0);
-
-    const handleSelect = (selectedIndex, e) => {
-        setIndex(selectedIndex);
-    };
+const PlacesItemContent = ({top_places}) => {
 
 
     return (
@@ -29,45 +18,84 @@ const PlacesItemContent = ({top_places, rate_top}) => {
                 <h1 className={styles.name}>Топ заведений</h1>
             </Card.Header>
 
-
-            <Carousel prevIcon={<p style={{fontSize: '70px', color: 'black'}}>{'←\t'}</p>}
-                      nextIcon={<p style={{fontSize: '70px', color: 'black'}}>{'→'}</p>}
-                      activeIndex={index} onSelect={handleSelect}
+            <Carousel
+                additionalTransfrom={0}
+                arrows
+                autoPlaySpeed={3000}
+                centerMode={false}
+                className=""
+                containerClass="container-with-dots"
+                dotListClass=""
+                draggable
+                focusOnSelect={false}
+                infinite
+                itemClass=""
+                keyBoardControl
+                minimumTouchDrag={80}
+                renderButtonGroupOutside={false}
+                renderDotsOutside={false}
+                responsive={{
+                    desktop: {
+                        breakpoint: {
+                            max: 3000,
+                            min: 1024
+                        },
+                        items: 4,
+                        partialVisibilityGutter: 40
+                    },
+                    mobile: {
+                        breakpoint: {
+                            max: 464,
+                            min: 0
+                        },
+                        items: 1,
+                        partialVisibilityGutter: 30
+                    },
+                    tablet: {
+                        breakpoint: {
+                            max: 1024,
+                            min: 464
+                        },
+                        items: 2,
+                        partialVisibilityGutter: 30
+                    }
+                }}
+                showDots={false}
+                sliderClass=""
+                slidesToSlide={1}
+                swipeable
             >
-                {
-                    arr.map(item => (
-                        <Carousel.Item interval={5000000}>
-                            <div className='d-flex flex-row'>
-                                {top_places.filter((place, index) => (item === 1 ? index < visible : index >= visible))
-                                    .map(place => {
+                {top_places
+                    .map(place => {
 
-                                            return <Card key={place.id} className='mx-2'>
-                                                <NavLink
-                                                    to={`places/place/${place.id}`}
-                                                    style={{textDecoration: 'none'}}
-                                                >
-                                                    <Card.Img style={{objectFit: 'cover', width: '200px', height: '200px'}}
-                                                              src={place.photos[0]
-                                                                  ? url + place.photos[0].photo
-                                                                  : default_photo}/>
-                                                    <Card.Body>
-                                                        <Card.Title>
-                                                            <h6 className={styles.link}>{place.name}</h6>
-                                                        </Card.Title>
-                                                        <Card.Subtitle className={'d-flex flex-row'}>
-                                                            <Stars rating={place.rating}/>
-                                                        </Card.Subtitle>
-                                                    </Card.Body>
-                                                </NavLink>
-                                            </Card>
+                            return <Card key={place.id} className='mx-2' border='light'>
+                                <NavLink
+                                    to={`places/place/${place.id}`}
+                                    style={{textDecoration: 'none'}}
+                                >
+                                    <Card.Img style={{objectFit: 'cover', width: '250px', height: '250px'}}
+                                              src={place.photos[0]
+                                                  ? url + place.photos[0].photo
+                                                  : default_photo}/>
+                                    <Card.Body>
+                                        <Card.Title>
+                                            <h6 className={styles.link}>{place.name}</h6>
+                                        </Card.Title>
+                                        <Card.Subtitle className={'d-flex flex-row'}>
+                                            <Stars rating={place.rating}/>
+                                        </Card.Subtitle>
+                                    </Card.Body>
+                                </NavLink>
+                            </Card>
 
-                                        }
-                                    )}
-                            </div>
-                        </Carousel.Item>
-                    ))
-                }
+                        }
+                    )}
+
+
             </Carousel>
+
+
+
             <Card.Footer>
                 <NavLink style={{textDecoration: 'none', fontSize: '20px'}} to='/places' className={styles.link}>Смотреть
                     все заведения...</NavLink>

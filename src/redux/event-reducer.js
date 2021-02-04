@@ -65,4 +65,17 @@ export const showOneEvent = (event_id) => {
     }
 }
 
+export const addParticipant = (place_id) => {
+    return dispatch => {
+        EventAPI.addNewParticipant(place_id)
+            .then(response => {
+                console.log(response)
+                dispatch(setAlert(response.data.message, 'Отлично', 'success'))
+            })
+            .catch(err => {
+                dispatch(setAlert(err.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
+    }
+}
+
 export default EventReducer

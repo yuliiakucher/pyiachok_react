@@ -1,7 +1,9 @@
 import * as axios from 'axios'
 import {current_store} from "../../index";
 import {setReloginUser} from "../../redux/reauth-reducer"
-import {handleShow} from "../../redux/modal-reducer";
+import { handleShow } from "../../redux/modal-reducer";
+
+const baseUrl = 'http://localhost:8000/'
 
 const token = localStorage.token;
 const instance = axios.create({
@@ -13,7 +15,7 @@ export const userAuth = ({
 
     userRegistration(userData) {
         return (
-            axios.post('http://localhost:8000/register/', {...userData})
+            axios.post(baseUrl + 'register/', {...userData})
         )
     },
     userLogin(userData) {
@@ -24,6 +26,16 @@ export const userAuth = ({
     refreshToken(refresh) {
         return (
             instance.post('token/refresh', {refresh})
+        )
+    },
+    passwordReset(email){
+        return(
+            instance.post(`api/password_reset/`, {...email})
+        )
+    },
+    passwordResetConfirm(email){
+        return(
+            instance.post(`api/password_reset/confirm/`, {...email})
         )
     }
 })
@@ -65,13 +77,17 @@ instance.interceptors.response.use(
                 .then(response => {
                     console.log('refresh token')
                     localStorage.setItem("token", response.data.access)
+
                 })
                 .catch(() => {
                     current_store.dispatch(handleShow(true))
+                    current_store.dispatch(setReloginUser(false))
+                    localStorage.removeItem('token')
                 })
         }
         if (error.response) {
             return new Promise((resolve, reject) => {
+                current_store.dispatch(setReloginUser(false))
                 reject(error)
                 console.log('reject error', error)
             })
@@ -95,6 +111,20 @@ export const userProfile = ({
     editPassword(data) {
         return (
             instance.post('profile/edit/', {...data})
+        )
+    },
+    editUserPhoto(data) {
+        return (
+            instance.put('http://localhost:8000/profile/edit/', data, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        )
+    },
+    showFavPlaces(){
+        return(
+            instance.get('profile/fav_places')
         )
     }
 })
@@ -130,7 +160,7 @@ export const PlaceAPI = ({
     },
     getTopPlaces() {
         return (
-            instance.get('place/top/')
+            axios.get(baseUrl + 'place/top/')
         )
     },
     addToFav(place_id) {
@@ -142,7 +172,17 @@ export const PlaceAPI = ({
         return (
             instance.patch(`profile/del-from-fav/${place_id}/`)
         )
-    }
+    },
+    deleteTagSpecFromPlace(add_inf, place_id, tag_id) {
+        return (
+            instance.delete(`place/${place_id}/${add_inf}/${tag_id}/delete`)
+        )
+    },
+    addTagToPlace(add_inf, place_id, tag_id) {
+        return (
+            instance.put(`place/${place_id}/${add_inf}-add/${tag_id}/`)
+        )
+    },
 })
 
 export const EventAPI = ({
@@ -161,6 +201,11 @@ export const EventAPI = ({
             instance.get(`event/${event_id}/`)
         )
     },
+    addNewParticipant(event_id){
+        return (
+            instance.patch(`event/${event_id}/`)
+        )
+    }
 })
 
 export const ChatAPI = ({
@@ -224,10 +269,18 @@ export const CommentsAPI = ({
 export const NewsAPI = ({
     getNews(type) {
         return(
-            instance.get(`news-top`, {
+            axios.get(`${baseUrl}news-top`, {
                 params: {type}
             })
         )
-    }
+    },
+    getTypes() {
+        return instance.get(`news-type/all`)
+    },
+    createNews(place_id, data) {
+        return(
+            instance.post(`place/${place_id}/add-news/`, data)
+        )
+    },
 })
 

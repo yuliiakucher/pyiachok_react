@@ -1,4 +1,6 @@
 const RELOGIN_USER = 'RELOGIN_USER'
+const LOGOUT_USER = 'LOGOUT_USER'
+
 
 
 const initialState = {
@@ -13,6 +15,12 @@ const ReAuthReducer = (state = initialState, action) => {
                 isAuth: action.payload
             }
         }
+        case LOGOUT_USER: {
+            return {
+                ...state,
+                isAuth: action.payload
+            }
+        }
         default:
             return state
     }
@@ -20,6 +28,7 @@ const ReAuthReducer = (state = initialState, action) => {
 
 
 export const setReloginUser = (payload) => ({type: RELOGIN_USER, payload})
+export const logOut = (payload) => ({type: LOGOUT_USER, payload})
 
 
 export default ReAuthReducer

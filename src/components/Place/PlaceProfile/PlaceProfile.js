@@ -42,7 +42,7 @@ const PlaceProfile = ({
     new_date = ''
     arr.map((i, inx) => {
         if (inx === date) {
-            new_date = i
+            return new_date = i
         }
     })
     useEffect(() => getAllComments(match.params.placeId), [])
@@ -174,7 +174,7 @@ const PlaceProfile = ({
                                         <h6 className={styles.name}>Специальные предложения</h6>
 
                                         {tags.map(tag => (
-                                            <div className='my-1'>
+                                            <div className='my-1' key={tag.id}>
                                                 <FontAwesomeIcon icon={faCheck}/>{tag.tag_name}
                                             </div>
                                         ))}

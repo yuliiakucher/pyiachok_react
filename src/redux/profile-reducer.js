@@ -1,17 +1,17 @@
-import {PlaceAPI, userAuth, userProfile} from "../components/api/api";
+import {PlaceAPI, userProfile} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
-import {getProfileInfo, loginUserAC} from "./login-reducer";
-import {setLoader} from "./loader-reducer";
+import {getProfileInfo} from "./login-reducer";
 
 const EDIT_PROFILE = 'EDIT_PROFILE'
 const EDIT_PASSWORD = 'EDIT_PASSWORD'
 const SET_ADMIN_PLACES = 'SET_ADMIN__PLACES'
+const SET_FAV_PLACES = 'SET_FAV_PLACES'
 
 const initialState = {
-
     admin_places: [],
     profileStatusCode: null,
     passwordStatusCode: null,
+    fav_places: []
 }
 
 const ProfileReducer = (state = initialState, action) => {
@@ -29,11 +29,18 @@ const ProfileReducer = (state = initialState, action) => {
             }
         }
 
-        case SET_ADMIN_PLACES:
+        case SET_ADMIN_PLACES: {
             return {
                 ...state,
                 admin_places: action.admin_places
             }
+        }
+        case SET_FAV_PLACES: {
+            return {
+                ...state,
+                fav_places: action.payload
+            }
+        }
         default:
             return state
     }
@@ -41,6 +48,7 @@ const ProfileReducer = (state = initialState, action) => {
 
 
 let setAdminPlaces = (admin_places) => ({type: SET_ADMIN_PLACES, admin_places})
+let setFavPlaces = (payload) => ({type: SET_FAV_PLACES, payload})
 
 
 export const editUser = (data) => {
@@ -66,6 +74,22 @@ export const editPassword = (data) => {
             })
     }
 }
+export const editPhoto = (data) => {
+    return (dispatch) => {
+        userProfile.editUserPhoto(data)
+            .then(response => {
+                dispatch((setAlert(response.data.message, 'Отлично', 'success')))
+                userProfile.showProfile()
+                    .then(response => {
+                        let {id, first_name, last_name, email, profile, owned_places} = response.data
+                        dispatch(getProfileInfo(id, first_name, last_name, email, profile.photo, owned_places))
+                    })
+            })
+            .catch(error => {
+                dispatch(setAlert(error.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
+    }
+}
 
 export const showPlacesByUser = () => {
     return dispatch => {
@@ -78,12 +102,20 @@ export const showPlacesByUser = () => {
 
 export const getUserProfile = () => {
     return (dispatch) => {
-        dispatch(setLoader(true))
         userProfile.showProfile()
             .then(response => {
                 let {id, first_name, last_name, email, profile, owned_places} = response.data
                 dispatch(getProfileInfo(id, first_name, last_name, email, profile.photo, owned_places))
-                dispatch(setLoader(false))
+            })
+    }
+
+}
+
+export const getFavPlaces = () => {
+    return (dispatch) => {
+        userProfile.showFavPlaces()
+            .then(response => {
+                dispatch(setFavPlaces(response.data))
             })
     }
 

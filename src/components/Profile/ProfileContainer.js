@@ -1,9 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
-import {editPassword, editUser, getUserProfile} from "../../redux/profile-reducer";
+import {editPassword, editPhoto, editUser, getUserProfile} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {Redirect} from "react-router-dom";
 import {getTagsInfo} from "../../redux/place-reducer";
+import Preloader from "../utilits/Preloader";
 
 class ProfileContainer extends React.Component {
 
@@ -22,7 +23,11 @@ class ProfileContainer extends React.Component {
     render() {
         if (!this.props.isAuth) return <Redirect to={'/'}/>
         return (
-                <Profile {...this.props}/>
+            <>{
+                !this.props.first_name
+                    ? <Preloader/>
+                    : <Profile {...this.props}/>
+            }</>
         )
     }
 }
@@ -43,4 +48,10 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { editUser, editPassword, getTagsInfo, getUserProfile})(ProfileContainer)
+export default connect(mapStateToProps, {
+    editUser,
+    editPassword,
+    getTagsInfo,
+    getUserProfile,
+    editPhoto,
+})(ProfileContainer)

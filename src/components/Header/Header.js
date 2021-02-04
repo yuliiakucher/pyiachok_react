@@ -9,19 +9,19 @@ import {faGlassCheers, faSearch} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {handleShow} from "../../redux/modal-reducer";
-import {logOut} from "../../redux/login-reducer";
 import styles from './Header.module.css'
+import {logOut} from "../../redux/reauth-reducer";
 
 
 const Header = (props) => {
 
     const logOut = (e) => {
-        e.preventDefault()
         localStorage.removeItem("token")
         localStorage.removeItem("refresh_token")
-        props.logOut()
-
+        props.logOut(false)
     }
+
+    console.log("IS AUTH",props.isAuth)
 
     return (
         <Navbar expand="lg" className='navbar-dark bg-dark'>
@@ -62,7 +62,7 @@ const Header = (props) => {
 
 let mapStateToProps = (state) => {
     return{
-        isAuth: state.ReAuthPage.isAuth
+        isAuth: state.ReAuthPage.isAuth,
     }
 }
 

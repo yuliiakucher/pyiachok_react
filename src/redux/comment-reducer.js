@@ -1,4 +1,4 @@
-import {CommentsAPI, EventAPI} from "../components/api/api";
+import {CommentsAPI} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
 
 const SET_ALL_COMMENTS = 'SET_ALL_COMMENTS'

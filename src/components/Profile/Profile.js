@@ -9,14 +9,19 @@ import default_user from '../media/default-user-image.png'
 import Place from "./UserPlaces/Place";
 import CreatePlace from "./UserPlaces/CreatePlace/CreatePlace";
 import Container from "react-bootstrap/Container";
+import AdminPlaceProfileContainer from "./UserPlaces/AdminPlaces/AdminPlaceProfile/AdminPlaceProfileContainer";
+import AddNewsForm from "./UserPlaces/AdminPlaces/AdminPlaceProfile/AddNewsForm";
+import FavouritePlaces from "./UserPlaces/FavouritePlaces/FavouritePlaces";
 
 
 const Profile = (props) => {
 
+    console.log('props profile!!!!!!!!!!!!!!!!!!!!!!!',props)
+
     return (
         <BrowserRouter>
             <div className='d-flex justify-content-center mt-5'>
-                <Container id="left-tabs-example" defaultActiveKey="first">
+                <Container id="left-tabs-example">
                     <Row>
                         <Col sm={3}>
                             <div>
@@ -35,12 +40,18 @@ const Profile = (props) => {
                                 <Nav.Item>
                                     <NavLink to="/profile/places">Заведения</NavLink>
                                 </Nav.Item>
+                                <Nav.Item>
+                                    <NavLink to='/profile/fav-places'>Favourite places</NavLink>
+                                </Nav.Item>
                             </Nav>
                         </Col>
                         <Col sm={9} className='mt-5'>
                             <Route exact path="/profile" render={() => <EditProfileInfo {...props}/>}/>
                             <Route exact path="/profile/places" render={() => <Place {...props}/>}/>
-                            <Route exact path='/profile/places/create' render={() => <CreatePlace/>}/>
+                            <Route exact path='/profile/places/create' render={() => <CreatePlace />} />
+                            <Route exact path='/profile/places/edit/:placeId' render={() => <AdminPlaceProfileContainer />} />
+                            <Route exact path='/profile/fav-places' render={() => <FavouritePlaces />} />
+                            <Route exact path='/profile/places/:placeId/add-news' render={() => <AddNewsForm/>}/>
                         </Col>
                     </Row>
                 </Container>

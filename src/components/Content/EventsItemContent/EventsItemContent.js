@@ -1,5 +1,4 @@
 import React from "react";
-
 import styles from "./../../../App.module.css";
 import Card from "react-bootstrap/Card";
 import {NavLink} from "react-router-dom";

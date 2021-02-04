@@ -6,11 +6,11 @@ import ModalContainer from "./components/Modal/ModalContainer";
 import Header from "./components/Header/Header";
 import Content from "./components/Content/Content";
 import Places from "./components/Places/Places";
-import Test from "./components/Test/Test";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import PlaceProfileContainer from "./components/Place/PlaceProfile/PlaceProfileContainer";
 import CreateEvent from "./components/Event/CreateEvent/CreateEvent";
 import EventProfileContainer from "./components/Event/EventProfile/EventProfileContainer";
+import ResetPasswordPage from "./components/Login/ResetPaswordPage/ResetPasswordPage";
 
 
 class App extends React.Component {
@@ -27,7 +27,7 @@ class App extends React.Component {
                     <Route exact path='/places' render={() => <Places/>}/>
                     <Route exact path='/places/place/:placeId' render={() => <PlaceProfileContainer/>}/>
                     <Route path='/places/place/:placeId/create-event' render={() => <CreateEvent/>}/>
-                    <Route exact path='/api/password_reset/' render={() => <Test/>}/>
+                    <Route exact path='/api/password_reset/' render={() => <ResetPasswordPage/>}/>
                     <Route exact path='/event/:eventId' render={() => <EventProfileContainer/>}/>
                 </>
             </BrowserRouter>

@@ -8,9 +8,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {NavLink} from "react-router-dom";
 import Paginator from "../Paginator/Paginator";
-import {Card} from "react-bootstrap";
 import Filters from "./Filters";
-import {showEventsByPlace} from "../../redux/event-reducer";
 
 
 const Places = ({getAllPlaces, places, totalCount, getTagsInfo, tags, spec, type}) => {
@@ -18,7 +16,7 @@ const Places = ({getAllPlaces, places, totalCount, getTagsInfo, tags, spec, type
     useEffect(getAllPlaces, [])
 
     const changePage = (page) => {
-        getAllPlaces(page)
+        getAllPlaces(null, page)
         window.scrollTo(0, 0)
     }
 

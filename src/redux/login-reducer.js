@@ -1,10 +1,9 @@
 import {userAuth, userProfile} from "../components/api/api";
-import {setPreloader} from "./profile-reducer";
-import {setLoader} from "./loader-reducer";
 import {handleClose} from "./modal-reducer";
+import {setReloginUser} from "./reauth-reducer";
+import {setAlert} from "./alert-reducer";
 
 const LOGIN_USER = 'LOGIN_USER'
-const LOGOUT_USER = 'LOGOUT_USER'
 const SHOW_PROFILE = 'SHOW_PROFILE'
 
 
@@ -21,18 +20,18 @@ const initialState = {
 
 export function LoginReducer(state = initialState, action) {
     switch (action.type) {
-        case LOGOUT_USER: {
-            return {
-                ...state,
-                isAuth: false,
-                id: null,
-                first_name: '',
-                last_name: '',
-                email: '',
-                photo: null,
-                owned_places: [],
-            }
-        }
+        // case LOGOUT_USER: {
+        //     return {
+        //         ...state,
+        //         isAuth: false,
+        //         id: null,
+        //         first_name: '',
+        //         last_name: '',
+        //         email: '',
+        //         photo: null,
+        //         owned_places: [],
+        //     }
+        // }
         case LOGIN_USER:{
             return {
                 ...state,
@@ -54,7 +53,6 @@ export function LoginReducer(state = initialState, action) {
 export const loginUserAC = statusCode => ({type: LOGIN_USER, statusCode})
 
 
-export const logOut = () => ({type: LOGOUT_USER})
 
 
 export let getProfileInfo = (id, first_name, last_name, email, photo, owned_places) => (
@@ -69,17 +67,31 @@ export const userLogin = user => {
                 localStorage.setItem("refresh_token", response.data.refresh)
                 dispatch(handleClose(false))
                 dispatch(loginUserAC(response.status))
-                dispatch(setLoader(true))
+                dispatch(setReloginUser(true))
+                // dispatch(setLoader(true))
                 userProfile.showProfile()
                     .then(response => {
                         let {first_name, last_name, email, profile, owned_places} = response.data
                         dispatch(getProfileInfo(first_name, last_name, email, profile.photo, owned_places))
-                        dispatch(setLoader(false))
+                        // dispatch(setLoader(false))
                         console.log('response data show user', response.data)
                     })
                 console.log('response data', response.data)
             })
             .catch(err => dispatch(loginUserAC(err.response.status)))
+    }
+}
+
+
+export const resetPassword = (data) => {
+    return (dispatch) => {
+        userAuth.passwordResetConfirm(data)
+            .then(response => {
+                dispatch((setAlert(response.data.message, 'Отлично', 'success')))
+            })
+            .catch(error => {
+                dispatch(setAlert(error.response.data.error, 'Что-то пошло не так...', 'danger'))
+            })
     }
 }
 

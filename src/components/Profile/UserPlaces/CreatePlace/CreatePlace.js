@@ -4,7 +4,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/cjs/Button";
 import {Formik} from "formik";
 import * as yup from "yup";
-import './bootstrap-multiselect.css'
 import {connect} from "react-redux";
 import {getResponseInfo, getTagsInfo} from "../../../../redux/place-reducer";
 import CustomAlert from "../../../Alerts/CustomAlert";
@@ -12,13 +11,22 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CustomMap from "../../../CustomMap/CustomMap";
+import CustomSelect from "./CustomSelect";
+
 
 
 const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, alert_variant, getTagsInfo, getResponseInfo}) => {
 
     useEffect(() => {
         getTagsInfo()
-    }, [lat])
+    }, [lat, getTagsInfo])
+
+    const tag_options = [...tags.map(tag => ({id: tag.id, value: tag.tag_name, label: tag.tag_name}))]
+    const spec_options = [...spec.map(spec => ({
+        id: spec.id,
+        value: spec.specificity_name,
+        label: spec.specificity_name
+    }))]
 
     const arr = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
@@ -28,29 +36,29 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
         email: '',
         contacts: '',
         type: {type_name: 'bar'},
-        tags: [{}],
-        specificities: [{}],
+        tags: [],
+        specificities: [],
         schedule: {
-            'monday_start': '00',
-            'monday_end': '00',
+            'monday_start': '-',
+            'monday_end': '-',
             'monday_check': false,
-            'tuesday_start': '00',
-            'tuesday_end': '00',
+            'tuesday_start': '-',
+            'tuesday_end': '-',
             'tuesday_check': false,
-            'wednesday_start': '00',
-            'wednesday_end': '00',
+            'wednesday_start': '-',
+            'wednesday_end': '-',
             'wednesday_check': false,
-            'thursday_start': '00',
-            'thursday_end': '00',
+            'thursday_start': '-',
+            'thursday_end': '-',
             'thursday_check': false,
-            'friday_start': '00',
-            'friday_end': '00',
+            'friday_start': '-',
+            'friday_end': '-',
             'friday_check': false,
-            'saturday_start': '00',
-            'saturday_end': '00',
+            'saturday_start': '-',
+            'saturday_end': '-',
             'saturday_check': false,
-            'sunday_start': '00',
-            'sunday_end': '00',
+            'sunday_start': '-',
+            'sunday_end': '-',
             'sunday_check': false,
         },
         coordinates: '',
@@ -58,10 +66,9 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
 
     const onSubmit = values => {
         console.log(values)
-
         values.coordinates = ({'lat': lat, 'lng': lng})
         const my_map = new Map()
-        const sch = arr.map(day => my_map.set(day, values.schedule[`${day}_start`].concat(values.schedule[`${day}_end`])))
+        const sch = arr.map(day => my_map.set(day, values.schedule[`${day}_start`].concat('-', values.schedule[`${day}_end`])))
         values.schedule = Object.fromEntries(sch[0])
         getResponseInfo(values)
     }
@@ -89,7 +96,7 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
                       touched,
                       errors,
                       handleSubmit,
-                      validateForm, values, setFieldValue
+                    validateForm, values, setFieldValue, setFieldTouched
 
                   }) => {
                     return (
@@ -175,33 +182,35 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
                                 <Col lg={4}>
                                     <Form.Group>
                                         <Form.Label>Теги</Form.Label>
-                                        <Form.Control as="select" multiple name='tags' onChange={handleChange}>
-                                            {tags.map(tag => (
-                                                <option value={tag.tag_name} key={tag.id}>
-                                                    {tag.tag_name}
-                                                </option>
-                                            ))}
-                                        </Form.Control>
+                                        <CustomSelect
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            isMulti={true}
+                                            options={tag_options}
+                                            value={values.tags}
+                                            name='tags'
+                                        />
                                     </Form.Group>
                                 </Col>
 
 
-                                <Col lg={5}>
+                                <Col lg={4}>
                                     <Form.Group>
                                         <Form.Label>Особенности</Form.Label>
-                                        <Form.Control as="select" multiple name='specificities' onChange={handleChange}>
-                                            {spec.map(spec => (
-                                                <option value={spec.specificity_name} key={spec.id}>
-                                                    {spec.specificity_name}
-                                                </option>
-                                            ))}
-                                        </Form.Control>
+                                        <CustomSelect
+                                            onChange={setFieldValue}
+                                            onBlur={setFieldTouched}
+                                            isMulti={true}
+                                            options={spec_options}
+                                            value={values.spec}
+                                            name='specificities'
+                                        />
                                     </Form.Group>
                                 </Col>
 
 
                                 <Row>
-                                    <Col>
+                                    <Col lg={4}>
                                         <Form.Group>
                                             <Form.Label>График</Form.Label>
                                             {arr.map(day => (
@@ -221,7 +230,7 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
                                                         Открытие
                                                     </InputGroup.Text>
                                                     <Form.Control
-                                                        placeholder={'00'}
+                                                        placeholder={'00:00'}
                                                         onChange={handleChange}
                                                         name={`schedule.${day}_start`}
                                                         disabled={!values.schedule[`${day}_check`]}
@@ -230,7 +239,7 @@ const CreatePlace = ({lat, lng, type, tags, spec, alert_text, alert_header, aler
                                                         Закрытие
                                                     </InputGroup.Text>
                                                     <Form.Control
-                                                        placeholder={'00'}
+                                                        placeholder={'00:00'}
                                                         onChange={handleChange}
                                                         name={`schedule.${day}_end`}
                                                         disabled={!values.schedule[`${day}_check`]}

@@ -5,21 +5,28 @@ import Card from "react-bootstrap/Card";
 import News from "./News/News";
 import {useDispatch, useSelector} from "react-redux";
 import {getNews} from "../../../redux/news-reducer";
-import {Container} from "react-bootstrap";
+import {CardGroup, Container} from "react-bootstrap";
 
 const TabContent = () => {
 
     const dispatch = useDispatch()
-    const news = useSelector(state=> state.NewsPage.news)
-    console.log(news)
+    const news = useSelector(state => state.NewsPage.news)
 
     const [key, setKey] = useState('news');
-    useEffect(()=> {dispatch(getNews(key))},[])
+    useEffect(() => {
+        dispatch(getNews(key))
+    }, [dispatch,key])
 
     const handleClick = (k) => {
         setKey(k)
         dispatch(getNews(k))
     }
+
+    const tabs_names = [
+        {eventKey: 'news', title: 'News'},
+        {eventKey: 'event', title: 'Events'},
+        {eventKey: 'promotion', title: 'Promotions'},
+    ]
 
     return (
         <Container>
@@ -29,15 +36,13 @@ const TabContent = () => {
                         id="controlled-tab"
                         activeKey={key}
                         onSelect={handleClick}>
-                        <Tab eventKey="news" title="News">
-                            <News news={news}/>
-                        </Tab>
-                        <Tab eventKey="event" title="Events">
-                            <News news={news}/>
-                        </Tab>
-                        <Tab eventKey="promotion" title="Promotions">
-                            <News news={news}/>
-                        </Tab>
+                        {tabs_names.map((tab_name, index) => (
+                                <Tab key={index} eventKey={tab_name.eventKey} title={tab_name.title} className='mt-5'>
+                                    <CardGroup>
+                                        <News news={news}/>
+                                    </CardGroup>
+                                </Tab>
+                            ))}
                     </Tabs>
                 </Card.Body>
             </Card>

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import Card from "react-bootstrap/cjs/Card";
 import styles from "../../../../App.module.css";
 import Button from "react-bootstrap/Button";

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Form} from 'react-bootstrap'
 import StarRatings from 'react-star-ratings';
 import Button from "react-bootstrap/Button";
+import CustomFileInput from "../../../utilits/CustomFileInput";
 
 const CreateComment = ({createComment, placeId, comment, editComment, commentForm}) => {
 
@@ -10,7 +11,6 @@ const CreateComment = ({createComment, placeId, comment, editComment, commentFor
     const [file, changeFile] = useState('')
 
     useEffect(() => {
-        console.log(comment)
         const {bill, rate, text} = comment
         changeFile(bill)
         changeText(text)
@@ -36,9 +36,6 @@ const CreateComment = ({createComment, placeId, comment, editComment, commentFor
         changeText(event.target.value)
     }
 
-    const handleImageSelect = (event) => {
-        changeFile(event.currentTarget.files[0])
-    }
     return (
         <Form className='my-2 d-flex flex-column' ref={commentForm}>
             <Form.Group>
@@ -62,17 +59,8 @@ const CreateComment = ({createComment, placeId, comment, editComment, commentFor
                               as="textarea"/>
             </Form.Group>
             <Form.Group>
-                <Form.Label>Bill</Form.Label>
-                <Form.File custom>
-                    <Form.File.Input isValid={!!file} onChange={handleImageSelect}/>
-                    <Form.File.Label data-browse="Search">
-                        Custom file input
-                    </Form.File.Label>
-                    {!!file &&
-                    <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback>}
-                </Form.File>
+                <CustomFileInput file={file} label='Bill' setData={changeFile} file_label='Please, attach your bill'/>
             </Form.Group>
-
             <Button className='align-self-center' onClick={handleSubmit}>Отправить комментарий</Button>
         </Form>
     )

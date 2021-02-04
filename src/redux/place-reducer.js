@@ -1,6 +1,5 @@
 import {PlaceAPI} from "../components/api/api";
 import {setAlert} from "./alert-reducer";
-import {setPreloader} from "./profile-reducer";
 import {setLoader} from "./loader-reducer";
 
 const SET_RESPONSE_INFO = 'SET_RESPONSE_INFO'
@@ -95,8 +94,9 @@ export const getMapInfo = (lat, lng) => ({type: SET_MAP_INFO, lat, lng})
 export const handleModal = (value) => ({type: HANDLE_MODAL, value})
 
 export const getResponseInfo = (values) => {
-    values.tags = [...(values.tags.map(value => ({'tag_name': value})))]
-    values.specificities = [...(values.specificities.map(value => ({'specificity_name': value})))]
+    values.tags = [...(values.tags.map(value => ({'tag_name': value.value})))]
+    values.specificities = [...(values.specificities.map(value => ({'specificity_name': value.value})))]
+    console.log(values)
     return (dispatch) => {
         PlaceAPI.createPlace(values)
             .then(response => {
@@ -121,6 +121,7 @@ export const getTagsInfo = () => {
 }
 
 export const getAllPlaces = (url_params, page) => {
+    console.log(url_params, page)
     return dispatch => {
         PlaceAPI.getAllPlaces(page, url_params)
             .then(response => {
@@ -133,6 +134,7 @@ export const getAllPlaces = (url_params, page) => {
 
 export const getPlaceProfile = (placeId) => {
     return dispatch => {
+        dispatch(setLoader(true))
         PlaceAPI.getPlaceProfile(placeId)
             .then(response => {
                 dispatch(setOnePlace(response.data.data))

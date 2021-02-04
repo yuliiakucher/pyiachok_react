@@ -11,13 +11,14 @@ import {getUserProfile} from "../../../redux/profile-reducer";
 function EventProfileContainer(props) {
 
     const event_id = props.match.params.eventId
+    const [showOneEvent, showMessages, getUserProfile] = props
 
     useEffect(() => {
-        props.showOneEvent(event_id)
-        props.showMessages(event_id)
-        props.getUserProfile()
+        showOneEvent(event_id)
+        showMessages(event_id)
+        getUserProfile()
 
-    },[])
+    },[event_id, getUserProfile, showMessages, showOneEvent])
 
     return (
         <>

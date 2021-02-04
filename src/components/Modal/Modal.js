@@ -25,6 +25,7 @@ const LoginModal = (props) => {
                             <RegistrationContainer/>
                         </Tab>
                     </Tabs>
+                    <div>lalala</div>
                 </Modal.Body>
             </Modal>
         </>
