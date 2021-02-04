@@ -36,15 +36,14 @@ const OnePlace = ({id, name, email, address, type, tags, rating}) => {
                             <p>{address}</p>
                         </Card.Subtitle>
                         <Card.Body>
-                            <Card.Text>
-                                {tags.map(tag => {
-                                    return (
-                                        <div>
+                            <div>
+                                {tags.map(tag => (
+                                        <div key={tag.id}>
                                             <FontAwesomeIcon icon={faCheck}/><span>{tag.tag_name}</span>
                                         </div>
                                     )
-                                })}
-                            </Card.Text>
+                                )}
+                            </div>
                         </Card.Body>
                     </Col>
                 </Row>

@@ -1,5 +1,5 @@
 export function validate(values) {
-    let errors = {name: '', text:'', type: ''}
+    let errors = {}
 
     if (!values.name) {
         errors.name = 'The name is required'

@@ -6,7 +6,7 @@ import {createNews, getNewsTypes} from "../../../../../redux/news-reducer";
 import CustomFileInput from "../../../../utilits/CustomFileInput";
 import CustomAlert from "../../../../Alerts/CustomAlert";
 import useForm from "../../../../utilits/useForm";
-import {validate} from '../../../../utilits/validation'
+import {validate} from '../../../../utilits/validationNewsForm'
 
 
 const AddNewsForm = () => {

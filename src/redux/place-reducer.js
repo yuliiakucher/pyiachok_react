@@ -125,7 +125,6 @@ export const getAllPlaces = (url_params, page) => {
     return dispatch => {
         PlaceAPI.getAllPlaces(page, url_params)
             .then(response => {
-                console.log(response)
                 dispatch(setAllPlaces(response.data.data))
                 dispatch(setTotalCount(response.data.count))
             })
@@ -148,8 +147,17 @@ export const getTopPlaces = () => {
     return dispatch => {
         PlaceAPI.getTopPlaces()
             .then(response => {
-                console.log(response)
                 dispatch(setTopPlaces(response.data))
+            })
+    }
+}
+
+export const getPlaceByName = (name) => {
+    return dispatch => {
+        PlaceAPI.searchByName(name)
+            .then(response => {
+                dispatch(setAllPlaces(response.data.data))
+                dispatch(setTotalCount(response.data.count))
             })
     }
 }

@@ -2,10 +2,8 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Form from 'react-bootstrap/Form'
-import FormControl from 'react-bootstrap/FormControl'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faGlassCheers, faSearch} from '@fortawesome/free-solid-svg-icons'
+import {faGlassCheers} from '@fortawesome/free-solid-svg-icons'
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {handleShow} from "../../redux/modal-reducer";
@@ -15,34 +13,24 @@ import {logOut} from "../../redux/reauth-reducer";
 
 const Header = (props) => {
 
-    const logOut = (e) => {
+    const logOut = () => {
         localStorage.removeItem("token")
         localStorage.removeItem("refresh_token")
         props.logOut(false)
     }
 
-    console.log("IS AUTH",props.isAuth)
-
     return (
         <Navbar expand="lg" className='navbar-dark bg-dark'>
             <Navbar.Brand>
-                <NavLink to='/' style={{ textDecoration: 'none' }} className={styles.title}>
+                <NavLink to='/' style={{textDecoration: 'none'}} className={styles.title}>
                     <FontAwesomeIcon
                         icon={faGlassCheers}/>
                     пиячок
                 </NavLink>
-                </Navbar.Brand>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse>
-                <Nav className="ml-auto">
-                    <Form inline>
-                        <FormControl type="text" placeholder="Search" className="mr-sm-2"/>
-                        <Button variant="outline-success">
-                            <FontAwesomeIcon icon={faSearch}/>
-                        </Button>
-                    </Form>
-                </Nav>
-                <Nav className='mx-5'>
+            <Navbar.Collapse className="mt-4">
+                <Nav className='mx-5 ml-auto'>
                     {!props.isAuth
                         ? <Button onClick={() => {
                             props.handleShow(true)
@@ -61,7 +49,7 @@ const Header = (props) => {
 }
 
 let mapStateToProps = (state) => {
-    return{
+    return {
         isAuth: state.ReAuthPage.isAuth,
     }
 }

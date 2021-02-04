@@ -183,6 +183,13 @@ export const PlaceAPI = ({
             instance.put(`place/${place_id}/${add_inf}-add/${tag_id}/`)
         )
     },
+    searchByName(name){
+        return(
+            instance.get(`place/search/`, {
+                params: {name}
+            })
+        )
+    }
 })
 
 export const EventAPI = ({

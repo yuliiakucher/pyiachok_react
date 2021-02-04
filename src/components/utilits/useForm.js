@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 
 const useForm = (submit, validate) => {
 
-    const [values, setValues] = useState({type: '1', text:'', name:''})
-    const [errors, setErrors] = useState({type: '', text:'', name:''})
+    const [values, setValues] = useState({})
+    const [errors, setErrors] = useState({})
     const [isSubmitting, setSubmitting] = useState(false)
 
     const handleChange = event => {
@@ -15,15 +15,15 @@ const useForm = (submit, validate) => {
     }
 
     useEffect(()=> {
-        if (Object.keys(errors) === 0 && isSubmitting){
+        if (Object.keys(errors).length === 0 && isSubmitting){
             submit()
+            setValues({})
         }
     }, [errors])
 
     const handleSubmit = () => {
         setErrors(validate(values))
         setSubmitting(true)
-
     }
 
     return {
